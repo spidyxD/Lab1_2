@@ -27,7 +27,13 @@ CREATE Table Carrera (
     CONSTRAINT pkCarrera PRIMARY KEY (codigo)
 );
 
-
+CREATE TABLE Usuario (
+    idUser number,
+    username VARCHAR(50),
+    clave VARCHAR(50),
+    rol VARCHAR(50),
+    CONSTRAINT pkUser PRIMARY KEY (username)
+);
 
 CREATE TABLE PlanEstudio (
     curso number,
@@ -44,7 +50,9 @@ CREATE TABLE Profesor (
     nombre VARCHAR(50),
     telefono number,
     email VARCHAR(50),
-    CONSTRAINT pkProfesor PRIMARY KEY (cedula)
+    userN number,
+    CONSTRAINT pkProfesor PRIMARY KEY (cedula),
+    CONSTRAINT fkProfesor FOREIGN KEY (userN) REFERENCES Usuario(idUser)
 );
 
 CREATE TABLE Alumno (
@@ -53,7 +61,9 @@ CREATE TABLE Alumno (
     email VARCHAR(50),
     fecha_nacimiento date,
     carrera number,
-    CONSTRAINT pkAlumno PRIMARY KEY (cedula)
+    userN number,
+    CONSTRAINT pkAlumno PRIMARY KEY (cedula),
+    CONSTRAINT fkAlumno FOREIGN KEY (userN) REFERENCES Usuario(idUser)
 );
 
 CREATE TABLE Ciclo (
@@ -80,27 +90,22 @@ CREATE TABLE Rendimiento_Grupo (
     CONSTRAINT fkDesc2 FOREIGN KEY (alumno) REFERENCES Alumno(cedula) 
 );
 
-CREATE TABLE Usuario (
-    cedula number,
-    clave VARCHAR(50),
-    rol VARCHAR(50),
-    CONSTRAINT pkUser PRIMARY KEY (cedula)
-);
 
-CREATE OR REPLACE PROCEDURE crearAlumno (xcedula in VARCHAR, xnombre in VARCHAR, xemail in VARCHAR, xfechaN in DATE, xcarrera in number, xclave in VARCHAR )
+
+CREATE OR REPLACE PROCEDURE crearAlumno (xcedula in VARCHAR, xnombre in VARCHAR, xemail in VARCHAR, xfechaN in DATE, xcarrera in number,xusername in VARCHAR, xclave in VARCHAR )
     IS
     BEGIN
         INSERT into Alumno VALUES(xcedula, xnombre, xemail, xfechaN, xcarrera); 
-        INSERT into Usuario VALUES(xcedula, xclave, 'ALUMNO');
+        INSERT into Usuario VALUES(xusername, xclave, 'ALUMNO');
         COMMIT;
     END crearAlumno;
     /
 
-CREATE OR REPLACE PROCEDURE crearProfesor (xcedula in VARCHAR, xnombre in VARCHAR, xemail in VARCHAR, telefono in VARCHAR, xclave in VARCHAR )
+CREATE OR REPLACE PROCEDURE crearProfesor (xcedula in VARCHAR, xnombre in VARCHAR, xemail in VARCHAR, telefono in VARCHAR,xusername in VARCHAR, xclave in VARCHAR )
     IS
     BEGIN
         INSERT into Profesor VALUES(xcedula, xnombre, xemail, xtelefono); 
-        INSERT into Usuario VALUES(xcedula, xclave, 'ALUMNO');
+        INSERT into Usuario VALUES(xusername, xclave, 'ALUMNO');
         COMMIT;
     END crearProfesor;
     /
@@ -151,13 +156,13 @@ CREATE OR REPLACE FUNCTION buscar_curso_nombre (xnombre in VARCHAR)
             CLOSE c;  
         END;
         /
-
+-- SI FUNCIONA
 CREATE OR REPLACE FUNCTION buscar_curso_carrera (xcarrera in number ) 
      RETURN SYS_REFCURSOR
      AS 
     c SYS_REFCURSOR;
     BEGIN
-        OPEN c FOR SELECT cur.nombre, cur.codigo, cur.creditos, cur.horas_semanales FROM Curso as cur, Carrera as car WHERE  car.codigo = xcarrera;
+        OPEN c FOR SELECT Curso.nombre, Curso.codigo, Curso.creditos, Curso.horas_semanales FROM Curso , Carrera WHERE  Carrera.codigo = xcarrera;
          RETURN c; 
          CLOSE c;  
     END;
@@ -174,17 +179,26 @@ CREATE OR REPLACE FUNCTION buscar_Profesor_nombre_cedula (xnombre in VARCHAR, xc
         END;
         /
 
+-- SI FUNCIONA
 CREATE OR REPLACE FUNCTION buscar_Alumno_n_c_c (xnombre in VARCHAR, xcedula in number, xcarrera in VARCHAR) 
     RETURN SYS_REFCURSOR
         AS 
             c1 SYS_REFCURSOR;
         BEGIN
             OPEN c1 FOR 
-                SELECT cedula,nombre,email,fecha_nacimiento, carrera FROM Alumno, Carrera AS c WHERE nombre = xnombre AND cedula = xcedula AND c.nombre = xcarrera;
+               SELECT Alumno.cedula, Alumno.nombre, Alumno.email, Alumno.fecha_nacimiento, Alumno.carrera FROM Alumno, Carrera WHERE  Alumno.nombre =xnombre  AND Alumno.cedula = xcedula  AND Carrera.nombre = xnombre;
             RETURN c1;   
         END;
         /
     
 
-   -- ALTER TABLE Profesor
-  --ADD nombre VARCHAR(50);
+CREATE OR REPLACE FUNCTION login(idin IN VARCHAR), passwordin IN VARCHAR)
+    RETURN SYS_REFCURSOR 
+    AS 
+            c SYS_REFCURSOR; 
+    BEGIN 
+    OPEN c FOR 
+        SELECT COUNT(nombreUsuario) AS esta FROM usuario WHERE nombreUsuario=idin AND contrase�a=passwordin;
+        RETURN c; 
+    END;
+    /
