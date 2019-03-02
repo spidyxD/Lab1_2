@@ -239,22 +239,22 @@ INSERT into Profesor VALUES (7648903,'Lucresia Ramirez',86345678,'lucresiar@gmai
 INSERT into Profesor VALUES (2789456,'Pablo Lopez',89345678,'pablol@gmail.com');
 
 -- ALUMNOS
-INSERT into Alumno VALUES(4678936,'Edgar Trigeros Arias','edgarta@gmail.com','08/07/1997',1);
-INSERT into Alumno VALUES(8362398,'Mirella Martinez','mirellam@gmail.com','15/04/1995',1);
-INSERT into Alumno VALUES(9859859,'Lourdes Ramirez','lourdes@gmail.com','04/04/1997',1);
-INSERT into Alumno VALUES(4564665,'María Jose Soto','mariasoto@gmail.com','04/04/1997',1);
-INSERT into Alumno VALUES(4465656,'Kimberly Hernandez Arce','kimher@gmail.com','04/04/1997',2);
-INSERT into Alumno VALUES(5675656,'Jennifer Hernandez Arce','jenniher@gmail.com','04/04/1997',2);
-INSERT into Alumno VALUES(9879586,'Karol Hernandez Arce','karolher@gmail.com','04/04/1997',2);
-INSERT into Alumno VALUES(4546956,'Estefany Hernandez Arce','estefanyher@gmail.com','04/04/1997',2);
-INSERT into Alumno VALUES(4666666,'Walter Ramirez Suniga','walR@gmail.com','04/04/1997',3);
-INSERT into Alumno VALUES(8096809,'Lukas Mora','lukasM@gmail.com','04/04/1997',3);
-INSERT into Alumno VALUES(8459867,'Marco Perez','marcoP@gmail.com','04/04/1997',3);
-INSERT into Alumno VALUES(4564645,'Jorge Alvarado','jorgeA@gmail.com','04/04/1997',3);
-INSERT into Alumno VALUES(6456456,'Geisel Alvarado','geiselAlv@gmail.com','04/04/1997',1);
-INSERT into Alumno VALUES(3534535,'Maria Jesus Lopez Martinez','mariajesusm@gmail.com','04/04/1997',2);
-INSERT into Alumno VALUES(6757576,'Mirella Gomez Lopez','mirellagomez@gmail.com','04/04/1997',3);
-INSERT into Alumno VALUES(4343453,'Zoe Montero Hernandez','zoemontero@gmail.com','04/04/1997',1);
+INSERT into Alumno VALUES(4678936,'Edgar Trigeros Arias','edgarta@gmail.com','08/07/1997';
+INSERT into Alumno VALUES(8362398,'Mirella Martinez','mirellam@gmail.com','15/04/1995');
+INSERT into Alumno VALUES(9859859,'Lourdes Ramirez','lourdes@gmail.com','04/04/1997');
+INSERT into Alumno VALUES(4564665,'María Jose Soto','mariasoto@gmail.com','04/04/1997');
+INSERT into Alumno VALUES(4465656,'Kimberly Hernandez Arce','kimher@gmail.com','04/04/1997');
+INSERT into Alumno VALUES(5675656,'Jennifer Hernandez Arce','jenniher@gmail.com','04/04/1997');
+INSERT into Alumno VALUES(9879586,'Karol Hernandez Arce','karolher@gmail.com','04/04/1997');
+INSERT into Alumno VALUES(4546956,'Estefany Hernandez Arce','estefanyher@gmail.com','04/04/1997');
+INSERT into Alumno VALUES(4666666,'Walter Ramirez Suniga','walR@gmail.com','04/04/1997');
+INSERT into Alumno VALUES(8096809,'Lukas Mora','lukasM@gmail.com','04/04/1997');
+INSERT into Alumno VALUES(8459867,'Marco Perez','marcoP@gmail.com','04/04/1997');
+INSERT into Alumno VALUES(4564645,'Jorge Alvarado','jorgeA@gmail.com','04/04/1997');
+INSERT into Alumno VALUES(6456456,'Geisel Alvarado','geiselAlv@gmail.com','04/04/1997');
+INSERT into Alumno VALUES(3534535,'Maria Jesus Lopez Martinez','mariajesusm@gmail.com','04/04/1997');
+INSERT into Alumno VALUES(6757576,'Mirella Gomez Lopez','mirellagomez@gmail.com','04/04/1997');
+INSERT into Alumno VALUES(4343453,'Zoe Montero Hernandez','zoemontero@gmail.com','04/04/1997');
 
 
 

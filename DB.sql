@@ -3,17 +3,17 @@
 DROP TABLE Grupo;
 DROP TABLE PlanEstudio;
 DROP TABLE Rendimiento_Grupo;
-DROP TABLE Carrera;
-DROP TABLE Alumno;
-DROP TABLE Curso;
-DROP TABLE Profesor;
+DROP TABLE Carrera CASCADE CONSTRAINTS;
+DROP TABLE Alumno CASCADE CONSTRAINTS;
+DROP TABLE Curso CASCADE CONSTRAINTS;
+DROP TABLE Profesor CASCADE CONSTRAINTS;
 DROP TABLE Ciclo;
 DROP TABLE Usuario;
 
 
 
 CREATE TABLE Curso (
-     codigo number NOT NULL ,
+     codigo number NOT NULL,
      nombre VARCHAR(50),
      creditos number,
      horas_semanales number,
@@ -21,18 +21,16 @@ CREATE TABLE Curso (
 );
 
 CREATE Table Carrera (
-    codigo number NOT NULL ,
+    codigo number NOT NULL,
     nombre VARCHAR(50),
     titulo VARCHAR(50),
     CONSTRAINT pkCarrera PRIMARY KEY (codigo)
 );
 
 CREATE TABLE Usuario (
-    idUser number,
-    username VARCHAR(50),
+    username VARCHAR(50) NOT NULL UNIQUE,
     clave VARCHAR(50),
-    rol VARCHAR(50),
-    CONSTRAINT pkUser PRIMARY KEY (username)
+    rol VARCHAR(50)
 );
 
 CREATE TABLE PlanEstudio (
@@ -46,24 +44,32 @@ CREATE TABLE PlanEstudio (
 );
 
 CREATE TABLE Profesor (
-    cedula number,
+    cedula number NOT NULL,
     nombre VARCHAR(50),
     telefono number,
     email VARCHAR(50),
-    userN number,
-    CONSTRAINT pkProfesor PRIMARY KEY (cedula),
-    CONSTRAINT fkProfesor FOREIGN KEY (userN) REFERENCES Usuario(idUser)
+    CONSTRAINT pkProfesor PRIMARY KEY (cedula)
 );
 
 CREATE TABLE Alumno (
-    cedula number,
+    cedula number NOT NULL,
     nombre VARCHAR(50),
     email VARCHAR(50),
     fecha_nacimiento date,
+    CONSTRAINT pkAlumno PRIMARY KEY (cedula)
+); 
+
+CREATE TABLE Matricula (
+    alumno number,
     carrera number,
-    userN number,
-    CONSTRAINT pkAlumno PRIMARY KEY (cedula),
-    CONSTRAINT fkAlumno FOREIGN KEY (userN) REFERENCES Usuario(idUser)
+    curso number,
+    profesor number,
+    ciclo VARCHAR(30),
+    CONSTRAINT pkMatricula PRIMARY KEY (carrera, alumno),
+    CONSTRAINT fkMat1 FOREIGN KEY (alumno) REFERENCES Alumno(cedula),
+    CONSTRAINT fkMat2 FOREIGN KEY (carrera) REFERENCES Carrera(codigo),
+    CONSTRAINT fkMat3 FOREIGN KEY (profesor) REFERENCES Profesor(cedula),
+    CONSTRAINT fkMat4 FOREIGN KEY (curso) REFERENCES Curso(codigo)
 );
 
 CREATE TABLE Ciclo (
@@ -85,31 +91,35 @@ CREATE TABLE Grupo (
 CREATE TABLE Rendimiento_Grupo (
     curso number,
     alumno number,
+    profesor number,
     calificacion number,
     CONSTRAINT fkDesc1 FOREIGN KEY (curso) REFERENCES Curso(codigo),
-    CONSTRAINT fkDesc2 FOREIGN KEY (alumno) REFERENCES Alumno(cedula) 
+    CONSTRAINT fkDesc2 FOREIGN KEY (alumno) REFERENCES Alumno(cedula),
+    CONSTRAINT fkDesc3 FOREIGN KEY (profesor) REFERENCES Profesor(cedula) 
 );
 
 
-
+-- SI FUNCIONA
 CREATE OR REPLACE PROCEDURE crearAlumno (xcedula in VARCHAR, xnombre in VARCHAR, xemail in VARCHAR, xfechaN in DATE, xcarrera in number,xusername in VARCHAR, xclave in VARCHAR )
-    IS
+    IS 
     BEGIN
-        INSERT into Alumno VALUES(xcedula, xnombre, xemail, xfechaN, xcarrera); 
+        INSERT into Alumno VALUES(xcedula, xnombre, xemail, xfechaN); 
         INSERT into Usuario VALUES(xusername, xclave, 'ALUMNO');
         COMMIT;
     END crearAlumno;
     /
 
-CREATE OR REPLACE PROCEDURE crearProfesor (xcedula in VARCHAR, xnombre in VARCHAR, xemail in VARCHAR, telefono in VARCHAR,xusername in VARCHAR, xclave in VARCHAR )
+
+-- SI FUNCIONA
+CREATE OR REPLACE PROCEDURE crearProfesor (xcedula in VARCHAR, xnombre in VARCHAR, xemail in VARCHAR, xtelefono in VARCHAR,xusername in VARCHAR, xclave in VARCHAR )
     IS
     BEGIN
-        INSERT into Profesor VALUES(xcedula, xnombre, xemail, xtelefono); 
-        INSERT into Usuario VALUES(xusername, xclave, 'ALUMNO');
+        INSERT into Profesor VALUES(xcedula, xnombre, xtelefono, xemail); 
+        INSERT into Usuario VALUES(xusername, xclave, 'PROFESOR');
         COMMIT;
     END crearProfesor;
     /
-
+-- SI FUNCIONA
 CREATE OR REPLACE PROCEDURE crearCurso (xcodigo in VARCHAR, xnombre in VARCHAR, xcreditos in VARCHAR, xhorasS in number)
     IS
     BEGIN
@@ -117,19 +127,19 @@ CREATE OR REPLACE PROCEDURE crearCurso (xcodigo in VARCHAR, xnombre in VARCHAR, 
         COMMIT;
     END crearCurso;
     /
-
-CREATE OR REPLACE PROCEDURE reporteNotas (xcurso in number, xalumno in number, xcalificacion in number)
+-- SI FUNCIONA
+CREATE OR REPLACE PROCEDURE reporteNotas (xcurso in number, xalumno in number, xprofesor in number, xcalificacion in number)
     IS
     BEGIN
-        INSERT into Rendimiento_Grupo VALUES(xcurso, xalumno, xcalificacion); 
+        INSERT into Rendimiento_Grupo VALUES(xcurso, xalumno, xprofesor, xcalificacion); 
         COMMIT;
-    END crearCurso;
+    END reporteNotas;
     /
-
+-- SI FUNCIONA
 CREATE OR REPLACE PROCEDURE generarPlanEstudio (xcurso in number, xcarrera in VARCHAR, xanno in number, xciclo in number)
     IS
     BEGIN
-        INSERT into PlanEstudio VALUES(xcurso, xcurso, xanno, xciclo); 
+        INSERT into PlanEstudio VALUES(xcurso, xcarrera, xanno, xciclo); 
         COMMIT;
     END generarPlanEstudio;
     /
@@ -180,25 +190,33 @@ CREATE OR REPLACE FUNCTION buscar_Profesor_nombre_cedula (xnombre in VARCHAR, xc
         /
 
 -- SI FUNCIONA
-CREATE OR REPLACE FUNCTION buscar_Alumno_n_c_c (xnombre in VARCHAR, xcedula in number, xcarrera in VARCHAR) 
+CREATE OR REPLACE FUNCTION buscar_Alumno_n_c_c (xnombre in VARCHAR, xcedula in number) 
     RETURN SYS_REFCURSOR
         AS 
             c1 SYS_REFCURSOR;
         BEGIN
             OPEN c1 FOR 
-               SELECT Alumno.cedula, Alumno.nombre, Alumno.email, Alumno.fecha_nacimiento, Alumno.carrera FROM Alumno, Carrera WHERE  Alumno.nombre =xnombre  AND Alumno.cedula = xcedula  AND Carrera.nombre = xnombre;
+               SELECT Alumno.cedula, Alumno.nombre, Alumno.email, Alumno.fecha_nacimiento FROM Alumno, Matricula WHERE  Alumno.nombre =xnombre  AND Alumno.cedula = xcedula AND Matricula.alumno = xcedula;
             RETURN c1;   
         END;
         /
     
-
-CREATE OR REPLACE FUNCTION login(idin IN VARCHAR), passwordin IN VARCHAR)
+-- SI FUNCIONA
+CREATE OR REPLACE FUNCTION login(xid IN VARCHAR, xpassword IN VARCHAR)
     RETURN SYS_REFCURSOR 
     AS 
             c SYS_REFCURSOR; 
     BEGIN 
     OPEN c FOR 
-        SELECT COUNT(nombreUsuario) AS esta FROM usuario WHERE nombreUsuario=idin AND contrase�a=passwordin;
+        SELECT COUNT(username) AS exist FROM Usuario WHERE username = xid AND clave = xpassword;
         RETURN c; 
     END;
+    /
+
+CREATE OR REPLACE PROCEDURE hacerMatricula (xalumno in number, xcarrera in number,  xcurso in number,  xprofesor in number, xciclo in VARCHAR)
+    IS
+        BEGIN 
+        INSERT INTO Matricula VALUES(xalumno, xcarrera, xcurso, xprofesor, xciclo);
+        COMMIT;
+    END hacerMatricula;
     /
