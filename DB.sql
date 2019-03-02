@@ -73,7 +73,7 @@ CREATE TABLE Matricula (
 );
 
 CREATE TABLE Ciclo (
-    anno VARCHAR(20),
+    tipo number,
     fecha_inicio date,
     fecha_finalizacion date
 );

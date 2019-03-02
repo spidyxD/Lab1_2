@@ -13,16 +13,14 @@ public class Persona {
     public String nombre;
     public String cedula;
     public String email;
-    public int userN;
 
     public Persona() {
     }
 
-    public Persona(String nombre, String cedula, String email, int userN) {
+    public Persona(String nombre, String cedula, String email) {
         this.nombre = nombre;
         this.cedula = cedula;
         this.email = email;
-        this.userN = userN;
     }
 
     public String getNombre() {
@@ -47,14 +45,6 @@ public class Persona {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public int getUserN() {
-        return userN;
-    }
-
-    public void setUserN(int userN) {
-        this.userN = userN;
     }
     
 }

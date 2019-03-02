@@ -13,7 +13,7 @@ public class Rendimiento_grupo extends Persona{
     public int curso;
     public int alumno;
     public float calificacion;
-
+    public Profesor profesor;
     public Rendimiento_grupo() {
     }
 
@@ -24,7 +24,7 @@ public class Rendimiento_grupo extends Persona{
     }
 
     public Rendimiento_grupo(int curso, int alumno, float calificacion, String nombre, String cedula, String email, int userN) {
-        super(nombre, cedula, email, userN);
+        super(nombre, cedula, email);
         this.curso = curso;
         this.alumno = alumno;
         this.calificacion = calificacion;
@@ -78,12 +78,13 @@ public class Rendimiento_grupo extends Persona{
         this.email = email;
     }
 
-    public int getUserN() {
-        return userN;
+    public Profesor getProfesor() {
+        return profesor;
     }
 
-    public void setUserN(int userN) {
-        this.userN = userN;
+    public void setProfesor(Profesor profesor) {
+        this.profesor = profesor;
     }
+
     
 }

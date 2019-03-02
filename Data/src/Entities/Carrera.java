@@ -13,16 +13,14 @@ public class Carrera {
     public int codigo;
     public String nombre;
     public String titulo;
-    public int alumno;
 
     public Carrera() {
     }
 
-    public Carrera(int codigo, String nombre, String titulo, int alumno) {
+    public Carrera(int codigo, String nombre, String titulo) {
         this.codigo = codigo;
         this.nombre = nombre;
         this.titulo = titulo;
-        this.alumno = alumno;
     }
 
     public int getCodigo() {
@@ -57,13 +55,6 @@ public class Carrera {
         this.titulo = titulo;
     }
 
-    public int getAlumno() {
-        return alumno;
-    }
-
-    public void setAlumno(int alumno) {
-        this.alumno = alumno;
-    }
 
   
     
