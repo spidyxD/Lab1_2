@@ -9,6 +9,8 @@ package View;
  *
  * @author dh173
  */
+import Controller.ProfesorController;
+import Model.ProfesorModel;
 import java.util.Observable;
 import javax.swing.JOptionPane;
 public class ProfesorView extends javax.swing.JFrame implements java.util.Observer   {
@@ -284,7 +286,20 @@ public class ProfesorView extends javax.swing.JFrame implements java.util.Observ
     private javax.swing.JList<String> listaCursos;
     public static javax.swing.JTable tablaEditNotas;
     // End of variables declaration//GEN-END:variables
+    ProfesorController controller;
+    ProfesorModel model;
+    
+    public void setController(ProfesorController controller){
+        this.controller=controller;
+    }
+    public void setModel(ProfesorModel model){
+        this.model=model;
+         model.addObserver(this);
+    }
 
+    public ProfesorModel getModel() {
+        return model;
+    }
     @Override
     public void update(Observable o, Object o1) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.

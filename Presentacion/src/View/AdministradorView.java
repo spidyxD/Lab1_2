@@ -201,15 +201,15 @@ public class AdministradorView extends javax.swing.JFrame implements java.util.O
     AdministradorController controller;
     AdministradorModel model;
     
-    public void setController(instrumentospresentacion.controller.InstrumentoController controller){
+    public void setController(AdministradorController controller){
         this.controller=controller;
     }
-    public void setModel(instrumentospresentacion.model.InstrumentoModel model){
+    public void setModel(AdministradorModel model){
         this.model=model;
          model.addObserver(this);
     }
 
-    public InstrumentoModel getModel() {
+    public AdministradorModel getModel() {
         return model;
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables

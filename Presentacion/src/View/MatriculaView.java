@@ -9,6 +9,8 @@ package View;
  *
  * @author dh173
  */
+import Controller.MatriculaController;
+import Model.MatriculaModel;
 import java.util.Observable;
 import javax.swing.JOptionPane;
 public class MatriculaView extends javax.swing.JFrame implements java.util.Observer   {
@@ -198,7 +200,20 @@ public class MatriculaView extends javax.swing.JFrame implements java.util.Obser
     private javax.swing.JScrollPane jScrollPane3;
     public static javax.swing.JTable tablaCursos;
     // End of variables declaration//GEN-END:variables
+    MatriculaController controller;
+    MatriculaModel model;
+    
+    public void setController(MatriculaController controller){
+        this.controller=controller;
+    }
+    public void setModel(MatriculaModel model){
+        this.model=model;
+         model.addObserver(this);
+    }
 
+    public MatriculaModel getModel() {
+        return model;
+    }
     @Override
     public void update(Observable o, Object o1) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
