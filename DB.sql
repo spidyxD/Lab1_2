@@ -58,7 +58,13 @@ CREATE TABLE Alumno (
     fecha_nacimiento date,
     CONSTRAINT pkAlumno PRIMARY KEY (cedula)
 ); 
-
+CREATE TABLE Inscripcion (
+    alumno number NOT NULL,
+	carrera number ,
+	CONSTRAINT pkInscripcion PRIMARY KEY (alumno,carrera),
+	CONSTRAINT fk1Inscripcion FOREIGN KEY (alumno) REFERENCES Alumno(cedula),
+    CONSTRAINT fk2Inscripcion FOREIGN KEY (carrera) REFERENCES Carrera(codigo)
+);
 CREATE TABLE Matricula (
     alumno number,
     carrera number,

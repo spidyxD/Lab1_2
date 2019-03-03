@@ -6,7 +6,7 @@
 package Controller;
 
 import View.AlumnoView;
-
+import Model.AlumnoModel;
 /**
  *
  * @author dh173

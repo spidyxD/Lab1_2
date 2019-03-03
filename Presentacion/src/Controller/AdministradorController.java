@@ -6,7 +6,7 @@
 package Controller;
 
 import View.AdministradorView;
-
+import Model.AdministradorModel;
 /**
  *
  * @author dh173
