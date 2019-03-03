@@ -73,19 +73,23 @@ CREATE TABLE Matricula (
 );
 
 CREATE TABLE Ciclo (
-    tipo number,
+    id number NOT NULL,
+    descripcion VARCHAR(30),
     fecha_inicio date,
-    fecha_finalizacion date
+    fecha_finalizacion date,
+     CONSTRAINT pkCiclo PRIMARY KEY(id)
 );
 
 CREATE TABLE Grupo (
-    ciclo VARCHAR(20),
+    capacidad number,
+    ciclo number,
     curso number,
-    numero number,
+    nrc number NOT NULL,
     horario VARCHAR(50),
     profesor number,
-    CONSTRAINT pkGrupo PRIMARY KEY(numero),
-    CONSTRAINT fkGrupo FOREIGN KEY (curso) REFERENCES Curso(codigo) 
+    CONSTRAINT pkGrupo PRIMARY KEY(nrc),
+    CONSTRAINT fkGrupo FOREIGN KEY (curso) REFERENCES Curso(codigo),
+    CONSTRAINT fkGrupo2 FOREIGN KEY (ciclo) REFERENCES Ciclo(id)
 );
 
 CREATE TABLE Rendimiento_Grupo (
