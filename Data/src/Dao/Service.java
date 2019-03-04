@@ -53,4 +53,7 @@ public class Service {
         }
         return null;
     }
+    
+    public boolean doLogin(){
+    return true;}
 }

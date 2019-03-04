@@ -33,6 +33,14 @@ CREATE TABLE Usuario (
     rol VARCHAR(50)
 );
 
+CREATE TABLE Inscripcion (
+    alumno number NOT NULL,
+    carrera number NOT NULL,
+    PRIMARY KEY (alumno,carrera),
+    CONSTRAINT fkInscrip1 FOREIGN KEY (alumno) REFERENCES Alumno(cedula),
+    CONSTRAINT fkInscrip2 FOREIGN KEY (carrera) REFERENCES Carrera(codigo)
+);
+
 CREATE TABLE PlanEstudio (
     curso number,
     carrera number,
