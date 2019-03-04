@@ -211,8 +211,7 @@ CREATE OR REPLACE FUNCTION buscar_Alumno_n_c_c (xnombre in VARCHAR, xcedula in n
                SELECT Alumno.cedula, Alumno.nombre, Alumno.email, Alumno.fecha_nacimiento FROM Alumno, Matricula WHERE  Alumno.nombre =xnombre  AND Alumno.cedula = xcedula AND Matricula.alumno = xcedula;
             RETURN c1;   
         END;
-        /
-    
+        /    
 -- SI FUNCIONA
 CREATE OR REPLACE FUNCTION login(xid IN VARCHAR, xpassword IN VARCHAR)
     RETURN SYS_REFCURSOR 
@@ -232,3 +231,20 @@ CREATE OR REPLACE PROCEDURE hacerMatricula (xalumno in number, xcarrera in numbe
         COMMIT;
     END hacerMatricula;
     /
+
+
+    /*CREATE OR REPLACE FUNCTION buscar_Alumno_n_c_c (xnombre in VARCHAR, xcedula in number) 
+    RETURN SYS_REFCURSOR
+        AS 
+            c1 SYS_REFCURSOR;
+        BEGIN
+            OPEN c1 FOR 
+               SELECT Alumno.cedula, Alumno.nombre, Alumno.email, Alumno.fecha_nacimiento FROM Alumno, Inscripcion ,Matricula, Carrera, curso
+               INNER JOIN Carrera ON
+                    SELECT Carrera.nombre 
+                INNER JOIN ON Curso
+                    SELECT Curso.nombre, Curso.codigo
+                  WHERE  Alumno.nombre =xnombre  AND Alumno.cedula = xcedula AND Matricula.alumno = xcedula AND Inscripcion.alumno = Alumno.cedula AND Inscripcion.Carrera = Carrera.codigo;
+            RETURN c1;   
+        END;
+        /*/
