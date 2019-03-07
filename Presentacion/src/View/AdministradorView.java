@@ -13,6 +13,8 @@ import java.util.Observable;
 
 import javax.swing.JOptionPane;
 import Controller.AdministradorController;
+import Entities.Alumno;
+import Entities.Usuario;
 import Model.AdministradorModel;
 public class AdministradorView extends javax.swing.JFrame implements java.util.Observer   {
 
@@ -34,14 +36,13 @@ public class AdministradorView extends javax.swing.JFrame implements java.util.O
 
         jPanel1 = new javax.swing.JPanel();
         cedula = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        mantenimientoEstudiantes = new javax.swing.JButton();
         nombreEst = new javax.swing.JTextField();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
+        labelNombre = new javax.swing.JLabel();
+        labelCedula = new javax.swing.JLabel();
         cedEst = new javax.swing.JTextField();
-        jLabel5 = new javax.swing.JLabel();
-        jButton3 = new javax.swing.JButton();
+        mensajeBusqueda = new javax.swing.JLabel();
+        search = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -51,22 +52,33 @@ public class AdministradorView extends javax.swing.JFrame implements java.util.O
 
         cedula.setText("Cedula Admin");
 
-        jButton1.setText("Mantenimento De Estudiantes");
-
-        jButton2.setText("Mantenimiento de Profesores");
-
-        jLabel3.setText("Nombre");
-
-        jLabel4.setText("Cédula");
-
-        jLabel5.setText("Busqueda por Nombre o Cédula");
-
-        jButton3.setBackground(new java.awt.Color(255, 255, 255));
-        jButton3.setForeground(new java.awt.Color(255, 255, 255));
-        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/buscar.png"))); // NOI18N
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        mantenimientoEstudiantes.setText("Mantenimento De Estudiantes");
+        mantenimientoEstudiantes.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                mantenimientoEstudiantesActionPerformed(evt);
+            }
+        });
+
+        nombreEst.setEnabled(false);
+
+        labelNombre.setText("Nombre");
+        labelNombre.setEnabled(false);
+
+        labelCedula.setText("Cédula");
+        labelCedula.setEnabled(false);
+
+        cedEst.setEnabled(false);
+
+        mensajeBusqueda.setText("Digite el  Nombre o la  Cédula");
+        mensajeBusqueda.setEnabled(false);
+
+        search.setBackground(new java.awt.Color(255, 255, 255));
+        search.setForeground(new java.awt.Color(255, 255, 255));
+        search.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/buscar.png"))); // NOI18N
+        search.setEnabled(false);
+        search.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                searchActionPerformed(evt);
             }
         });
 
@@ -77,22 +89,15 @@ public class AdministradorView extends javax.swing.JFrame implements java.util.O
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(20, 20, 20)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(184, 184, 184)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jButton1)
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addGap(164, 164, 164)
-                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jLabel4)
-                                            .addComponent(jLabel3))))
+                                    .addComponent(labelCedula)
+                                    .addComponent(labelNombre))
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addGap(110, 110, 110)
-                                        .addComponent(jButton2))
                                     .addGroup(jPanel1Layout.createSequentialGroup()
                                         .addGap(18, 18, 18)
                                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -100,13 +105,12 @@ public class AdministradorView extends javax.swing.JFrame implements java.util.O
                                             .addComponent(nombreEst, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                     .addGroup(jPanel1Layout.createSequentialGroup()
                                         .addGap(28, 28, 28)
-                                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(164, 164, 164)
-                                .addComponent(jLabel5)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addComponent(search, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(mensajeBusqueda)
+                            .addComponent(mantenimientoEstudiantes))
+                        .addGap(165, 165, 165))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGap(352, 352, 352)
+                        .addGap(372, 372, 372)
                         .addComponent(cedula, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -120,22 +124,20 @@ public class AdministradorView extends javax.swing.JFrame implements java.util.O
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(18, 18, 18)
                         .addComponent(cedula, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(36, 36, 36)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jButton2)
-                            .addComponent(jButton1))
-                        .addGap(31, 31, 31)
-                        .addComponent(jLabel5)
+                        .addGap(56, 56, 56)
+                        .addComponent(mantenimientoEstudiantes)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(mensajeBusqueda)
                         .addGap(23, 23, 23)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(nombreEst, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel3))
+                            .addComponent(labelNombre))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel4)
+                            .addComponent(labelCedula)
                             .addComponent(cedEst, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(search, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(62, Short.MAX_VALUE))
         );
@@ -159,9 +161,28 @@ public class AdministradorView extends javax.swing.JFrame implements java.util.O
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton3ActionPerformed
+    private void searchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchActionPerformed
+        Alumno alumno= null;
+        if(nombreEst.getText()!=""){
+            alumno= controller.SearchPorNombre(nombreEst.getText());
+       }if(cedEst.getText()!=""){
+            alumno= controller.SearchPorCed(cedEst.getText());
+       }
+       if(alumno!=null){
+           
+       }
+                
+    }//GEN-LAST:event_searchActionPerformed
+
+    private void mantenimientoEstudiantesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mantenimientoEstudiantesActionPerformed
+        mensajeBusqueda.setEnabled(true);
+        mensajeBusqueda.setText("Busqueda de Estudiantes por Nombre o Cédula");
+        labelNombre.setEnabled(true);
+        nombreEst.setEnabled(true);
+        labelCedula.setEnabled(true);
+        cedEst.setEnabled(true);
+        search.setEnabled(true);
+    }//GEN-LAST:event_mantenimientoEstudiantesActionPerformed
 
     /**
      * @param args the command line arguments
@@ -215,19 +236,18 @@ public class AdministradorView extends javax.swing.JFrame implements java.util.O
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField cedEst;
     private javax.swing.JLabel cedula;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JLabel labelCedula;
+    private javax.swing.JLabel labelNombre;
+    private javax.swing.JButton mantenimientoEstudiantes;
+    private javax.swing.JLabel mensajeBusqueda;
     private javax.swing.JTextField nombreEst;
+    private javax.swing.JButton search;
     // End of variables declaration//GEN-END:variables
 
     @Override
     public void update(Observable o, Object o1) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
     }
 }

@@ -5,19 +5,19 @@
  */
 package Controller;
 
-import Entities.Alumno;
-import View.AdministradorView;
-import Model.AdministradorModel;
 import Entities.Usuario;
+import Model.LoginModel;
+import View.LoginView;
+
 /**
  *
  * @author dh173
  */
-public class AdministradorController {
-      AdministradorView view;
-      AdministradorModel model;
+public class LoginController {
+      LoginView view;
+      LoginModel model;
     
-    public AdministradorController(AdministradorView view, AdministradorModel model) { 
+    public LoginController(LoginView view, LoginModel model) { 
         model.init();
         //this.domainModel= domainModel;
         
@@ -26,10 +26,8 @@ public class AdministradorController {
         view.setController(this);
         view.setModel(model);
     }
-    public Alumno SearchPorNombre(String nom){
-    return new Alumno();
-    }
-    public Alumno SearchPorCed(String ced){
-    return new Alumno();
+    
+    public Usuario doLogin(String user, String clave){
+        return new Usuario();
     }
 }
