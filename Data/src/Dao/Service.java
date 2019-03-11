@@ -54,6 +54,6 @@ public class Service {
         return null;
     }
     
-    public boolean doLogin(){
+    public boolean doLogin(String user, String password){
     return true;}
 }
