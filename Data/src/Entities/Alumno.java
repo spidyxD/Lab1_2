@@ -21,7 +21,7 @@ public class Alumno extends Persona{
         this.fecha_nacimiento = fecha_nacimiento;
     }
 
-    public Alumno(Date fecha_nacimiento, String nombre, String cedula, String email, int userN) {
+    public Alumno(Date fecha_nacimiento, String nombre, int cedula, String email, int userN) {
         super(nombre, cedula, email);
         this.fecha_nacimiento = fecha_nacimiento;
     }
@@ -42,11 +42,11 @@ public class Alumno extends Persona{
         this.nombre = nombre;
     }
 
-    public String getCedula() {
+    public int getCedula() {
         return cedula;
     }
 
-    public void setCedula(String cedula) {
+    public void setCedula(int cedula) {
         this.cedula = cedula;
     }
 

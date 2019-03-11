@@ -11,13 +11,13 @@ package Entities;
  */
 public class Persona {
     public String nombre;
-    public String cedula;
+    public int cedula;
     public String email;
-
+    public int Edad;
     public Persona() {
     }
 
-    public Persona(String nombre, String cedula, String email) {
+    public Persona(String nombre, int cedula, String email) {
         this.nombre = nombre;
         this.cedula = cedula;
         this.email = email;
@@ -31,11 +31,11 @@ public class Persona {
         this.nombre = nombre;
     }
 
-    public String getCedula() {
+    public int getCedula() {
         return cedula;
     }
 
-    public void setCedula(String cedula) {
+    public void setCedula(int cedula) {
         this.cedula = cedula;
     }
 
@@ -45,6 +45,14 @@ public class Persona {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public int getEdad() {
+        return Edad;
+    }
+
+    public void setEdad(int Edad) {
+        this.Edad = Edad;
     }
     
 }

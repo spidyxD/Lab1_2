@@ -43,6 +43,7 @@ CREATE TABLE Administrador (
 CREATE TABLE Profesor (
     cedula number NOT NULL,
     nombre VARCHAR(50),
+    edad number,
     telefono number,
     email VARCHAR(50),
     CONSTRAINT pkProfesor PRIMARY KEY (cedula)
@@ -51,6 +52,7 @@ CREATE TABLE Profesor (
 CREATE TABLE Alumno (
     cedula number NOT NULL,
     nombre VARCHAR(50),
+    edad number,
     email VARCHAR(50),
     fecha_nacimiento date,
     CONSTRAINT pkAlumno PRIMARY KEY (cedula)
@@ -115,37 +117,38 @@ CREATE TABLE PlanEstudio (
 );
 
 -- SI FUNCIONA
-CREATE OR REPLACE PROCEDURE crearAlumno (xcedula in Alumno.cedula%TYPE, xnombre in Alumno.nombre%TYPE, xemail in Alumno.email%TYPE, xfechaN in Alumno.fecha_nacimiento%TYPE,xusername in Usuario.id%TYPE, xclave in Usuario.clave%TYPE )
+CREATE OR REPLACE PROCEDURE crearAlumno (xcedula in Alumno.cedula%TYPE, xnombre in Alumno.nombre%TYPE, xedad in Alumno.edad%TYPE, xemail in Alumno.email%TYPE, xfechaN in Alumno.fecha_nacimiento%TYPE,xusername in Usuario.id%TYPE, xclave in Usuario.clave%TYPE )
     IS 
     BEGIN
-        INSERT into Alumno VALUES(xcedula, xnombre, xemail, xfechaN); 
+        INSERT into Alumno VALUES(xcedula, xnombre, xedad, xfechaN,xemail); 
         INSERT into Usuario VALUES(xcedula, xclave, 'Alumno');
         COMMIT;
     END crearAlumno;
     /
 
-CREATE OR REPLACE PROCEDURE modificarAlumno (xcedula in Alumno.cedula%TYPE, xnombre in Alumno.nombre%TYPE, xemail in Alumno.email%TYPE, xfechaN in Alumno.fecha_nacimiento%TYPE,xusername in Usuario.id%TYPE, xclave in Usuario.clave%TYPE )
+CREATE OR REPLACE PROCEDURE modificarAlumno (xcedula in Alumno.cedula%TYPE, xnombre in Alumno.nombre%TYPE,xedad in Alumno.edad%TYPE, xemail in Alumno.email%TYPE, xfechaN in Alumno.fecha_nacimiento%TYPE,xusername in Usuario.id%TYPE, xclave in Usuario.clave%TYPE )
     IS 
     BEGIN
-        UPDATE  Alumno set cedula = xcedula, nombre = xnombre, email = xemail, fecha_nacimiento = xfechaN; 
+        UPDATE  Alumno set cedula = xcedula, nombre = xnombre, edad = xedad, email = xemail, fecha_nacimiento = xfechaN; 
         UPDATE  Usuario set id = xcedula, clave = xclave, rol ='Alumno';
         COMMIT;
     END modificarAlumno;
     /
 
 -- SI FUNCIONA
-CREATE OR REPLACE PROCEDURE crearProfesor (xcedula in Profesor.cedula%TYPE, xnombre in Profesor.nombre%TYPE, xemail in Profesor.email%TYPE, xtelefono in Profesor.telefono%TYPE,xusername in Usuario.id%TYPE, xclave in Usuario.clave%TYPE )
+CREATE OR REPLACE PROCEDURE crearProfesor (xcedula in Profesor.cedula%TYPE, xnombre in Profesor.nombre%TYPE,xedad in Profesor.edad%TYPE, xemail in Profesor.email%TYPE, xtelefono in Profesor.telefono%TYPE,xusername in Usuario.id%TYPE, xclave in Usuario.clave%TYPE )
     IS
     BEGIN
-        INSERT into Profesor VALUES(xcedula, xnombre, xtelefono, xemail); 
+        INSERT into Profesor VALUES(xcedula, xnombre, xedad, xtelefono, xemail); 
         INSERT into Usuario VALUES(xcedula, xclave, 'Profesor');
         COMMIT;
     END crearProfesor;
     /
-CREATE OR REPLACE PROCEDURE modificarProfesor (xcedula in Profesor.cedula%TYPE, xnombre in Profesor.nombre%TYPE, xemail in Profesor.email%TYPE, xtelefono in Profesor.telefono%TYPE,xusername in Usuario.id%TYPE, xclave in Usuario.clave%TYPE )
+
+CREATE OR REPLACE PROCEDURE modificarProfesor (xcedula in Profesor.cedula%TYPE, xnombre in Profesor.nombre%TYPE,xedad in Alumno.edad%TYPE, xemail in Profesor.email%TYPE, xtelefono in Profesor.telefono%TYPE,xusername in Usuario.id%TYPE, xclave in Usuario.clave%TYPE )
     IS
     BEGIN
-        UPDATE  Profesor SET cedula = xcedula, nombre = xnombre, telefono = xtelefono, email = xemail; 
+        UPDATE  Profesor SET cedula = xcedula, nombre = xnombre, edad = xedad, telefono = xtelefono, email = xemail; 
         UPDATE  Usuario SET id = xcedula, clave = xclave, rol = 'Profesor';
         COMMIT;
     END modificarProfesor;
@@ -256,8 +259,9 @@ CREATE OR REPLACE PROCEDURE hacerMatricula (xalumno in Alumno.cedula%TYPE, xcarr
     END hacerMatricula;
     /
 
-
- 
+ALTER TABLE Alumno ADD edad number;
+ALTER TABLE Profesor ADD edad number;
+ commit;
 
         /*CREATE OR REPLACE FUNCTION buscar_Alumno_nombre (xnombre in VARCHAR) 
             RETURN SYS_REFCURSOR
