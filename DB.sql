@@ -111,7 +111,6 @@ CREATE TABLE Matricula (
 CREATE TABLE PlanEstudio (
     curso number,
     carrera number,
-    anno number,
     ciclo number,
     CONSTRAINT pkPlanEst PRIMARY KEY (curso, carrera),
     CONSTRAINT fkPlanEst1 FOREIGN KEY (curso) REFERENCES Curso(codigo),
@@ -177,7 +176,7 @@ CREATE OR REPLACE PROCEDURE reporteNotas (xcurso in Curso.codigo%TYPE, xalumno i
 CREATE OR REPLACE PROCEDURE generarPlanEstudio (xcurso in Curso.codigo%TYPE, xcarrera in Carrera.codigo%TYPE, xanno in PlanEstudio.anno%TYPE, xciclo in Ciclo.id%TYPE)
     IS
     BEGIN
-        INSERT into PlanEstudio VALUES(xcurso, xcarrera, xanno, xciclo); 
+        INSERT into PlanEstudio VALUES(xcurso, xcarrera, xciclo); 
         COMMIT;
     END generarPlanEstudio;
     /
