@@ -20,6 +20,10 @@ public class Grupo {
     public Grupo() {
     }
 
+    public int getNrc() {
+        return nrc;
+    }
+
    
     public void setNrc(int nrc) {
         this.nrc = nrc;

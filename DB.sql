@@ -97,11 +97,14 @@ CREATE TABLE Inscripcion (
 CREATE TABLE Matricula (
     alumno number,
     carrera number,
+    curso number,
     grupo number,
     ciclo number,
-    CONSTRAINT pkMatricula PRIMARY KEY (carrera, alumno, grupo),
+    CONSTRAINT pkMatricula PRIMARY KEY (carrera, alumno, curso),
     CONSTRAINT fkMat1 FOREIGN KEY (alumno) REFERENCES Alumno(cedula),
     CONSTRAINT fkMat2 FOREIGN KEY (carrera) REFERENCES Carrera(codigo),
+    CONSTRAINT fkMat3 FOREIGN KEY (grupo) REFERENCES Grupo(nrc),
+    CONSTRAINT fkMat4 FOREIGN KEY (curso) REFERENCES Curso(codigo),
     CONSTRAINT fkMat5 FOREIGN KEY (ciclo) REFERENCES Ciclo(id)
 );
 
@@ -126,11 +129,11 @@ CREATE OR REPLACE PROCEDURE crearAlumno (xcedula in Alumno.cedula%TYPE, xnombre 
     END crearAlumno;
     /
 
-CREATE OR REPLACE PROCEDURE modificarAlumno (xcedula in Alumno.cedula%TYPE, xnombre in Alumno.nombre%TYPE,xedad in Alumno.edad%TYPE, xemail in Alumno.email%TYPE, xfechaN in Alumno.fecha_nacimiento%TYPE,xusername in Usuario.id%TYPE, xclave in Usuario.clave%TYPE )
+CREATE OR REPLACE PROCEDURE modificarAlumno (xnombre in Alumno.nombre%TYPE,xedad in Alumno.edad%TYPE, xemail in Alumno.email%TYPE, xfechaN in Alumno.fecha_nacimiento%TYPE,xusername in Usuario.id%TYPE, xclave in Usuario.clave%TYPE )
     IS 
     BEGIN
-        UPDATE  Alumno set cedula = xcedula, nombre = xnombre, edad = xedad, email = xemail, fecha_nacimiento = xfechaN; 
-        UPDATE  Usuario set id = xcedula, clave = xclave, rol ='Alumno';
+        UPDATE  Alumno set nombre = xnombre, edad = xedad, email = xemail, fecha_nacimiento = xfechaN; 
+        UPDATE  Usuario set clave = xclave, rol ='Alumno';
         COMMIT;
     END modificarAlumno;
     /
@@ -145,11 +148,11 @@ CREATE OR REPLACE PROCEDURE crearProfesor (xcedula in Profesor.cedula%TYPE, xnom
     END crearProfesor;
     /
 
-CREATE OR REPLACE PROCEDURE modificarProfesor (xcedula in Profesor.cedula%TYPE, xnombre in Profesor.nombre%TYPE,xedad in Alumno.edad%TYPE, xemail in Profesor.email%TYPE, xtelefono in Profesor.telefono%TYPE,xusername in Usuario.id%TYPE, xclave in Usuario.clave%TYPE )
+CREATE OR REPLACE PROCEDURE modificarProfesor (xnombre in Profesor.nombre%TYPE,xedad in Alumno.edad%TYPE, xemail in Profesor.email%TYPE, xtelefono in Profesor.telefono%TYPE,xusername in Usuario.id%TYPE, xclave in Usuario.clave%TYPE )
     IS
     BEGIN
-        UPDATE  Profesor SET cedula = xcedula, nombre = xnombre, edad = xedad, telefono = xtelefono, email = xemail; 
-        UPDATE  Usuario SET id = xcedula, clave = xclave, rol = 'Profesor';
+        UPDATE  Profesor SET nombre = xnombre, edad = xedad, telefono = xtelefono, email = xemail; 
+        UPDATE  Usuario SET clave = xclave, rol = 'Profesor';
         COMMIT;
     END modificarProfesor;
     /
@@ -251,16 +254,18 @@ CREATE OR REPLACE FUNCTION login(xid IN Usuario.id%TYPE, xpassword IN Usuario.cl
     /
 
 -- SI FUNCIONA
-CREATE OR REPLACE PROCEDURE hacerMatricula (xalumno in Alumno.cedula%TYPE, xcarrera in Carrera.codigo%TYPE, xgrupo in Grupo.nrc%TYPE, xciclo in Ciclo.id%TYPE)
+CREATE OR REPLACE PROCEDURE hacerMatricula (xalumno in Alumno.cedula%TYPE, xcarrera in Carrera.codigo%TYPE,xcurso in Curso.codigo%TYPE, xgrupo in Grupo.nrc%TYPE, xciclo in Ciclo.id%TYPE)
     IS
         BEGIN 
-        INSERT INTO Matricula VALUES(xalumno, xcarrera,xgrupo, xciclo);
+        --PENDIENTE AÑADIR COLUMNA CURSO
+        INSERT INTO Matricula VALUES(xalumno, xcarrera,xcurso,xgrupo, xciclo);
         COMMIT;
     END hacerMatricula;
     /
 
 ALTER TABLE Alumno ADD edad number;
 ALTER TABLE Profesor ADD edad number;
+ALTER TABLE Mtricula ADD curso number;
  commit;
 
         /*CREATE OR REPLACE FUNCTION buscar_Alumno_nombre (xnombre in VARCHAR) 

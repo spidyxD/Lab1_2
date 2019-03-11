@@ -5,20 +5,19 @@
  */
 package Dao;
 
-import Entities.Alumno;
+import Entities.Profesor;
 import Entities.Usuario;
 import java.sql.CallableStatement;
-import java.sql.Date;
 import java.sql.SQLException;
 
 /**
  *
  * @author Addiel
  */
-public class ServicioEstudiante extends Service{
-    private static final String INSERTARESTUDIANTE= "{call crearAlumno(?,?,?,?,?,?)}";
-    private static final String MODIFICARESTUDIANTE= "{call modificarAlumno(?,?,?,?,?,?)}";
-     public void insertarEstudiante(Alumno alumno, Usuario user) throws AccesoADatos.GlobalException, AccesoADatos.NoDataException  	{
+public class ServicioProfesor extends Service{
+    private static final String INSERTARPROFESOR= "{call crearProfesor(?,?,?,?,?,?)}";
+    private static final String MODIFICARPROFESOR= "{call modificarProfesor(?,?,?,?,?,?)}";
+    public void insertarProfesor(Profesor profesor, Usuario user) throws AccesoADatos.GlobalException, AccesoADatos.NoDataException  	{
         try {
             conectar();
         } catch (ClassNotFoundException e) {
@@ -29,13 +28,13 @@ public class ServicioEstudiante extends Service{
         CallableStatement pstmt=null;
         
         try {
-            pstmt = conexion.prepareCall(INSERTARESTUDIANTE);
-            pstmt.setInt(1,alumno.getCedula());
-            pstmt.setString(2,alumno.getNombre());
-            pstmt.setInt(3,alumno.getEdad());
-            pstmt.setString(4, alumno.getEmail());
-            pstmt.setDate(5, (Date) alumno.getFecha_nacimiento());
-            pstmt.setInt(6,alumno.getCedula());
+            pstmt = conexion.prepareCall(INSERTARPROFESOR);
+            pstmt.setInt(1,profesor.getCedula());
+            pstmt.setString(2,profesor.getNombre());
+            pstmt.setInt(3,profesor.getEdad());
+            pstmt.setString(4, profesor.getEmail());
+            pstmt.setInt(5, profesor.getTelefono());
+            pstmt.setInt(6,profesor.getCedula());
             pstmt.setString(7,user.getClave() );
             boolean resultado = pstmt.execute();
             if (resultado == true) {
@@ -59,7 +58,7 @@ public class ServicioEstudiante extends Service{
      
      
      
-      public void modificarEstudiante(Alumno alumno, Usuario user) throws AccesoADatos.GlobalException, AccesoADatos.NoDataException  	{
+      public void modificarProfesor(Profesor profesor, Usuario user) throws AccesoADatos.GlobalException, AccesoADatos.NoDataException  	{
         try {
             conectar();
         } catch (ClassNotFoundException e) {
@@ -70,12 +69,12 @@ public class ServicioEstudiante extends Service{
         CallableStatement pstmt=null;
         
         try {
-            pstmt = conexion.prepareCall(MODIFICARESTUDIANTE);
-            pstmt.setString(1,alumno.getNombre());
-            pstmt.setInt(2,alumno.getEdad());
-            pstmt.setString(3, alumno.getEmail());
-            pstmt.setDate(4, (Date) alumno.getFecha_nacimiento());
-            pstmt.setInt(5,alumno.getCedula());
+            pstmt = conexion.prepareCall(MODIFICARPROFESOR);
+            pstmt.setString(1,profesor.getNombre());
+            pstmt.setInt(2,profesor.getEdad());
+            pstmt.setString(3, profesor.getEmail());
+            pstmt.setInt(4, profesor.getTelefono());
+            pstmt.setInt(5,profesor.getCedula());
             pstmt.setString(6,user.getClave() );
             boolean resultado = pstmt.execute();
             if (resultado == true) {

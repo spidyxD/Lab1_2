@@ -10,33 +10,33 @@ package Entities;
  * @author Addiel
  */
 public class Usuario {
-    public String username;
-    public String clvae;
+    public int username;
+    public String clave;
     public String rol;
 
     public Usuario() {
     }
 
-    public Usuario(String username, String clvae, String rol) {
+    public Usuario(int username, String clave, String rol) {
         this.username = username;
-        this.clvae = clvae;
+        this.clave = clave;
         this.rol = rol;
     }
 
-    public String getUsername() {
+    public int getUsername() {
         return username;
     }
 
-    public void setUsername(String username) {
+    public void setUsername(int username) {
         this.username = username;
     }
 
-    public String getClvae() {
-        return clvae;
+    public String getClave() {
+        return clave;
     }
 
-    public void setClvae(String clvae) {
-        this.clvae = clvae;
+    public void setClave(String clave) {
+        this.clave = clave;
     }
 
     public String getRol() {

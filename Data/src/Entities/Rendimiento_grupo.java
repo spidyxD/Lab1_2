@@ -10,47 +10,47 @@ package Entities;
  * @author Addiel
  */
 public class Rendimiento_grupo extends Persona{
-    public int curso;
-    public int alumno;
-    public float calificacion;
+    public Curso curso;
+    public Alumno alumno;
+    public int calificacion;
     public Profesor profesor;
     public Rendimiento_grupo() {
     }
 
-    public Rendimiento_grupo(int curso, int alumno, float calificacion) {
+    public Rendimiento_grupo(Curso curso, Alumno alumno, int calificacion) {
         this.curso = curso;
         this.alumno = alumno;
         this.calificacion = calificacion;
     }
 
-    public Rendimiento_grupo(int curso, int alumno, float calificacion, String nombre, String cedula, String email, int userN) {
+    public Rendimiento_grupo(Curso curso, Alumno alumno, int calificacion, String nombre, int cedula, String email, int userN) {
         super(nombre, cedula, email);
         this.curso = curso;
         this.alumno = alumno;
         this.calificacion = calificacion;
     }
 
-    public int getCurso() {
+    public Curso getCurso() {
         return curso;
     }
 
-    public void setCurso(int curso) {
+    public void setCurso(Curso curso) {
         this.curso = curso;
     }
 
-    public int getAlumno() {
+    public Alumno getAlumno() {
         return alumno;
     }
 
-    public void setAlumno(int alumno) {
+    public void setAlumno(Alumno alumno) {
         this.alumno = alumno;
     }
 
-    public float getCalificacion() {
+    public int getCalificacion() {
         return calificacion;
     }
 
-    public void setCalificacion(float calificacion) {
+    public void setCalificacion(int calificacion) {
         this.calificacion = calificacion;
     }
 
@@ -62,11 +62,11 @@ public class Rendimiento_grupo extends Persona{
         this.nombre = nombre;
     }
 
-    public String getCedula() {
+    public int getCedula() {
         return cedula;
     }
 
-    public void setCedula(String cedula) {
+    public void setCedula(int cedula) {
         this.cedula = cedula;
     }
 

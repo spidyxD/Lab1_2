@@ -12,7 +12,7 @@ import java.util.Date;
  * @author Addiel
  */
 public class Ciclo {
-    public int tipo;
+    public int codigo;
     public String descripcion;
     public Date fecha_inicio;
     public Date fecha_finalizacion;
@@ -21,24 +21,24 @@ public class Ciclo {
     }
 
     public Ciclo(int tipo, String descripcion, Date fecha_inicio, Date fecha_finalizacion) {
-        this.tipo = tipo;
+        this.codigo = tipo;
         this.descripcion = descripcion;
         this.fecha_inicio = fecha_inicio;
         this.fecha_finalizacion = fecha_finalizacion;
     }
 
     public Ciclo(int tipo, Date fecha_inicio, Date fecha_finalizacion) {
-        this.tipo = tipo;
+        this.codigo = tipo;
         this.fecha_inicio = fecha_inicio;
         this.fecha_finalizacion = fecha_finalizacion;
     }
 
-    public int getTipo() {
-        return tipo;
+    public int getCodigo() {
+        return codigo;
     }
 
-    public void setTipo(int tipo) {
-        this.tipo = tipo;
+    public void setCodigo(int tipo) {
+        this.codigo = tipo;
     }
 
     public Date getFecha_inicio() {
