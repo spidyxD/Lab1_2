@@ -23,10 +23,10 @@ public class Service {
         
     }
     
-    protected void conectar() throws SQLException,ClassNotFoundException 
-    {       //DriverManager.registerDriver(new oracle.jdbc.OracleDriver());
-            Class.forName("oracle.jdbc.OracleDriver");
-            conexion = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe","system","k1n9r4d2");    
+    protected void conectar() throws SQLException,ClassNotFoundException, InstantiationException, IllegalAccessException 
+    {
+            Class.forName("oracle.jdbc.OracleDriver").newInstance();
+            conexion = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:XE","sys as sysdba","k1n9r4d2");    
     }
     
     protected void desconectar() throws SQLException{
@@ -40,10 +40,7 @@ public class Service {
         Context c = new InitialContext();
         try {
             return ((DataSource) c.lookup("jdbc/Mydbsource")).getConnection();
-        } catch (NamingException ex) {
-            ex.printStackTrace();
-        } catch (SQLException ex) {
-            ex.printStackTrace();
+        } catch (NamingException | SQLException ex) {
         }
         return null;
     }
