@@ -34,7 +34,7 @@ public class ServicioEstudiante extends Service{
             pstmt.setString(2,alumno.getNombre());
             pstmt.setInt(3,alumno.getEdad());
             pstmt.setString(4, alumno.getEmail());
-            pstmt.setDate(5, (Date) alumno.getFecha_nacimiento());
+            pstmt.setDate(5,alumno.getFecha_nacimiento());
             pstmt.setInt(6,alumno.getCedula());
             pstmt.setString(7,user.getClave() );
             boolean resultado = pstmt.execute();

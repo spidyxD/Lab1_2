@@ -1,4 +1,5 @@
-
+INSERT INTO Ciclo VALUES(01,'CICLO I',TO_DATE('2019/02/08','YYYY-MM-DD'),TO_DATE('2019/06/28','YYYY-MM-DD'));
+INSERT INTO Ciclo VALUES(02,'CICLO II',TO_DATE('2019/07/12','YYYY-MM-DD'),TO_DATE('2019/11/26','YYYY-MM-DD'));
 ----------------------------------VETERIARIA----------------------------------
 INSERT INTO Carrera VALUES(1,'Medicina Veterinaria','Licenciatura');
 
@@ -249,10 +250,10 @@ INSERT INTO Curso VALUES(111,'Investigación de Mercados',2,2);
 INSERT INTO Administrador Values(12345,'DBA');
 
 ---PROFESORES
-INSERT INTO Profesor VALUES (1763589,'Juan Perez',87656789,'juanp@gmail.com');
-INSERT INTO Profesor VALUES (6543789,'Margarita Gomez',76427896,'margaritag@gmail.com');
-INSERT INTO Profesor VALUES (7648903,'Lucresia Ramirez',86345678,'lucresiar@gmail.com');
-INSERT INTO Profesor VALUES (2789456,'Pablo Lopez',89345678,'pablol@gmail.com');
+INSERT INTO Profesor VALUES (1763589,'Juan Perez',35,87656789,'juanp@gmail.com');
+INSERT INTO Profesor VALUES (6543789,'Margarita Gomez',31,76427896,'margaritag@gmail.com');
+INSERT INTO Profesor VALUES (7648903,'Lucresia Ramirez',52,86345678,'lucresiar@gmail.com');
+INSERT INTO Profesor VALUES (2789456,'Pablo Lopez',57,89345678,'pablol@gmail.com');
 
 INSERT INTO Usuario VALUES(1763589,'1234','Profesor');
 INSERT INTO Usuario VALUES(6543789,'1234','Profesor');
@@ -260,22 +261,22 @@ INSERT INTO Usuario VALUES(7648903,'1234','Profesor');
 INSERT INTO Usuario VALUES(2789456,'1234','Profesor');
 
 -- ALUMNOS
-INSERT INTO Alumno VALUES(4678936,'Edgar Trigeros Arias','edgarta@gmail.com','08/07/1997');
-INSERT INTO Alumno VALUES(8362398,'Mirella Martinez','mirellam@gmail.com','15/04/1995');
-INSERT INTO Alumno VALUES(9859859,'Lourdes Ramirez','lourdes@gmail.com','04/04/1997');
-INSERT INTO Alumno VALUES(4564665,'María Jose Soto','mariasoto@gmail.com','04/04/1997');
-INSERT INTO Alumno VALUES(4465656,'Kimberly Hernandez Arce','kimher@gmail.com','04/04/1997');
-INSERT INTO Alumno VALUES(5675656,'Jennifer Hernandez Arce','jenniher@gmail.com','04/04/1997');
-INSERT INTO Alumno VALUES(9879586,'Karol Hernandez Arce','karolher@gmail.com','04/04/1997');
-INSERT INTO Alumno VALUES(4546956,'Estefany Hernandez Arce','estefanyher@gmail.com','04/04/1997');
-INSERT INTO Alumno VALUES(4666666,'Walter Ramirez Suniga','walR@gmail.com','04/04/1997');
-INSERT INTO Alumno VALUES(8096809,'Lukas Mora','lukasM@gmail.com','04/04/1997');
-INSERT INTO Alumno VALUES(8459867,'Marco Perez','marcoP@gmail.com','04/04/1997');
-INSERT INTO Alumno VALUES(4564645,'Jorge Alvarado','jorgeA@gmail.com','04/04/1997');
-INSERT INTO Alumno VALUES(6456456,'Geisel Alvarado','geiselAlv@gmail.com','04/04/1997');
-INSERT INTO Alumno VALUES(3534535,'Maria Jesus Lopez Martinez','mariajesusm@gmail.com','04/04/1997');
-INSERT INTO Alumno VALUES(6757576,'Mirella Gomez Lopez','mirellagomez@gmail.com','04/04/1997');
-INSERT INTO Alumno VALUES(4343453,'Zoe Montero Hernandez','zoemontero@gmail.com','04/04/1997');
+INSERT INTO Alumno VALUES(4678936,'Edgar Trigeros Arias','08/07/1997',22,'edgarta@gmail.com');
+INSERT INTO Alumno VALUES(8362398,'Mirella Martinez','15/04/1995',24,'mirellam@gmail.com');
+INSERT INTO Alumno VALUES(9859859,'Lourdes Ramirez','04/04/1997',22,'lourdes@gmail.com');
+INSERT INTO Alumno VALUES(4564665,'María Jose Soto',22,'04/04/1997','mariasoto@gmail.com');
+INSERT INTO Alumno VALUES(4465656,'Kimberly Hernandez Arce','04/04/1997',22,'kimher@gmail.com');
+INSERT INTO Alumno VALUES(5675656,'Jennifer Hernandez Arce','04/04/1997',22,'jenniher@gmail.com');
+INSERT INTO Alumno VALUES(9879586,'Karol Hernandez Arce','04/04/1997',22,'karolher@gmail.com');
+INSERT INTO Alumno VALUES(4546956,'Estefany Hernandez Arce','04/04/1997',22,'estefanyher@gmail.com');
+INSERT INTO Alumno VALUES(4666666,'Walter Ramirez Suniga','04/04/1997',22,'walR@gmail.com');
+INSERT INTO Alumno VALUES(8096809,'Lukas Mora','04/04/1997',22,'lukasM@gmail.com');
+INSERT INTO Alumno VALUES(8459867,'Marco Perez','04/04/1997',22,'marcoP@gmail.com');
+INSERT INTO Alumno VALUES(4564645,'Jorge Alvarado','04/04/1997',22,'jorgeA@gmail.com');
+INSERT INTO Alumno VALUES(6456456,'Geisel Alvarado','04/04/1997',22,'geiselAlv@gmail.com');
+INSERT INTO Alumno VALUES(3534535,'Maria Jesus Lopez Martinez','04/04/1997',22,'mariajesusm@gmail.com');
+INSERT INTO Alumno VALUES(6757576,'Mirella Gomez Lopez','04/04/1997',22,'mirellagomez@gmail.com');
+INSERT INTO Alumno VALUES(4343453,'Zoe Montero Hernandez','04/04/1997',22,'zoemontero@gmail.com');
 
 INSERT INTO Usuario VALUES(4678936,'1234','Alumno');
 INSERT INTO Usuario VALUES(8362398,'1234','Alumno');
@@ -295,8 +296,7 @@ INSERT INTO Usuario VALUES(6757576,'1234','Alumno');
 INSERT INTO Usuario VALUES(4343453,'1234','Alumno');
 
 
-INSERT INTO Ciclo VALUES(01,'CICLO I',TO_DATE('2019/02/08','YYYY-MM-DD'),TO_DATE('2019/06/28','YYYY-MM-DD'));
-INSERT INTO Ciclo VALUES(02,'CICLO II',TO_DATE('2019/07/12','YYYY-MM-DD'),TO_DATE('2019/11/26','YYYY-MM-DD'));
+
 
 INSERT INTO Grupo VALUES(100,1,25,'L-V 8:00AM-10:40AM',1763589);
 INSERT INTO Grupo VALUES(101,2,25,'L-V 8:00AM-10:40AM',1763589);
@@ -357,10 +357,10 @@ INSERT INTO Inscripcion VALUES(9879586,2);
 INSERT INTO Inscripcion VALUES(4546956,2);
 INSERT INTO Inscripcion VALUES(4666666,1);
 INSERT INTO Inscripcion VALUES(8096809,3);
-INSERT INTO Inscripcion VALUES(8459867,3,100);
-INSERT INTO Inscripcion VALUES(4564645,3,100);
-INSERT INTO Inscripcion VALUES(6456456,3,100);
-INSERT INTO Inscripcion VALUES(3534535,3,100);
+INSERT INTO Inscripcion VALUES(8459867,3);
+INSERT INTO Inscripcion VALUES(4564645,3);
+INSERT INTO Inscripcion VALUES(6456456,3);
+INSERT INTO Inscripcion VALUES(3534535,3);
 INSERT INTO Inscripcion VALUES(6757576,1);
 INSERT INTO Inscripcion VALUES(4343453,2);
 

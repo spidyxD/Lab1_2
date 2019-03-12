@@ -5,6 +5,7 @@ DROP TABLE PlanEstudio;
 DROP TABLE Rendimiento_Grupo;
 DROP TABLE Inscripcion;
 DROP TABLE Matricula;
+DROP TABLE Administrador;
 DROP TABLE Carrera CASCADE CONSTRAINTS;
 DROP TABLE Alumno CASCADE CONSTRAINTS;
 DROP TABLE Curso CASCADE CONSTRAINTS;
@@ -52,9 +53,9 @@ CREATE TABLE Profesor (
 CREATE TABLE Alumno (
     cedula number NOT NULL,
     nombre VARCHAR(50),
+    fecha_nacimiento date,
     edad number,
     email VARCHAR(50),
-    fecha_nacimiento date,
     CONSTRAINT pkAlumno PRIMARY KEY (cedula)
 ); 
 
@@ -111,6 +112,7 @@ CREATE TABLE Matricula (
 CREATE TABLE PlanEstudio (
     curso number,
     carrera number,
+    anno number,
     ciclo number,
     CONSTRAINT pkPlanEst PRIMARY KEY (curso, carrera),
     CONSTRAINT fkPlanEst1 FOREIGN KEY (curso) REFERENCES Curso(codigo),
@@ -122,7 +124,7 @@ CREATE TABLE PlanEstudio (
 CREATE OR REPLACE PROCEDURE crearAlumno (xcedula in Alumno.cedula%TYPE, xnombre in Alumno.nombre%TYPE, xedad in Alumno.edad%TYPE, xemail in Alumno.email%TYPE, xfechaN in Alumno.fecha_nacimiento%TYPE,xusername in Usuario.id%TYPE, xclave in Usuario.clave%TYPE )
     IS 
     BEGIN
-        INSERT into Alumno VALUES(xcedula, xnombre, xedad, xfechaN,xemail); 
+        INSERT into Alumno VALUES(xcedula, xnombre, xfechaN, xedad,xemail); 
         INSERT into Usuario VALUES(xcedula, xclave, 'Alumno');
         COMMIT;
     END crearAlumno;
@@ -173,10 +175,10 @@ CREATE OR REPLACE PROCEDURE reporteNotas (xcurso in Curso.codigo%TYPE, xalumno i
     END reporteNotas;
     /
 -- SI FUNCIONA
-CREATE OR REPLACE PROCEDURE generarPlanEstudio (xcurso in Curso.codigo%TYPE, xcarrera in Carrera.codigo%TYPE, xanno in PlanEstudio.anno%TYPE, xciclo in Ciclo.id%TYPE)
+CREATE OR REPLACE PROCEDURE generarPlanEstudio (xcurso in Curso.codigo%TYPE, xcarrera in Carrera.codigo%TYPE,xanno in PlanEstudio.anno%TYPE, xciclo in Ciclo.id%TYPE)
     IS
     BEGIN
-        INSERT into PlanEstudio VALUES(xcurso, xcarrera, xciclo); 
+        INSERT into PlanEstudio VALUES(xcurso, xcarrera, xanno, xciclo); 
         COMMIT;
     END generarPlanEstudio;
     /
@@ -264,7 +266,7 @@ CREATE OR REPLACE PROCEDURE hacerMatricula (xalumno in Alumno.cedula%TYPE, xcarr
 
 ALTER TABLE Alumno ADD edad number;
 ALTER TABLE Profesor ADD edad number;
-ALTER TABLE Mtricula ADD curso number;
+ALTER TABLE Matricula ADD curso number;
  commit;
 
         /*CREATE OR REPLACE FUNCTION buscar_Alumno_nombre (xnombre in VARCHAR) 

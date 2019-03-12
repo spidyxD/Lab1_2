@@ -17,7 +17,7 @@ import java.sql.SQLException;
 public class ServicioProfesor extends Service{
     private static final String INSERTARPROFESOR= "{call crearProfesor(?,?,?,?,?,?)}";
     private static final String MODIFICARPROFESOR= "{call modificarProfesor(?,?,?,?,?,?)}";
-    public void insertarProfesor(Profesor profesor, Usuario user) throws AccesoADatos.GlobalException, AccesoADatos.NoDataException  	{
+    public void insertarProfesor(Profesor profesor, Usuario user) throws AccesoADatos.GlobalException, AccesoADatos.NoDataException, InstantiationException, IllegalAccessException  	{
         try {
             conectar();
         } catch (ClassNotFoundException e) {
@@ -58,7 +58,7 @@ public class ServicioProfesor extends Service{
      
      
      
-      public void modificarProfesor(Profesor profesor, Usuario user) throws AccesoADatos.GlobalException, AccesoADatos.NoDataException  	{
+      public void modificarProfesor(Profesor profesor, Usuario user) throws AccesoADatos.GlobalException, AccesoADatos.NoDataException, InstantiationException, IllegalAccessException  	{
         try {
             conectar();
         } catch (ClassNotFoundException e) {

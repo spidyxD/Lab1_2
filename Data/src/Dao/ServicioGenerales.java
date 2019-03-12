@@ -23,7 +23,7 @@ public class ServicioGenerales extends Service {
     private static final String MATRICULARCURSO= "{call hacerMtricula(?,?,?,?,?)}";
     private static final String GENERARPLANESTUDIO= "{call generarPlanEstudio(?,?,?,?)}";
     
-     public void reportarNotas(Rendimiento_grupo rg) throws AccesoADatos.GlobalException, AccesoADatos.NoDataException, SQLException  	{
+     public void reportarNotas(Rendimiento_grupo rg) throws AccesoADatos.GlobalException, AccesoADatos.NoDataException, SQLException, InstantiationException, IllegalAccessException  	{
         try {
             conectar();
         } catch (ClassNotFoundException e) {
@@ -59,7 +59,7 @@ public class ServicioGenerales extends Service {
         }
     }
      
-    public void matricularCurso(Alumno a, Carrera c ,Curso cu,Grupo g, Ciclo cl) throws AccesoADatos.GlobalException, AccesoADatos.NoDataException, SQLException  	{
+    public void matricularCurso(Alumno a, Carrera c ,Curso cu,Grupo g, Ciclo cl) throws AccesoADatos.GlobalException, AccesoADatos.NoDataException, SQLException, InstantiationException, IllegalAccessException  	{
         try {
             conectar();
         } catch (ClassNotFoundException e) {
@@ -96,7 +96,7 @@ public class ServicioGenerales extends Service {
         }
     } 
     
-    public void generarPlanEstudio(Carrera ca ,Curso cu, Ciclo cl) throws AccesoADatos.GlobalException, AccesoADatos.NoDataException, SQLException  	{
+    public void generarPlanEstudio(Carrera ca ,Curso cu, Ciclo cl) throws AccesoADatos.GlobalException, AccesoADatos.NoDataException, SQLException, InstantiationException, IllegalAccessException  	{
         try {
             conectar();
         } catch (ClassNotFoundException e) {

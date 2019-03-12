@@ -14,7 +14,7 @@ import java.sql.SQLException;
  */
 public class ServicioCursos extends Service {
      private static final String CREARCURSO= "{call crearCurso(?,?,?,?)}";
-     public void crearCurso(int xcodigo, String xnombre, int xcreditos, int xhoras) throws AccesoADatos.GlobalException, AccesoADatos.NoDataException, SQLException  	{
+     public void crearCurso(int xcodigo, String xnombre, int xcreditos, int xhoras) throws AccesoADatos.GlobalException, AccesoADatos.NoDataException, SQLException, InstantiationException, IllegalAccessException  	{
         try {
             conectar();
         } catch (ClassNotFoundException e) {

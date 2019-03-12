@@ -19,7 +19,7 @@ public class ServicioBusquedas extends Service{
     private static final String BUSCARPROFCEDULA= "{call buscar_Profesor_cedula(?)}";
     private static final String BUSCARALUMCEDULA= "{call buscar_Alumno_ced(?)}";
     
-    public void buscarCursoId(int xcodigo) throws AccesoADatos.GlobalException, AccesoADatos.NoDataException, SQLException  	{
+    public void buscarCursoId(int xcodigo) throws AccesoADatos.GlobalException, AccesoADatos.NoDataException, SQLException, InstantiationException, IllegalAccessException  	{
         try {
             conectar();
         } catch (ClassNotFoundException e) {
@@ -51,7 +51,7 @@ public class ServicioBusquedas extends Service{
             }
         }
         
-        public void buscarCursoNombre(String xnombre) throws AccesoADatos.GlobalException, AccesoADatos.NoDataException, SQLException  	{
+        public void buscarCursoNombre(String xnombre) throws AccesoADatos.GlobalException, AccesoADatos.NoDataException, SQLException, InstantiationException, IllegalAccessException  	{
         try {
             conectar();
         } catch (ClassNotFoundException e) {
@@ -84,7 +84,7 @@ public class ServicioBusquedas extends Service{
         
     }
         
-     public void buscarCarreraId(int codigo) throws AccesoADatos.GlobalException, AccesoADatos.NoDataException, SQLException  	{
+     public void buscarCarreraId(int codigo) throws AccesoADatos.GlobalException, AccesoADatos.NoDataException, SQLException, InstantiationException, IllegalAccessException  	{
         try {
             conectar();
         } catch (ClassNotFoundException e) {
@@ -118,7 +118,7 @@ public class ServicioBusquedas extends Service{
     }    
      
     
-    public void buscarProfeId(int id) throws AccesoADatos.GlobalException, AccesoADatos.NoDataException, SQLException  	{
+    public void buscarProfeId(int id) throws AccesoADatos.GlobalException, AccesoADatos.NoDataException, SQLException, InstantiationException, IllegalAccessException  	{
         try {
             conectar();
         } catch (ClassNotFoundException e) {
@@ -151,7 +151,7 @@ public class ServicioBusquedas extends Service{
         
     }     
     
-    public void buscarAlumnoId(int id) throws AccesoADatos.GlobalException, AccesoADatos.NoDataException, SQLException  	{
+    public void buscarAlumnoId(int id) throws AccesoADatos.GlobalException, AccesoADatos.NoDataException, SQLException, InstantiationException, IllegalAccessException  	{
         try {
             conectar();
         } catch (ClassNotFoundException e) {
