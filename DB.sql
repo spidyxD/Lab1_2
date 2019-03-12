@@ -204,7 +204,7 @@ CREATE OR REPLACE FUNCTION buscar_curso_nombre (xnombre in Curso.nombre%TYPE)
         END;
         /
 -- SI FUNCIONA
-CREATE OR REPLACE FUNCTION buscar_curso_carrera (xcarrera in Carrera.codigo%TYPE ) 
+CREATE OR REPLACE FUNCTION buscar_curso_carrera(xcarrera in Carrera.codigo%TYPE ) 
      RETURN SYS_REFCURSOR
      AS 
     c SYS_REFCURSOR;

@@ -16,7 +16,7 @@ import java.sql.SQLException;
  * @author Addiel
  */
 public class ServicioEstudiante extends Service{
-    private static final String INSERTARESTUDIANTE= "{call crearAlumno(?,?,?,?,?,?)}";
+    private static final String INSERTARESTUDIANTE= "{call crearAlumno(?,?,?,?,?,?,?)}";
     private static final String MODIFICARESTUDIANTE= "{call modificarAlumno(?,?,?,?,?,?)}";
      public void insertarEstudiante(Alumno alumno, Usuario user) throws AccesoADatos.GlobalException, AccesoADatos.NoDataException  	{
         try {
