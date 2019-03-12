@@ -305,8 +305,7 @@ CREATE OR REPLACE PROCEDURE hacerMatricula (xalumno in Alumno.cedula%TYPE, xcarr
                     c1 SYS_REFCURSOR;
                 BEGIN
                     OPEN c1 FOR 
-                    SELECT  Alumno.cedula, Alumno.nombre, Alumno.email, Alumno.fecha_nacimiento, Carrera.nombre  FROM    
-                    Alumno, Inscripcion, Carrera 
+                    SELECT  *
                     WHERE Alumno.nombre =  xnombre AND Alumno.cedula = Inscripcion.alumno  AND Inscripcion.carrera = Carrera.codigo;  
                     RETURN c1;   
                 END;
