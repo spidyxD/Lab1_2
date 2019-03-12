@@ -14,6 +14,8 @@ import java.sql.SQLException;
  */
 public class ServicioCursos extends Service {
      private static final String CREARCURSO= "{call crearCurso(?,?,?,?)}";
+     private static final String MODIFICARCURSO= "{call modificarCurso(?,?,?)}";
+     private static final String ELIMINARCURSO= "{call eliminarCurso(?)}";
      public void crearCurso(int xcodigo, String xnombre, int xcreditos, int xhoras) throws AccesoADatos.GlobalException, AccesoADatos.NoDataException, SQLException, InstantiationException, IllegalAccessException  	{
         try {
             conectar();
@@ -33,6 +35,75 @@ public class ServicioCursos extends Service {
             boolean resultado = pstmt.execute();
             if (resultado == true) {
                 throw new AccesoADatos.NoDataException("No se realizo la inserci�n");
+            }
+            
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new AccesoADatos.GlobalException("Llave duplicada");
+        } finally {
+            try {
+                if (pstmt != null) {
+                    pstmt.close();
+                }
+                desconectar();
+            } catch (SQLException e) {
+                throw new AccesoADatos.GlobalException("Estatutos invalidos o nulos");
+            }
+        }
+    }
+     
+     
+     public void modificarCurso(String xnombre, int xcreditos, int xhoras) throws AccesoADatos.GlobalException, AccesoADatos.NoDataException, SQLException, InstantiationException, IllegalAccessException  	{
+        try {
+            conectar();
+        } catch (ClassNotFoundException e) {
+            throw new AccesoADatos.GlobalException("No se ha localizado el driver");
+        } catch (SQLException e) {
+            throw new AccesoADatos.NoDataException("La base de datos no se encuentra disponible");
+        }
+        CallableStatement pstmt=null;
+        
+        try {
+            pstmt = conexion.prepareCall(MODIFICARCURSO);          
+            pstmt.setString(1,xnombre);
+            pstmt.setInt(2,xcreditos);  
+            pstmt.setInt(3,xhoras);  
+            boolean resultado = pstmt.execute();
+            if (resultado == true) {
+                throw new AccesoADatos.NoDataException("No se realizo la actualizacion");
+            }
+            
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new AccesoADatos.GlobalException("Llave duplicada");
+        } finally {
+            try {
+                if (pstmt != null) {
+                    pstmt.close();
+                }
+                desconectar();
+            } catch (SQLException e) {
+                throw new AccesoADatos.GlobalException("Estatutos invalidos o nulos");
+            }
+        }
+    }
+     
+     public void eliminarCurso(int codigo) throws AccesoADatos.GlobalException, AccesoADatos.NoDataException, SQLException, InstantiationException, IllegalAccessException  	{
+        try {
+            conectar();
+        } catch (ClassNotFoundException e) {
+            throw new AccesoADatos.GlobalException("No se ha localizado el driver");
+        } catch (SQLException e) {
+            throw new AccesoADatos.NoDataException("La base de datos no se encuentra disponible");
+        }
+        CallableStatement pstmt=null;
+        
+        try {
+            pstmt = conexion.prepareCall(ELIMINARCURSO);          
+            pstmt.setInt(1,codigo);
+            boolean resultado = pstmt.execute();
+            if (resultado == true) {
+                throw new AccesoADatos.NoDataException("No se realizo la actualizacion");
             }
             
         } catch (SQLException e) {

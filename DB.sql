@@ -138,7 +138,14 @@ CREATE OR REPLACE PROCEDURE modificarAlumno (xnombre in Alumno.nombre%TYPE,xedad
         COMMIT;
     END modificarAlumno;
     /
-
+CREATE OR REPLACE PROCEDURE eliminarAlumno (xcedula in Alumno.cedula%TYPE)
+    IS 
+    BEGIN
+        DELETE Alumno WHERE cedula = xcedula;
+        DELETE Usuario WHERE id = xcedula;
+        COMMIT;
+    END eliminarAlumno;
+    /
 -- SI FUNCIONA
 CREATE OR REPLACE PROCEDURE crearProfesor (xcedula in Profesor.cedula%TYPE, xnombre in Profesor.nombre%TYPE,xedad in Profesor.edad%TYPE, xemail in Profesor.email%TYPE, xtelefono in Profesor.telefono%TYPE,xusername in Usuario.id%TYPE, xclave in Usuario.clave%TYPE )
     IS
@@ -158,6 +165,14 @@ CREATE OR REPLACE PROCEDURE modificarProfesor (xnombre in Profesor.nombre%TYPE,x
     END modificarProfesor;
     /
 
+CREATE OR REPLACE PROCEDURE eliminarProfesor (xcedula in Alumno.cedula%TYPE)
+    IS 
+    BEGIN
+        DELETE Profesor WHERE cedula = xcedula;
+        DELETE Usuario WHERE id = xcedula;
+        COMMIT;
+    END eliminarProfesor;
+    /
 -- SI FUNCIONA
 CREATE OR REPLACE PROCEDURE crearCurso (xcodigo in Curso.codigo%TYPE, xnombre in Curso.nombre%TYPE, xcreditos in Curso.creditos%TYPE, xhorasS in Curso.horas_semanales%TYPE)
     IS
@@ -165,6 +180,22 @@ CREATE OR REPLACE PROCEDURE crearCurso (xcodigo in Curso.codigo%TYPE, xnombre in
         INSERT into Curso VALUES(xcodigo, xnombre, xcreditos, xhorasS); 
         COMMIT;
     END crearCurso;
+    /
+
+CREATE OR REPLACE PROCEDURE modificarCurso (xnombre in Curso.nombre%TYPE, xcreditos in Curso.creditos%TYPE, xhorasS in Curso.horas_semanales%TYPE)
+    IS
+    BEGIN
+        UPDATE Curso set  nombre =  xnombre, creditos = xcreditos, horas_semanales = xhorasS; 
+        COMMIT;
+    END modificarCurso;
+    /
+
+CREATE OR REPLACE PROCEDURE eliminarCurso (xcodigo in Alumno.cedula%TYPE)
+    IS 
+    BEGIN
+        DELETE Curso WHERE codigo = xcodigo;
+        COMMIT;
+    END eliminarCurso;
     /
 -- SI FUNCIONA
 CREATE OR REPLACE PROCEDURE reporteNotas (xcurso in Curso.codigo%TYPE, xalumno in Alumno.cedula%TYPE, xprofesor in Profesor.cedula%TYPE, xcalificacion in Rendimiento_Grupo.calificacion%TYPE)
@@ -258,16 +289,15 @@ CREATE OR REPLACE FUNCTION login(xid IN Usuario.id%TYPE, xpassword IN Usuario.cl
 CREATE OR REPLACE PROCEDURE hacerMatricula (xalumno in Alumno.cedula%TYPE, xcarrera in Carrera.codigo%TYPE,xcurso in Curso.codigo%TYPE, xgrupo in Grupo.nrc%TYPE, xciclo in Ciclo.id%TYPE)
     IS
         BEGIN 
-        --PENDIENTE AÑADIR COLUMNA CURSO
         INSERT INTO Matricula VALUES(xalumno, xcarrera,xcurso,xgrupo, xciclo);
         COMMIT;
     END hacerMatricula;
     /
 
-ALTER TABLE Alumno ADD edad number;
-ALTER TABLE Profesor ADD edad number;
-ALTER TABLE Matricula ADD curso number;
- commit;
+--ALTER TABLE Alumno ADD edad number;
+--ALTER TABLE Profesor ADD edad number;
+--ALTER TABLE Matricula ADD curso number;
+ --commit;
 
         /*CREATE OR REPLACE FUNCTION buscar_Alumno_nombre (xnombre in VARCHAR) 
             RETURN SYS_REFCURSOR

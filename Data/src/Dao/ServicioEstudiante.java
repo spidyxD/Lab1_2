@@ -18,6 +18,7 @@ import java.sql.SQLException;
 public class ServicioEstudiante extends Service{
     private static final String INSERTARESTUDIANTE= "{call crearAlumno(?,?,?,?,?,?,?)}";
     private static final String MODIFICARESTUDIANTE= "{call modificarAlumno(?,?,?,?,?,?)}";
+    private static final String ELIMINARESTUDIANTE= "{call eliminarAlumno(?)}";
      public void insertarEstudiante(Alumno alumno, Usuario user) throws AccesoADatos.GlobalException, AccesoADatos.NoDataException, InstantiationException, IllegalAccessException  	{
         try {
             conectar();
@@ -77,6 +78,39 @@ public class ServicioEstudiante extends Service{
             pstmt.setDate(4, (Date) alumno.getFecha_nacimiento());
             pstmt.setInt(5,alumno.getCedula());
             pstmt.setString(6,user.getClave() );
+            boolean resultado = pstmt.execute();
+            if (resultado == true) {
+                throw new AccesoADatos.NoDataException("No se realizo la inserci�n");
+            }
+            
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new AccesoADatos.GlobalException("Llave duplicada");
+        } finally {
+            try {
+                if (pstmt != null) {
+                    pstmt.close();
+                }
+                desconectar();
+            } catch (SQLException e) {
+                throw new AccesoADatos.GlobalException("Estatutos invalidos o nulos");
+            }
+        }
+    }
+      
+      public void eliminarEstudiante(int codigo) throws AccesoADatos.GlobalException, AccesoADatos.NoDataException, InstantiationException, IllegalAccessException  	{
+        try {
+            conectar();
+        } catch (ClassNotFoundException e) {
+            throw new AccesoADatos.GlobalException("No se ha localizado el driver");
+        } catch (SQLException e) {
+            throw new AccesoADatos.NoDataException("La base de datos no se encuentra disponible");
+        }
+        CallableStatement pstmt=null;
+        
+        try {
+            pstmt = conexion.prepareCall(ELIMINARESTUDIANTE);
+            pstmt.setInt(1,codigo);
             boolean resultado = pstmt.execute();
             if (resultado == true) {
                 throw new AccesoADatos.NoDataException("No se realizo la inserci�n");
