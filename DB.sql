@@ -236,13 +236,24 @@ CREATE OR REPLACE FUNCTION buscar_curso_nombre (xnombre in Curso.nombre%TYPE)
             CLOSE c;  
         END;
         /
+
 -- SI FUNCIONA
+CREATE OR REPLACE FUNCTION buscar_carrera_id (xcodigo in Carrera.codigo%TYPE) RETURN SYS_REFCURSOR
+    IS 
+    c SYS_REFCURSOR;
+    BEGIN
+        OPEN c FOR SELECT *FROM Carrera WHERE codigo = xcodigo;
+         RETURN c; 
+         CLOSE c;  
+    END;
+    /
+
 CREATE OR REPLACE FUNCTION buscar_curso_carrera(xcarrera in Carrera.codigo%TYPE ) 
      RETURN SYS_REFCURSOR
      AS 
     c SYS_REFCURSOR;
     BEGIN
-        OPEN c FOR SELECT DISTINCT * FROM PlanEstudio, Curso WHERE PlanEstudio.curso =  Curso.codigo  AND PlanEstudio.carrera = xcarrera;
+        OPEN c FOR SELECT DISTINCT * FROM Curso, PlanEstudio WHERE PlanEstudio.curso =  Curso.codigo  AND PlanEstudio.carrera = xcarrera;
          RETURN c; 
          CLOSE c;  
     END;

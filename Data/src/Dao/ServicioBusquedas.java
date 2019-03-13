@@ -23,9 +23,10 @@ import java.util.ArrayList;
  * @author Addiel
  */
 public class ServicioBusquedas extends Service{
+    private static final String BUSCARCARRERA= "{call buscar_carrera_id(?)}";
     private static final String BUSCARCURSOID= "{call buscar_curso_id(?)}";
     private static final String BUSCARCURSONOMBRE= "{call buscar_curso_nombre(?)}";
-    private static final String BUSCARCARRERA= "{call buscar_curso_carrera(?)}";
+    private static final String BUSCARCURSOXCARRERA= "{call buscar_curso_carrera(?)}";
     private static final String BUSCARPROFCEDULA= "{call buscar_Profesor_cedula(?)}";
     private static final String BUSCARALUMNOCEDULA= "{call buscar_Alumno_ced(?)}";
     private static final String BUSCARALUMNOMBRE= "{call buscar_Alumno_nombre(?)}";
@@ -181,7 +182,7 @@ public class ServicioBusquedas extends Service{
             }
             
         } catch (SQLException e) {
-            throw new AccesoADatos.GlobalException("Llave duplicada");
+            throw new AccesoADatos.GlobalException("No se encontro resultado");
         } finally {
             try {
                 if (pstmt != null) {
@@ -222,7 +223,7 @@ public class ServicioBusquedas extends Service{
             }
             
         } catch (SQLException e) {
-            throw new AccesoADatos.GlobalException("Llave duplicada");
+            throw new AccesoADatos.GlobalException("No se encontro resultado");
         } finally {
             try {
                 if (pstmt != null) {
@@ -263,7 +264,7 @@ public class ServicioBusquedas extends Service{
                 return carreras.get(0);
             }
         } catch (SQLException e) {
-            throw new AccesoADatos.GlobalException("Llave duplicada");
+            throw new AccesoADatos.GlobalException("No se encontro resultado");
         } finally {
             try {
                 if (pstmt != null) {
@@ -277,7 +278,48 @@ public class ServicioBusquedas extends Service{
         
     }    
      
-    
+     public Carrera buscarCursoXCarrera(int codigo) throws AccesoADatos.GlobalException, AccesoADatos.NoDataException, SQLException, InstantiationException, IllegalAccessException  	{
+        try {
+            conectar();
+        } catch (ClassNotFoundException e) {
+            throw new AccesoADatos.GlobalException("No se ha localizado el driver");
+        } catch (SQLException e) {
+            throw new AccesoADatos.NoDataException("La base de datos no se encuentra disponible");
+        }
+        CallableStatement pstmt=null;
+        
+        try {
+            pstmt = conexion.prepareCall(BUSCARCURSOXCARRERA);          
+            pstmt.setInt(1,codigo);
+            boolean resultado = pstmt.execute();
+            if (resultado == true) {
+                throw new AccesoADatos.NoDataException("No se realizo la busqueda");
+            }
+            else{
+             ResultSet rs = pstmt.executeQuery();
+                ArrayList<Carrera> carreras = new ArrayList();
+                System.out.println(rs);
+                while(rs.next()){
+                    carreras.add(tipoCarrera(rs));
+                }
+                return carreras.get(0);
+            }
+        } catch (SQLException e) {
+            throw new AccesoADatos.GlobalException("No se encontro resultado");
+        } finally {
+            try {
+                if (pstmt != null) {
+                    pstmt.close();
+                }
+                desconectar();
+            } catch (SQLException e) {
+                throw new AccesoADatos.GlobalException("Estatutos invalidos o nulos");
+            }
+        }
+        
+    }    
+     
+     
     public Profesor buscarProfeId(int id) throws AccesoADatos.GlobalException, AccesoADatos.NoDataException, SQLException, InstantiationException, IllegalAccessException  	{
         try {
             conectar();
@@ -306,7 +348,7 @@ public class ServicioBusquedas extends Service{
             }
             
         } catch (SQLException e) {
-            throw new AccesoADatos.GlobalException("Llave duplicada");
+            throw new AccesoADatos.GlobalException("No se encontro resultado");
         } finally {
             try {
                 if (pstmt != null) {
@@ -348,7 +390,7 @@ public class ServicioBusquedas extends Service{
             }
             
         } catch (SQLException e) {
-            throw new AccesoADatos.GlobalException("Llave duplicada");
+            throw new AccesoADatos.GlobalException("No se encontro resultado");
         } finally {
             try {
                 if (pstmt != null) {
@@ -390,7 +432,7 @@ public class ServicioBusquedas extends Service{
             }
             
         } catch (SQLException e) {
-            throw new AccesoADatos.GlobalException("Llave duplicada");
+            throw new AccesoADatos.GlobalException("No se encontro resultado");
         } finally {
             try {
                 if (pstmt != null) {
@@ -430,7 +472,7 @@ public class ServicioBusquedas extends Service{
                 return cursos;
             }
         } catch (SQLException e) {
-            throw new AccesoADatos.GlobalException("Llave duplicada");
+            throw new AccesoADatos.GlobalException("No se encontro resultado");
         } finally {
             try {
                 if (pstmt != null) {
@@ -474,7 +516,7 @@ public class ServicioBusquedas extends Service{
             }
             
         } catch (SQLException e) {
-            throw new AccesoADatos.GlobalException("Llave duplicada");
+            throw new AccesoADatos.GlobalException("No se encontro resultado");
         } finally {
             try {
                 if (pstmt != null) {
@@ -516,7 +558,7 @@ public class ServicioBusquedas extends Service{
             }
             
         } catch (SQLException e) {
-            throw new AccesoADatos.GlobalException("Llave duplicada");
+            throw new AccesoADatos.GlobalException("No se encontro resultado");
         } finally {
             try {
                 if (pstmt != null) {
@@ -558,7 +600,7 @@ public class ServicioBusquedas extends Service{
                 return alumnos;
             }
         } catch (SQLException e) {
-            throw new AccesoADatos.GlobalException("Llave duplicada");
+            throw new AccesoADatos.GlobalException("No se encontro resultado");
         } finally {
             try {
                 if (pstmt != null) {
