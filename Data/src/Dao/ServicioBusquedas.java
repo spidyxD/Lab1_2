@@ -5,8 +5,18 @@
  */
 package Dao;
 
+import Entities.Alumno;
+import Entities.Carrera;
+import Entities.Ciclo;
+import Entities.Curso;
+import Entities.Grupo;
+import Entities.Profesor;
+import Entities.Rendimiento_grupo;
+import Entities.Usuario;
 import java.sql.CallableStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 /**
  *
@@ -24,7 +34,125 @@ public class ServicioBusquedas extends Service{
     private static final String BUSCARCURSOXPROFESOR= "{call buscar_cursoXProfesor(?)}";
     private static final String BUSCARALUMNOSXCARRERA= "{call buscar_inscritoCarrera(?)}";
     
-    public void buscarCursoId(int xcodigo) throws AccesoADatos.GlobalException, AccesoADatos.NoDataException, SQLException, InstantiationException, IllegalAccessException  	{
+    
+    
+    private Curso tipoCurso(ResultSet rs){
+        try{
+            Curso c = new Curso();
+            c.setCodigo(rs.getInt("codigo"));
+            c.setNombre(rs.getString("nombre"));
+            c.setCreditos(rs.getInt("creditos"));
+            c.setHoras_semanales(rs.getInt("horas_semanales"));
+            return c;
+        }
+        catch (SQLException ex) {
+            return null;
+        }
+    }
+    
+      private Grupo tipoGrupo(ResultSet rs){
+        try{
+            Grupo g = new Grupo();
+            g.setCapacidad(rs.getInt("capacidad"));
+            g.setCurso(tipoCurso(rs));
+            g.setHorario(rs.getString("horario"));
+            g.setNrc(0);
+            g.setPorfesor(tipoProfesor(rs));
+            return g;
+        }
+        catch (SQLException ex) {
+            return null;
+        }
+    }
+    
+    private Ciclo tipoCiclo(ResultSet rs){
+        try{
+            Ciclo c = new Ciclo();
+            c.setCodigo(rs.getInt("codigo"));
+            c.setDescripcion(rs.getString("descripcion"));
+            c.setFecha_finalizacion(rs.getDate("fecha_finalizacion"));
+            c.setFecha_inicio(rs.getDate("fecha_inicio"));
+            return c;
+        }
+        catch (SQLException ex) {
+            return null;
+        }
+    }
+      
+    private Alumno tipoAlumno(ResultSet rs){
+        try{
+            Alumno a = new Alumno();
+            a.setCedula(rs.getInt("cedula"));
+            a.setEdad(rs.getInt("edad"));
+            a.setEmail(rs.getString("email"));
+            a.setFecha_nacimiento(rs.getDate("fecha_nacimiento"));
+            a.setNombre(BUSCARALUMNOMBRE);
+            return a;
+        }
+        catch (SQLException ex) {
+            return null;
+        }
+    }
+    
+     private Rendimiento_grupo tipoRendimiento(ResultSet rs){
+        try{
+            Rendimiento_grupo rg = new Rendimiento_grupo();
+            rg.setAlumno(tipoAlumno(rs));
+            rg.setCalificacion(rs.getInt("calificacion"));
+            rg.setProfesor(tipoProfesor(rs));
+            rg.setCurso(tipoCurso(rs));
+            return rg;
+        }
+        catch (SQLException ex) {
+            return null;
+        }
+    }
+    
+    
+    private Profesor tipoProfesor(ResultSet rs){
+        try{
+            Profesor p = new Profesor();
+            p.setCedula(rs.getInt("cedula"));
+            p.setEdad(rs.getInt("edad"));
+            p.setEmail(rs.getString("email"));
+            p.setTelefono(rs.getInt("telefono"));
+            p.setNombre(BUSCARALUMNOMBRE);
+            return p;
+        }
+        catch (SQLException ex) {
+            return null;
+        }
+    }
+    
+        
+        private Carrera tipoCarrera(ResultSet rs){
+        try{
+            Carrera c = new Carrera();
+            c.setCodigo(rs.getInt("codigo"));
+            c.setNombre(rs.getString("nombre"));
+            c.setTitulo(rs.getString("titulo"));
+            return c;
+        }
+        catch (SQLException ex) {
+            return null;
+        }
+    }
+        
+    private Usuario tipoUsuario(ResultSet rs){
+        try{
+            Usuario u = new Usuario();
+            u.setClave(rs.getString("clave"));
+            u.setRol(rs.getString("nombre"));
+            u.setUsername(rs.getInt("id"));
+            return u;
+        }
+        catch (SQLException ex) {
+            return null;
+        }
+    }
+    
+    
+    public Curso buscarCursoId(int xcodigo) throws AccesoADatos.GlobalException, AccesoADatos.NoDataException, SQLException, InstantiationException, IllegalAccessException  	{
         try {
             conectar();
         } catch (ClassNotFoundException e) {
@@ -38,8 +166,18 @@ public class ServicioBusquedas extends Service{
             pstmt = conexion.prepareCall(BUSCARCURSOID);          
             pstmt.setInt(1,xcodigo);
             boolean resultado = pstmt.execute();
+            
             if (resultado == true) {
-                throw new AccesoADatos.NoDataException("No se realizo la inserci�n");
+                throw new AccesoADatos.NoDataException("No se realizo la busqueda");
+            }
+            else {
+                ResultSet rs = pstmt.executeQuery();
+                ArrayList<Curso> cursos = new ArrayList();
+                System.out.println(rs);
+                while(rs.next()){
+                    cursos.add(tipoCurso(rs));
+                }
+                return cursos.get(0);
             }
             
         } catch (SQLException e) {
@@ -56,7 +194,7 @@ public class ServicioBusquedas extends Service{
             }
         }
         
-        public void buscarCursoNombre(String xnombre) throws AccesoADatos.GlobalException, AccesoADatos.NoDataException, SQLException, InstantiationException, IllegalAccessException  	{
+        public Curso buscarCursoNombre(String xnombre) throws AccesoADatos.GlobalException, AccesoADatos.NoDataException, SQLException, InstantiationException, IllegalAccessException  	{
         try {
             conectar();
         } catch (ClassNotFoundException e) {
@@ -71,7 +209,16 @@ public class ServicioBusquedas extends Service{
             pstmt.setString(1,xnombre);
             boolean resultado = pstmt.execute();
             if (resultado == true) {
-                throw new AccesoADatos.NoDataException("No se realizo la inserci�n");
+                throw new AccesoADatos.NoDataException("No se realizo la busqueda");
+            }
+            else{
+             ResultSet rs = pstmt.executeQuery();
+                ArrayList<Curso> cursos = new ArrayList();
+                System.out.println(rs);
+                while(rs.next()){
+                    cursos.add(tipoCurso(rs));
+                }
+                return cursos.get(0);
             }
             
         } catch (SQLException e) {
@@ -89,7 +236,7 @@ public class ServicioBusquedas extends Service{
         
     }
         
-     public void buscarCarreraId(int codigo) throws AccesoADatos.GlobalException, AccesoADatos.NoDataException, SQLException, InstantiationException, IllegalAccessException  	{
+     public Carrera buscarCarreraId(int codigo) throws AccesoADatos.GlobalException, AccesoADatos.NoDataException, SQLException, InstantiationException, IllegalAccessException  	{
         try {
             conectar();
         } catch (ClassNotFoundException e) {
@@ -104,9 +251,17 @@ public class ServicioBusquedas extends Service{
             pstmt.setInt(1,codigo);
             boolean resultado = pstmt.execute();
             if (resultado == true) {
-                throw new AccesoADatos.NoDataException("No se realizo la inserci�n");
+                throw new AccesoADatos.NoDataException("No se realizo la busqueda");
             }
-            
+            else{
+             ResultSet rs = pstmt.executeQuery();
+                ArrayList<Carrera> carreras = new ArrayList();
+                System.out.println(rs);
+                while(rs.next()){
+                    carreras.add(tipoCarrera(rs));
+                }
+                return carreras.get(0);
+            }
         } catch (SQLException e) {
             throw new AccesoADatos.GlobalException("Llave duplicada");
         } finally {
@@ -123,7 +278,7 @@ public class ServicioBusquedas extends Service{
     }    
      
     
-    public void buscarProfeId(int id) throws AccesoADatos.GlobalException, AccesoADatos.NoDataException, SQLException, InstantiationException, IllegalAccessException  	{
+    public Profesor buscarProfeId(int id) throws AccesoADatos.GlobalException, AccesoADatos.NoDataException, SQLException, InstantiationException, IllegalAccessException  	{
         try {
             conectar();
         } catch (ClassNotFoundException e) {
@@ -138,7 +293,16 @@ public class ServicioBusquedas extends Service{
             pstmt.setInt(1,id);
             boolean resultado = pstmt.execute();
             if (resultado == true) {
-                throw new AccesoADatos.NoDataException("No se realizo la inserci�n");
+                throw new AccesoADatos.NoDataException("No se realizo la busqueda");
+            }
+            else{
+             ResultSet rs = pstmt.executeQuery();
+                ArrayList<Profesor> profesores = new ArrayList();
+                System.out.println(rs);
+                while(rs.next()){
+                    profesores.add(tipoProfesor(rs));
+                }
+                return profesores.get(0);
             }
             
         } catch (SQLException e) {
@@ -156,7 +320,7 @@ public class ServicioBusquedas extends Service{
         
     }     
     
-    public void buscarAlumnoId(int id) throws AccesoADatos.GlobalException, AccesoADatos.NoDataException, SQLException, InstantiationException, IllegalAccessException  	{
+    public Alumno buscarAlumnoId(int id) throws AccesoADatos.GlobalException, AccesoADatos.NoDataException, SQLException, InstantiationException, IllegalAccessException  	{
         try {
             conectar();
         } catch (ClassNotFoundException e) {
@@ -171,7 +335,16 @@ public class ServicioBusquedas extends Service{
             pstmt.setInt(1,id);
             boolean resultado = pstmt.execute();
             if (resultado == true) {
-                throw new AccesoADatos.NoDataException("No se realizo la inserci�n");
+                throw new AccesoADatos.NoDataException("No se realizo la busqueda");
+            }
+             else{
+             ResultSet rs = pstmt.executeQuery();
+                ArrayList<Alumno> alumnos = new ArrayList();
+                System.out.println(rs);
+                while(rs.next()){
+                    alumnos.add(tipoAlumno(rs));
+                }
+                return alumnos.get(0);
             }
             
         } catch (SQLException e) {
@@ -189,7 +362,7 @@ public class ServicioBusquedas extends Service{
         
     }     
     
-     public void buscarAlumnoNombre(String nombre) throws AccesoADatos.GlobalException, AccesoADatos.NoDataException, SQLException, InstantiationException, IllegalAccessException  	{
+     public Alumno buscarAlumnoNombre(String nombre) throws AccesoADatos.GlobalException, AccesoADatos.NoDataException, SQLException, InstantiationException, IllegalAccessException  	{
         try {
             conectar();
         } catch (ClassNotFoundException e) {
@@ -204,7 +377,16 @@ public class ServicioBusquedas extends Service{
             pstmt.setString(1,nombre);
             boolean resultado = pstmt.execute();
             if (resultado == true) {
-                throw new AccesoADatos.NoDataException("No se realizo la inserci�n");
+                throw new AccesoADatos.NoDataException("No se realizo la busqueda");
+            }
+             else{
+             ResultSet rs = pstmt.executeQuery();
+                ArrayList<Alumno> alumnos = new ArrayList();
+                System.out.println(rs);
+                while(rs.next()){
+                    alumnos.add(tipoAlumno(rs));
+                }
+                return alumnos.get(0);
             }
             
         } catch (SQLException e) {
@@ -221,7 +403,7 @@ public class ServicioBusquedas extends Service{
         }
         
     }    
-     public void buscarCursoXAlumno(int id) throws AccesoADatos.GlobalException, AccesoADatos.NoDataException, SQLException, InstantiationException, IllegalAccessException  	{
+     public ArrayList<Curso> buscarCursosXAlumno(int id) throws AccesoADatos.GlobalException, AccesoADatos.NoDataException, SQLException, InstantiationException, IllegalAccessException  	{
         try {
             conectar();
         } catch (ClassNotFoundException e) {
@@ -236,9 +418,17 @@ public class ServicioBusquedas extends Service{
             pstmt.setInt(1,id);
             boolean resultado = pstmt.execute();
             if (resultado == true) {
-                throw new AccesoADatos.NoDataException("No se realizo la inserci�n");
+                throw new AccesoADatos.NoDataException("No se realizo la busqueda");
             }
-            
+             else{
+             ResultSet rs = pstmt.executeQuery();
+                ArrayList<Curso> cursos = new ArrayList();
+                System.out.println(rs);
+                while(rs.next()){
+                    cursos.add(tipoCurso(rs));
+                }
+                return cursos;
+            }
         } catch (SQLException e) {
             throw new AccesoADatos.GlobalException("Llave duplicada");
         } finally {
@@ -256,7 +446,7 @@ public class ServicioBusquedas extends Service{
      
      
      
-    public void buscarAlumnoXCurso(int codigo) throws AccesoADatos.GlobalException, AccesoADatos.NoDataException, SQLException, InstantiationException, IllegalAccessException  	{
+    public ArrayList<Alumno> buscarAlumnoXCurso(int codigo) throws AccesoADatos.GlobalException, AccesoADatos.NoDataException, SQLException, InstantiationException, IllegalAccessException  	{
         try {
             conectar();
         } catch (ClassNotFoundException e) {
@@ -271,7 +461,16 @@ public class ServicioBusquedas extends Service{
             pstmt.setInt(1,codigo);
             boolean resultado = pstmt.execute();
             if (resultado == true) {
-                throw new AccesoADatos.NoDataException("No se realizo la inserci�n");
+                throw new AccesoADatos.NoDataException("No se realizo la busqueda");
+            }
+             else{
+             ResultSet rs = pstmt.executeQuery();
+                ArrayList<Alumno> alumnos = new ArrayList();
+                System.out.println(rs);
+                while(rs.next()){
+                    alumnos.add(tipoAlumno(rs));
+                }
+                return alumnos;
             }
             
         } catch (SQLException e) {
@@ -289,7 +488,7 @@ public class ServicioBusquedas extends Service{
         
     }      
     
-    public void buscarCursoXprofesor(int codigo) throws AccesoADatos.GlobalException, AccesoADatos.NoDataException, SQLException, InstantiationException, IllegalAccessException  	{
+    public ArrayList<Curso> buscarCursoXprofesor(int codigo) throws AccesoADatos.GlobalException, AccesoADatos.NoDataException, SQLException, InstantiationException, IllegalAccessException  	{
         try {
             conectar();
         } catch (ClassNotFoundException e) {
@@ -304,7 +503,16 @@ public class ServicioBusquedas extends Service{
             pstmt.setInt(1,codigo);
             boolean resultado = pstmt.execute();
             if (resultado == true) {
-                throw new AccesoADatos.NoDataException("No se realizo la inserci�n");
+                throw new AccesoADatos.NoDataException("No se realizo la busqueda");
+            }
+            else{
+             ResultSet rs = pstmt.executeQuery();
+                ArrayList<Curso> cursos = new ArrayList();
+                System.out.println(rs);
+                while(rs.next()){
+                    cursos.add(tipoCurso(rs));
+                }
+                return cursos;
             }
             
         } catch (SQLException e) {
@@ -323,7 +531,7 @@ public class ServicioBusquedas extends Service{
     }      
     
     
-    public void buscarAlumnoXCarrera(int codigo) throws AccesoADatos.GlobalException, AccesoADatos.NoDataException, SQLException, InstantiationException, IllegalAccessException  	{
+    public ArrayList<Alumno> buscarAlumnoXCarrera(int codigo) throws AccesoADatos.GlobalException, AccesoADatos.NoDataException, SQLException, InstantiationException, IllegalAccessException  	{
         try {
             conectar();
         } catch (ClassNotFoundException e) {
@@ -338,9 +546,17 @@ public class ServicioBusquedas extends Service{
             pstmt.setInt(1,codigo);
             boolean resultado = pstmt.execute();
             if (resultado == true) {
-                throw new AccesoADatos.NoDataException("No se realizo la inserci�n");
+                throw new AccesoADatos.NoDataException("No se realizo la busqueda");
             }
-            
+            else{
+             ResultSet rs = pstmt.executeQuery();
+                ArrayList<Alumno> alumnos = new ArrayList();
+                System.out.println(rs);
+                while(rs.next()){
+                    alumnos.add(tipoAlumno(rs));
+                }
+                return alumnos;
+            }
         } catch (SQLException e) {
             throw new AccesoADatos.GlobalException("Llave duplicada");
         } finally {
