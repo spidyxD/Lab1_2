@@ -294,16 +294,17 @@ CREATE OR REPLACE FUNCTION buscar_inscritoCarrera(xcodigo in Carrera.codigo%TYPE
 
 
 -- SI FUNCIONA
-CREATE OR REPLACE FUNCTION buscar_Profesor_cedula (xcedula in Profesor.cedula%TYPE) 
-    RETURN SYS_REFCURSOR
-        AS 
-        c SYS_REFCURSOR;
-        BEGIN
-            OPEN c FOR SELECT *FROM Profesor WHERE cedula = xcedula;
-            RETURN c; 
-        END;
-        /
 
+    CREATE OR REPLACE FUNCTION buscar_Alumno_nombre (xnombre in VARCHAR) 
+            RETURN SYS_REFCURSOR
+                AS 
+                    c1 SYS_REFCURSOR;
+                BEGIN
+                    OPEN c1 FOR 
+                    SELECT  * FROM Alumno WHERE nombre = xnombre;  
+                    RETURN c1;   
+                END;
+                /
 -- SI FUNCIONA
    CREATE OR REPLACE FUNCTION buscar_Alumno_ced (xcedula in Alumno.cedula%TYPE) 
          RETURN SYS_REFCURSOR
@@ -318,6 +319,15 @@ CREATE OR REPLACE FUNCTION buscar_Profesor_cedula (xcedula in Profesor.cedula%TY
                 END;
             /
 
+CREATE OR REPLACE FUNCTION buscar_Profesor_cedula (xcedula in Profesor.cedula%TYPE) 
+    RETURN SYS_REFCURSOR
+        AS 
+        c SYS_REFCURSOR;
+        BEGIN
+            OPEN c FOR SELECT *FROM Profesor WHERE cedula = xcedula;
+            RETURN c; 
+        END;
+        /
 -- SI FUNCIONA
 CREATE OR REPLACE FUNCTION login(xid IN Usuario.id%TYPE, xpassword IN Usuario.clave%TYPE)
     RETURN SYS_REFCURSOR 
@@ -339,19 +349,5 @@ CREATE OR REPLACE PROCEDURE hacerMatricula (xalumno in Alumno.cedula%TYPE, xcarr
     END hacerMatricula;
     /
 
---ALTER TABLE Alumno ADD edad number;
---ALTER TABLE Profesor ADD edad number;
---ALTER TABLE Matricula ADD curso number;
- --commit;
 
-        /*CREATE OR REPLACE FUNCTION buscar_Alumno_nombre (xnombre in VARCHAR) 
-            RETURN SYS_REFCURSOR
-                AS 
-                    c1 SYS_REFCURSOR;
-                BEGIN
-                    OPEN c1 FOR 
-                    SELECT  *
-                    WHERE Alumno.nombre =  xnombre AND Alumno.cedula = Inscripcion.alumno  AND Inscripcion.carrera = Carrera.codigo;  
-                    RETURN c1;   
-                END;
-                /*/
+    
