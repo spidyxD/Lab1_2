@@ -1,6 +1,6 @@
 -- Dispositivos mobiles
 -- Base de datos para Lab 1 
-DROP TABLE Grupo;
+DROP TABLE Grupo CASCADE CONSTRAINTS;
 DROP TABLE PlanEstudio;
 DROP TABLE Rendimiento_Grupo;
 DROP TABLE Inscripcion;
@@ -242,11 +242,56 @@ CREATE OR REPLACE FUNCTION buscar_curso_carrera(xcarrera in Carrera.codigo%TYPE 
      AS 
     c SYS_REFCURSOR;
     BEGIN
-        OPEN c FOR SELECT Curso.nombre, Curso.codigo, Curso.creditos, Curso.horas_semanales FROM Carrera, PlanEstudio, Curso WHERE  Carrera.codigo = xcarrera AND PlanEstudio.carrera = Carrera.codigo AND PlanEstudio.curso = Curso.codigo;
+        OPEN c FOR SELECT DISTINCT * FROM PlanEstudio, Curso WHERE PlanEstudio.curso =  Curso.codigo  AND PlanEstudio.carrera = xcarrera;
          RETURN c; 
          CLOSE c;  
     END;
     / 
+
+CREATE OR REPLACE FUNCTION buscar_cursoXAlumno(xcedula in Alumno.cedula%TYPE ) 
+     RETURN SYS_REFCURSOR
+     AS 
+    c SYS_REFCURSOR;
+    BEGIN
+        OPEN c FOR SELECT DISTINCT * FROM Curso, Matricula WHERE Matricula.curso =  Curso.codigo  AND Matricula.alumno = xcedula;
+         RETURN c; 
+         CLOSE c;  
+    END;
+    / 
+
+CREATE OR REPLACE FUNCTION buscar_AlumnoXCurso(xcodigo in Curso.codigo%TYPE ) 
+     RETURN SYS_REFCURSOR
+     AS 
+    c SYS_REFCURSOR;
+    BEGIN
+        OPEN c FOR SELECT DISTINCT * FROM Alumno, Matricula WHERE Matricula.alumno =  Alumno.cedula  AND Matricula.curso = xcodigo;
+         RETURN c; 
+         CLOSE c;  
+    END;
+    / 
+
+CREATE OR REPLACE FUNCTION buscar_cursoXProfesor(xcedula in Profesor.cedula%TYPE ) 
+     RETURN SYS_REFCURSOR
+     AS 
+    c SYS_REFCURSOR;
+    BEGIN
+        OPEN c FOR SELECT DISTINCT * FROM Curso, Grupo WHERE Grupo.curso =  Curso.codigo  AND Grupo.profesor = xcedula;
+         RETURN c; 
+         CLOSE c;  
+    END;
+    / 
+
+CREATE OR REPLACE FUNCTION buscar_inscritoCarrera(xcodigo in Carrera.codigo%TYPE ) 
+     RETURN SYS_REFCURSOR
+     AS 
+    c SYS_REFCURSOR;
+    BEGIN
+        OPEN c FOR SELECT DISTINCT * FROM Alumno, Inscripcion WHERE Inscripcion.alumno =  Alumno.cedula  AND Inscripcion.carrera = xcodigo;
+         RETURN c; 
+         CLOSE c;  
+    END;
+    / 
+
 
 -- SI FUNCIONA
 CREATE OR REPLACE FUNCTION buscar_Profesor_cedula (xcedula in Profesor.cedula%TYPE) 

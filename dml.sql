@@ -1,11 +1,11 @@
 INSERT INTO Ciclo VALUES(01,'CICLO I',TO_DATE('2019/02/08','YYYY-MM-DD'),TO_DATE('2019/06/28','YYYY-MM-DD'));
 INSERT INTO Ciclo VALUES(02,'CICLO II',TO_DATE('2019/07/12','YYYY-MM-DD'),TO_DATE('2019/11/26','YYYY-MM-DD'));
-----------------------------------VETERIARIA----------------------------------
+-- --------------------------------VETERIARIA----------------------------------
 INSERT INTO Carrera VALUES(1,'Medicina Veterinaria','Licenciatura');
 
 --PRIMER AÑO
-INSERT INTO Curso VALUES(1,'Estudios Generales',3,3);
-INSERT INTO Curso VALUES(2,'Estudios Generales',3,3);
+INSERT INTO Curso VALUES(1,'Estudios Generales 1',3,3);
+INSERT INTO Curso VALUES(2,'Estudios Generales 2',3,3);
 INSERT INTO Curso VALUES(3,'Introducción a la Química General',4,4);
 INSERT INTO Curso VALUES(4,'Zoología',3,3);
 INSERT INTO Curso VALUES(5,'Ingles Tecnico',3,3);
@@ -17,8 +17,8 @@ INSERT INTO PlanEstudio VALUES(4,1,1,1);
 INSERT INTO PlanEstudio VALUES(5,1,1,1);
 INSERT INTO PlanEstudio VALUES(6,1,1,1);
 
-INSERT INTO Curso VALUES(7,'Estudios Generales',3,3);
-INSERT INTO Curso VALUES(8,'Estudios Generales',3,3);
+INSERT INTO Curso VALUES(7,'Estudios Generales 3',3,3);
+INSERT INTO Curso VALUES(8,'Estudios Generales 4',3,3);
 INSERT INTO Curso VALUES(9,'Fundamentos de química orgánica',3,3);
 INSERT INTO Curso VALUES(10,'Anatomía de los animales domésticos I',4,4);
 INSERT INTO Curso VALUES(11,'Citología e histología general',3,3);
@@ -130,20 +130,19 @@ INSERT INTO PlanEstudio VALUES(55,1,5,2);
 
 --SEXTO AÑO
 INSERT INTO Curso VALUES(56,'Internado Rotatorio I*',15,15);
-INSERT INTO PlanEstudio VALUES(56,1,6,1);
-
 INSERT INTO Curso VALUES(57,'Internado Rotatorio II*',15,15);
 INSERT INTO Curso VALUES(58,'Trabajo Final de Graduación',0,0);
+INSERT INTO PlanEstudio VALUES(56,1,6,1);
 INSERT INTO PlanEstudio VALUES(57,1,6,2);
 INSERT INTO PlanEstudio VALUES(58,1,6,2);
 
-----------------------Ingeniería em Sistemas----------------------
+-- --------------------Ingeniería em Sistemas----------------------
 INSERT INTO Carrera VALUES(2,'Ingenieria en Sistemas','Bachillerato');
-------PRIMER AÑO
+-- ----PRIMER AÑO
 INSERT INTO Curso VALUES(59,'Fundamentos de Informática',3,3);
 INSERT INTO Curso VALUES(60,'Matemática para Informática I',4,4);
-INSERT INTO Curso VALUES(61,'Estudios Generales ',3,3);
-INSERT INTO Curso VALUES(62,'Estudios Generales',3,3);
+INSERT INTO Curso VALUES(61,'Arte',3,3);
+INSERT INTO Curso VALUES(62,'Cambio Climatico',3,3);
 INSERT INTO Curso VALUES(63,'Inglés Integrado I',4,4);
 INSERT INTO PlanEstudio VALUES(59,2,1,1);
 INSERT INTO PlanEstudio VALUES(60,2,1,1);
@@ -153,8 +152,8 @@ INSERT INTO PlanEstudio VALUES(63,2,1,1);
 
 INSERT INTO Curso VALUES(64,'Programación I',4,4);
 INSERT INTO Curso VALUES(65,'Calculo I',4,4);
-INSERT INTO Curso VALUES(66,'Estudios Generales ',3,3);
-INSERT INTO Curso VALUES(67,'Estudios Generales',3,3);
+INSERT INTO Curso VALUES(66,'Globalizacion ',3,3);
+INSERT INTO Curso VALUES(67,'Apreciacion del arte',3,3);
 INSERT INTO Curso VALUES(68,'Inglés Integrado II',4,4);
 INSERT INTO PlanEstudio VALUES(64,2,1,2);
 INSERT INTO PlanEstudio VALUES(65,2,1,2);
@@ -162,7 +161,7 @@ INSERT INTO PlanEstudio VALUES(66,2,1,2);
 INSERT INTO PlanEstudio VALUES(67,2,1,2);
 INSERT INTO PlanEstudio VALUES(68,2,1,2);
 
----------------SEGUNDO AÑO------------------------------
+-- -------------SEGUNDO AÑO------------------------------
 INSERT INTO Curso VALUES(69,'Programación II',4,4);
 INSERT INTO Curso VALUES(70,'Algebra',4,4);
 INSERT INTO Curso VALUES(71,'Soporte Técnico',3,3);
@@ -185,7 +184,7 @@ INSERT INTO PlanEstudio VALUES(76,2,2,2);
 INSERT INTO PlanEstudio VALUES(77,2,2,2);
 INSERT INTO PlanEstudio VALUES(78,2,2,2);
 
----------------TERCER AÑO------------------------------
+-- -------------TERCER AÑO------------------------------
 INSERT INTO Curso VALUES(79,'Programación IV',4,4);
 INSERT INTO Curso VALUES(80,'Ingenieria de Sistemas  I',4,4);
 INSERT INTO Curso VALUES(81,'Diseño e Implementación de Bases de Dato',4,4);
@@ -208,11 +207,11 @@ INSERT INTO PlanEstudio VALUES(86,2,5,2);
 INSERT INTO PlanEstudio VALUES(87,2,5,2);
 INSERT INTO PlanEstudio VALUES(88,2,5,2);
 
----------------CUARTO AÑO------------------------------
+-- -------------CUARTO AÑO------------------------------
 INSERT INTO Curso VALUES(89,'Diseño y programación de plataformas Móviles',4,4);
 INSERT INTO Curso VALUES(90,'Ingenieria de Sistemas  III',4,4);
-INSERT INTO Curso VALUES(91,'Optativo ',3,3);
-INSERT INTO Curso VALUES(92,'Optativo ',3,3);
+INSERT INTO Curso VALUES(91,'Optativo 1 ',3,3);
+INSERT INTO Curso VALUES(92,'Optativo 2 ',3,3);
 INSERT INTO Curso VALUES(93,'Met Inv Científica en Informática',3,3);
 INSERT INTO PlanEstudio VALUES(89,2,4,1);
 INSERT INTO PlanEstudio VALUES(90,2,4,1);
@@ -222,8 +221,8 @@ INSERT INTO PlanEstudio VALUES(93,2,4,1);
 
 INSERT INTO Curso VALUES(94,'Proyectos y su Aplicacion en la Organizacion(PPS)',5,5);
 INSERT INTO Curso VALUES(95,'Aplicaciones Informaticas Globales',4,4);
-INSERT INTO Curso VALUES(96,'Optativo',3,3);
-INSERT INTO Curso VALUES(97,'Optativo',3,3);
+INSERT INTO Curso VALUES(96,'Optativo 3',3,3);
+INSERT INTO Curso VALUES(97,'Optativo 4',3,3);
 INSERT INTO Curso VALUES(98,'Informatica y Sociedad',2,2);
 INSERT INTO PlanEstudio VALUES(94,2,4,2);
 INSERT INTO PlanEstudio VALUES(95,2,4,2);
@@ -249,7 +248,7 @@ INSERT INTO Curso VALUES(111,'Investigación de Mercados',2,2);
 -- Admin
 INSERT INTO Administrador Values(12345,'DBA');
 
----PROFESORES
+-- PROFESORES
 INSERT INTO Profesor VALUES (1763589,'Juan Perez',35,87656789,'juanp@gmail.com');
 INSERT INTO Profesor VALUES (6543789,'Margarita Gomez',31,76427896,'margaritag@gmail.com');
 INSERT INTO Profesor VALUES (7648903,'Lucresia Ramirez',52,86345678,'lucresiar@gmail.com');
@@ -346,6 +345,32 @@ INSERT INTO Grupo VALUES(503,75,25,'L-V 8:00AM-10:40AM',2789456);
 INSERT INTO Grupo VALUES(504,76,25,'L-V 8:00AM-10:40AM',2789456);
 INSERT INTO Grupo VALUES(505,77,25,'L-V 8:00AM-10:40AM',7648903);
 INSERT INTO Grupo VALUES(506,78,25,'L-V 8:00AM-10:40AM',7648903);
+INSERT INTO Grupo VALUES(506,78,25,'L-V 8:00AM-10:40AM',7648903);
+INSERT INTO Grupo VALUES(507,79,25,'L-V 8:00AM-10:40AM',7648903);
+INSERT INTO Grupo VALUES(508,80,25,'L-V 8:00AM-10:40AM',7648903);
+INSERT INTO Grupo VALUES(509,81,25,'L-V 8:00AM-10:40AM',7648903);
+INSERT INTO Grupo VALUES(510,82,25,'L-V 8:00AM-10:40AM',7648903);
+INSERT INTO Grupo VALUES(511,83,25,'L-V 8:00AM-10:40AM',2789456);
+INSERT INTO Grupo VALUES(512,84,25,'L-V 8:00AM-10:40AM',2789456);
+INSERT INTO Grupo VALUES(513,85,25,'L-V 8:00AM-10:40AM',2789456);
+INSERT INTO Grupo VALUES(514,86,25,'L-V 8:00AM-10:40AM',2789456);
+INSERT INTO Grupo VALUES(515,87,25,'L-V 8:00AM-10:40AM',2789456);
+INSERT INTO Grupo VALUES(516,88,25,'L-V 8:00AM-10:40AM',1763589);
+INSERT INTO Grupo VALUES(517,89,25,'L-V 8:00AM-10:40AM',1763589);
+INSERT INTO Grupo VALUES(518,90,25,'L-V 8:00AM-10:40AM',1763589);
+INSERT INTO Grupo VALUES(519,91,25,'L-V 8:00AM-10:40AM',1763589);
+INSERT INTO Grupo VALUES(520,92,25,'L-V 8:00AM-10:40AM',1763589);
+INSERT INTO Grupo VALUES(521,93,25,'L-V 8:00AM-10:40AM',6543789);
+INSERT INTO Grupo VALUES(522,94,25,'L-V 8:00AM-10:40AM',6543789);
+INSERT INTO Grupo VALUES(523,95,25,'L-V 8:00AM-10:40AM',6543789);
+INSERT INTO Grupo VALUES(524,96,25,'L-V 8:00AM-10:40AM',6543789);
+INSERT INTO Grupo VALUES(525,97,25,'L-V 8:00AM-10:40AM',6543789);
+INSERT INTO Grupo VALUES(526,98,25,'L-V 8:00AM-10:40AM',6543789);
+
+
+
+
+
 
 INSERT INTO Inscripcion VALUES(4678936,2);
 INSERT INTO Inscripcion VALUES(8362398,2);
