@@ -3,15 +3,20 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/dh173/OneDrive/Documentos/GitHub/Lab1_2/Presentacion/src/Controller/AlumnoController.java</file>
-            <file>file:/C:/Users/dh173/OneDrive/Documentos/GitHub/Lab1_2/Presentacion/src/Model/LoginModel.java</file>
-            <file>file:/C:/Users/dh173/OneDrive/Documentos/GitHub/Lab1_2/Presentacion/src/View/MatriculaView.java</file>
-            <file>file:/C:/Users/dh173/OneDrive/Documentos/GitHub/Lab1_2/Presentacion/src/Controller/LoginController.java</file>
-            <file>file:/C:/Users/dh173/OneDrive/Documentos/GitHub/Lab1_2/Presentacion/src/Model/AlumnoModel.java</file>
             <file>file:/C:/Users/dh173/OneDrive/Documentos/GitHub/Lab1_2/Presentacion/src/Principal/Presentacion.java</file>
             <file>file:/C:/Users/dh173/OneDrive/Documentos/GitHub/Lab1_2/Presentacion/src/Controller/AdministradorController.java</file>
-            <file>file:/C:/Users/dh173/OneDrive/Documentos/GitHub/Lab1_2/Presentacion/src/View/AlumnoView.java</file>
+            <file>file:/C:/Users/dh173/OneDrive/Documentos/GitHub/Lab1_2/Presentacion/src/Model/AlumnoModel.java</file>
             <file>file:/C:/Users/dh173/OneDrive/Documentos/GitHub/Lab1_2/Presentacion/src/View/AdministradorView.java</file>
+            <file>file:/C:/Users/dh173/OneDrive/Documentos/GitHub/Lab1_2/Presentacion/src/Controller/ProfesorController.java</file>
+            <file>file:/C:/Users/dh173/OneDrive/Documentos/GitHub/Lab1_2/Presentacion/src/Model/AdministradorModel.java</file>
+            <file>file:/C:/Users/dh173/OneDrive/Documentos/GitHub/Lab1_2/Presentacion/src/Model/ProfesorModel.java</file>
+            <file>file:/C:/Users/dh173/OneDrive/Documentos/GitHub/Lab1_2/Presentacion/src/Controller/LoginController.java</file>
+            <file>file:/C:/Users/dh173/OneDrive/Documentos/GitHub/Lab1_2/Presentacion/src/View/MatriculaView.java</file>
+            <file>file:/C:/Users/dh173/OneDrive/Documentos/GitHub/Lab1_2/Presentacion/src/Model/Model.java</file>
+            <file>file:/C:/Users/dh173/OneDrive/Documentos/GitHub/Lab1_2/Presentacion/src/View/ProfesorView.java</file>
+            <file>file:/C:/Users/dh173/OneDrive/Documentos/GitHub/Lab1_2/Presentacion/src/Model/LoginModel.java</file>
+            <file>file:/C:/Users/dh173/OneDrive/Documentos/GitHub/Lab1_2/Presentacion/src/Controller/AlumnoController.java</file>
+            <file>file:/C:/Users/dh173/OneDrive/Documentos/GitHub/Lab1_2/Presentacion/src/View/AlumnoView.java</file>
             <file>file:/C:/Users/dh173/OneDrive/Documentos/GitHub/Lab1_2/Presentacion/src/View/LoginView.java</file>
         </group>
     </open-files>
