@@ -5,17 +5,15 @@
  */
 package Model;
 
+import Entities.Administrador;
 import java.util.HashMap;
-import javax.swing.ComboBoxModel;
-import javax.swing.DefaultComboBoxModel;
-import Entities.Usuario;
-import java.util.Observer;
+
 /**
  *
  * @author dh173
  */
-public class AdministradorModel extends java.util.Observable{
-    Usuario current;
+public class AdministradorModel extends java.util.Observable {
+    Administrador current;
     HashMap<String,String> errores;
     String mensaje;
     int modo;    
@@ -25,9 +23,9 @@ public class AdministradorModel extends java.util.Observable{
 
    public void init(){ //init(TipoInstrumento[] tiposIns)
         //setTiposIns(tipos);
-        setCurrent(new Usuario());
+        setCurrent(new Administrador());
         clearErrors();
-         setChanged();
+        setChanged();
         notifyObservers();  
     }
 
@@ -60,14 +58,14 @@ public class AdministradorModel extends java.util.Observable{
         setMensaje("");
         
     }
-    public Usuario getCurrent() {
-        return current;
-    }
 
-    public void setCurrent(Usuario current) {
+    public void setCurrent(Administrador current) {
         this.current = current;
         setChanged();
         notifyObservers();        
+    }
+     public Administrador getCurrent() {
+        return current;
     }
 
     @Override
@@ -77,3 +75,4 @@ public class AdministradorModel extends java.util.Observable{
         notifyObservers();
     }
 }
+

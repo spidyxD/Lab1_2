@@ -4,17 +4,14 @@
  * and open the template in the editor.
  */
 package Model;
-
-import java.util.HashMap;
-import javax.swing.ComboBoxModel;
-import javax.swing.DefaultComboBoxModel;
 import Entities.Profesor;
-import java.util.Observer;
+import java.util.HashMap;
+
 /**
  *
  * @author dh173
  */
-public class ProfesorModel extends java.util.Observable{
+public class ProfesorModel extends java.util.Observable {
     Profesor current;
     HashMap<String,String> errores;
     String mensaje;
@@ -23,11 +20,11 @@ public class ProfesorModel extends java.util.Observable{
     public ProfesorModel() {
     }
 
-     public void init(){ //init(TipoInstrumento[] tiposIns)
+   public void init(){ //init(TipoInstrumento[] tiposIns)
         //setTiposIns(tipos);
         setCurrent(new Profesor());
         clearErrors();
-         setChanged();
+        setChanged();
         notifyObservers();  
     }
 
@@ -60,14 +57,14 @@ public class ProfesorModel extends java.util.Observable{
         setMensaje("");
         
     }
-    public Profesor getCurrent() {
-        return current;
-    }
 
     public void setCurrent(Profesor current) {
         this.current = current;
         setChanged();
         notifyObservers();        
+    }
+     public Profesor getCurrent() {
+        return current;
     }
 
     @Override

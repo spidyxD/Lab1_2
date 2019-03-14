@@ -5,29 +5,49 @@
  */
 package Model;
 
+import Entities.Alumno;
+import Entities.Profesor;
+import Entities.Usuario;
 import java.util.HashMap;
-import javax.swing.ComboBoxModel;
-import javax.swing.DefaultComboBoxModel;
-import Entities.Matricula;
-import java.util.Observer;
+
 /**
  *
  * @author dh173
  */
-public class MatriculaModel extends java.util.Observable{
-    Matricula current;
+public class Model extends java.util.Observable {
+    Usuario usuario;
+    Alumno alumno;
+    Profesor profesor;
     HashMap<String,String> errores;
     String mensaje;
     int modo;    
 
-    public MatriculaModel() {
+    public Model() {
     }
 
-     public void init(){ //init(TipoInstrumento[] tiposIns)
+    public Alumno getAlumno() {
+        return alumno;
+    }
+
+    public void setAlumno(Alumno alumno) {
+        this.alumno = alumno;
+    }
+
+    public Profesor getProfesor() {
+        return profesor;
+    }
+
+    public void setProfesor(Profesor profesor) {
+        this.profesor = profesor;
+    }
+
+   public void init(){ //init(TipoInstrumento[] tiposIns)
         //setTiposIns(tipos);
-        setCurrent(new Matricula());
+        setUsuario(new Usuario());
+        setAlumno(new Alumno());
+        setProfesor(new Profesor());
         clearErrors();
-         setChanged();
+        setChanged();
         notifyObservers();  
     }
 
@@ -60,12 +80,12 @@ public class MatriculaModel extends java.util.Observable{
         setMensaje("");
         
     }
-    public Matricula getCurrent() {
-        return current;
+    public Usuario getUsuario() {
+        return usuario;
     }
 
-    public void setCurrent(Matricula current) {
-        this.current = current;
+    public void setUsuario(Usuario current) {
+        this.usuario = current;
         setChanged();
         notifyObservers();        
     }
