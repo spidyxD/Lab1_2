@@ -7,15 +7,12 @@ package Model;
 
 import Entities.Usuario;
 import java.util.HashMap;
-import java.util.HashMap;
-import javax.swing.ComboBoxModel;
-import javax.swing.DefaultComboBoxModel;
-import java.util.Observer;
+
 /**
  *
  * @author dh173
  */
-public class LoginModel extends java.util.Observable{
+public class LoginModel extends java.util.Observable {
     Usuario current;
     HashMap<String,String> errores;
     String mensaje;
@@ -24,11 +21,11 @@ public class LoginModel extends java.util.Observable{
     public LoginModel() {
     }
 
-    public void init(){ //init(TipoInstrumento[] tiposIns)
+   public void init(){ //init(TipoInstrumento[] tiposIns)
         //setTiposIns(tipos);
         setCurrent(new Usuario());
         clearErrors();
-         setChanged();
+        setChanged();
         notifyObservers();  
     }
 
@@ -61,14 +58,14 @@ public class LoginModel extends java.util.Observable{
         setMensaje("");
         
     }
-    public Usuario getCurrent() {
-        return current;
-    }
 
     public void setCurrent(Usuario current) {
         this.current = current;
         setChanged();
         notifyObservers();        
+    }
+     public Usuario getCurrent() {
+        return current;
     }
 
     @Override

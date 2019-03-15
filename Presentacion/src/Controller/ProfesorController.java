@@ -5,6 +5,7 @@
  */
 package Controller;
 
+import Dao.Data;
 import View.ProfesorView;
 import Model.ProfesorModel;
 /**
@@ -14,10 +15,11 @@ import Model.ProfesorModel;
 public class ProfesorController {
       ProfesorView view;
       ProfesorModel model;
+      Data data;
     
-    public ProfesorController(ProfesorView view, ProfesorModel model) { 
+    public ProfesorController(ProfesorView view, ProfesorModel model,Data data) { 
         model.init();
-        //this.domainModel= domainModel;
+        this.data=data;
         
         this.view = view;
         this.model = model;

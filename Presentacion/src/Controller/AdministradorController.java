@@ -9,22 +9,29 @@ import Entities.Alumno;
 import View.AdministradorView;
 import Model.AdministradorModel;
 import Entities.Usuario;
+import View.MatriculaView;
+import Dao.Data;
 /**
  *
  * @author dh173
  */
 public class AdministradorController {
-      AdministradorView view;
+      AdministradorView viewAdmin;
+      MatriculaView viewMat;
       AdministradorModel model;
+      Data data;
     
-    public AdministradorController(AdministradorView view, AdministradorModel model) { 
+    public AdministradorController(AdministradorView viewAdmin, MatriculaView viewMat, AdministradorModel model, Data data) { 
         model.init();
-        //this.domainModel= domainModel;
+        this.data=data;
         
-        this.view = view;
+        this.viewMat= viewMat;
+        this.viewAdmin = viewAdmin;
         this.model = model;
-        view.setController(this);
-        view.setModel(model);
+        viewAdmin.setController(this);
+        viewMat.setController(this);
+        viewAdmin.setModel(model);
+        viewMat.setModel(model);
     }
     public Alumno SearchPorNombre(String nom){
     return new Alumno();

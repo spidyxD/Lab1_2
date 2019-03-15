@@ -5,16 +5,14 @@
  */
 package Model;
 
-import java.util.HashMap;
-import javax.swing.ComboBoxModel;
-import javax.swing.DefaultComboBoxModel;
 import Entities.Alumno;
-import java.util.Observer;
+import java.util.HashMap;
+
 /**
  *
  * @author dh173
  */
-public class AlumnoModel extends java.util.Observable{
+public class AlumnoModel extends java.util.Observable {
     Alumno current;
     HashMap<String,String> errores;
     String mensaje;
@@ -23,11 +21,11 @@ public class AlumnoModel extends java.util.Observable{
     public AlumnoModel() {
     }
 
-    public void init(){ //init(TipoInstrumento[] tiposIns)
+   public void init(){ //init(TipoInstrumento[] tiposIns)
         //setTiposIns(tipos);
         setCurrent(new Alumno());
         clearErrors();
-         setChanged();
+        setChanged();
         notifyObservers();  
     }
 
@@ -60,14 +58,14 @@ public class AlumnoModel extends java.util.Observable{
         setMensaje("");
         
     }
-    public Alumno getCurrent() {
-        return current;
-    }
 
     public void setCurrent(Alumno current) {
         this.current = current;
         setChanged();
         notifyObservers();        
+    }
+     public Alumno getCurrent() {
+        return current;
     }
 
     @Override
@@ -77,3 +75,4 @@ public class AlumnoModel extends java.util.Observable{
         notifyObservers();
     }
 }
+

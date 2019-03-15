@@ -5,6 +5,7 @@
  */
 package Controller;
 
+import Dao.Data;
 import Entities.Usuario;
 import Model.LoginModel;
 import View.LoginView;
@@ -16,10 +17,11 @@ import View.LoginView;
 public class LoginController {
       LoginView view;
       LoginModel model;
+      Data data;
     
-    public LoginController(LoginView view, LoginModel model) { 
+    public LoginController(LoginView view, LoginModel model, Data data) { 
         model.init();
-        //this.domainModel= domainModel;
+        this.data=data;
         
         this.view = view;
         this.model = model;
