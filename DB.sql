@@ -1,17 +1,17 @@
 -- Dispositivos mobiles
 -- Base de datos para Lab 1 
---DROP TABLE Grupo CASCADE CONSTRAINTS;
---DROP TABLE PlanEstudio;
---DROP TABLE Rendimiento_Grupo;
---DROP TABLE Inscripcion;
---DROP TABLE Matricula;
---DROP TABLE Administrador;
---DROP TABLE Carrera CASCADE CONSTRAINTS;
---DROP TABLE Alumno CASCADE CONSTRAINTS;
---DROP TABLE Curso CASCADE CONSTRAINTS;
---DROP TABLE Profesor CASCADE CONSTRAINTS;
---DROP TABLE Ciclo CASCADE CONSTRAINTS;
---DROP TABLE Usuario CASCADE CONSTRAINTS;
+DROP TABLE Grupo CASCADE CONSTRAINTS;
+DROP TABLE PlanEstudio;
+DROP TABLE Rendimiento_Grupo;
+DROP TABLE Inscripcion;
+DROP TABLE Matricula;
+DROP TABLE Administrador;
+DROP TABLE Carrera CASCADE CONSTRAINTS;
+DROP TABLE Alumno CASCADE CONSTRAINTS;
+DROP TABLE Curso CASCADE CONSTRAINTS;
+DROP TABLE Profesor CASCADE CONSTRAINTS;
+DROP TABLE Ciclo CASCADE CONSTRAINTS;
+DROP TABLE Usuario CASCADE CONSTRAINTS;
 
 
 
@@ -323,9 +323,9 @@ CREATE OR REPLACE FUNCTION buscar_inscritoCarrera(xcodigo in Carrera.codigo%TYPE
                     c1 SYS_REFCURSOR;
                 BEGIN
                     OPEN c1 FOR 
-                    SELECT * 
-                    FROM  Alumno
-                    WHERE Alumno.cedula =  xcedula;  
+                    SELECT  *
+                    FROM   Alumno
+                    WHERE Alumno.cedula =  xcedula AND Alumno.cedula = Inscripcion.alumno  AND Inscripcion.carrera = Carrera.codigo AND Inscripcion.carrera = Matricula.carrera AND Matricula.grupo = Grupo.nrc AND Grupo.curso = Curso.codigo;  
                     RETURN c1;   
                 END;
             /
@@ -361,4 +361,15 @@ CREATE OR REPLACE PROCEDURE hacerMatricula (xalumno in Alumno.cedula%TYPE, xcarr
     /
 
 
-    
+   /* CREATE OR REPLACE FUNCTION buscar_Alumno_ced (xcedula in Alumno.cedula%TYPE) 
+         RETURN SYS_REFCURSOR
+                AS 
+                    c1 SYS_REFCURSOR;
+                BEGIN
+                    OPEN c1 FOR 
+                    SELECT  Alumno.cedula, Alumno.nombre, Alumno.email, Alumno.fecha_nacimiento, Carrera.nombre, Curso.nombre  FROM    
+                    Alumno, Inscripcion, Carrera, Matricula, Curso, Grupo  
+                    WHERE Alumno.cedula =  xcedula AND Alumno.cedula = Inscripcion.alumno  AND Inscripcion.carrera = Carrera.codigo AND Inscripcion.carrera = Matricula.carrera AND Matricula.grupo = Grupo.nrc AND Grupo.curso = Curso.codigo;  
+                    RETURN c1;   
+                END;
+            /*/
