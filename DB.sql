@@ -323,9 +323,9 @@ CREATE OR REPLACE FUNCTION buscar_inscritoCarrera(xcodigo in Carrera.codigo%TYPE
                     c1 SYS_REFCURSOR;
                 BEGIN
                     OPEN c1 FOR 
-                    SELECT  Alumno.cedula, Alumno.nombre, Alumno.email, Alumno.fecha_nacimiento, Carrera.nombre, Curso.nombre  FROM    
-                    Alumno, Inscripcion, Carrera, Matricula, Curso, Grupo  
-                    WHERE Alumno.cedula =  xcedula AND Alumno.cedula = Inscripcion.alumno  AND Inscripcion.carrera = Carrera.codigo AND Inscripcion.carrera = Matricula.carrera AND Matricula.grupo = Grupo.nrc AND Grupo.curso = Curso.codigo;  
+                    SELECT * 
+                    FROM  Alumno
+                    WHERE Alumno.cedula =  xcedula;  
                     RETURN c1;   
                 END;
             /
