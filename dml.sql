@@ -246,7 +246,8 @@ INSERT INTO Curso VALUES(110,'Elaboración y Evaluación de Proyectos',4,4);
 INSERT INTO Curso VALUES(111,'Investigación de Mercados',2,2);
 
 -- Admin
-INSERT INTO Administrador Values(12345,'DBA');
+INSERT INTO Administrador Values(12345,'Administrador1');
+INSERT INTO Usuario values (12345,'admin','Administrador')
 
 -- PROFESORES
 INSERT INTO Profesor VALUES (1763589,'Juan Perez',35,87656789,'juanp@gmail.com');
