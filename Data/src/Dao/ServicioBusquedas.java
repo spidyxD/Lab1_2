@@ -85,10 +85,10 @@ public class ServicioBusquedas extends Service{
         try{
             Alumno a = new Alumno();
             a.setCedula(rs.getInt("cedula"));
-            a.setEdad(rs.getInt("edad"));       
+            a.setEdad(rs.getInt("edad"));
             a.setEmail(rs.getString("email"));
             a.setFecha_nacimiento(rs.getDate("fecha_nacimiento"));
-            a.setNombre(rs.getString("nombre"));
+            a.setNombre(rs.getString(""));
             return a;
         }
         catch (SQLException ex) {
@@ -351,8 +351,14 @@ public class ServicioBusquedas extends Service{
             pstmt.registerOutParameter(1, OracleTypes.CURSOR);
             pstmt.setInt(2,id);
              pstmt.execute();              
+<<<<<<< HEAD
              ResultSet rs = (ResultSet) pstmt.getObject(1);                                
              rs.next();
+=======
+             ResultSet rs = (ResultSet) pstmt.getObject(1);                 
+                System.out.println(rs);
+                while(rs.next()){
+>>>>>>> parent of a30ef2b... important updates
                     alumnos.add(tipoAlumno(rs));
                                                   
         } catch (SQLException e) {
