@@ -38,32 +38,38 @@ public class Presentacion {
      */
     public static void main(String[] args) {
         Data data= new Data();
-       
-          
-        AdministradorModel modelAdmin= new AdministradorModel();
-        AlumnoModel modelAlum= new AlumnoModel();
-        LoginModel modelLogin= new LoginModel();
-        ProfesorModel modelProf= new ProfesorModel();
-
-        AlumnoView alumnoView = new AlumnoView();
-        ALUMNO_VIEW=alumnoView;
-        AlumnoController alumnoController = new AlumnoController(alumnoView,modelAlum,data);
-        
-       MatriculaView matriculaView=new MatriculaView();
-       MATRICULA_VIEW=matriculaView;
-       
-       AdministradorView adminView= new AdministradorView();
-       ADMINISTRADOR_VIEW = adminView;
-       AdministradorController administradorController = new AdministradorController(adminView,matriculaView,modelAdmin,data);
-        
-       ProfesorView profesorView= new ProfesorView();
-        PROFESOR_VIEW=profesorView;
-        ProfesorController profesorController=new ProfesorController(profesorView,modelProf,data);
-        
-        LoginView loginView= new LoginView();
-        LOGIN_VIEW = loginView;
-        LoginController loginController= new LoginController(loginView,modelLogin,data);
-        LOGIN_VIEW.setVisible(true);
+        try {
+            
+            Alumno al= new Alumno();
+            data.getServiciobusquedas().buscarAlumnoId(4465656);
+            } catch (GlobalException | NoDataException | SQLException | InstantiationException | IllegalAccessException ex) {
+            Logger.getLogger(Presentacion.class.getName()).log(Level.SEVERE, null, ex);
+        }
+            
+            AdministradorModel modelAdmin= new AdministradorModel();
+            AlumnoModel modelAlum= new AlumnoModel();
+            LoginModel modelLogin= new LoginModel();
+            ProfesorModel modelProf= new ProfesorModel();
+            
+            AlumnoView alumnoView = new AlumnoView();
+            ALUMNO_VIEW=alumnoView;
+            AlumnoController alumnoController = new AlumnoController(alumnoView,modelAlum,data);
+            
+            MatriculaView matriculaView=new MatriculaView();
+            MATRICULA_VIEW=matriculaView;
+            
+            AdministradorView adminView= new AdministradorView();
+            ADMINISTRADOR_VIEW = adminView;
+            AdministradorController administradorController = new AdministradorController(adminView,matriculaView,modelAdmin,data);
+            
+            ProfesorView profesorView= new ProfesorView();
+            PROFESOR_VIEW=profesorView;
+            ProfesorController profesorController=new ProfesorController(profesorView,modelProf,data);
+            
+            LoginView loginView= new LoginView();
+            LOGIN_VIEW = loginView;
+            LoginController loginController= new LoginController(loginView,modelLogin,data);
+            LOGIN_VIEW.setVisible(true);
     }
     public static AdministradorView ADMINISTRADOR_VIEW;
     public static AlumnoView ALUMNO_VIEW; 
