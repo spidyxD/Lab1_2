@@ -18,6 +18,12 @@ public class Data{
     private ServicioProfesor servicioProfesor;
 
     public Data() {
+        service = new Service();
+        serviciobusquedas = new ServicioBusquedas();
+        servicioCursos = new ServicioCursos();
+        servicioestudiante= new ServicioEstudiante();
+        serviciogenerales = new ServicioGenerales();
+        servicioProfesor = new ServicioProfesor();
     }
 
     public Service getService() {

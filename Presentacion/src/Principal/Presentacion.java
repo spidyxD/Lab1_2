@@ -5,6 +5,8 @@
  */
 package Principal;
 
+import AccesoADatos.GlobalException;
+import AccesoADatos.NoDataException;
 import Controller.AdministradorController;
 import Controller.AlumnoController;
 import Controller.LoginController;
@@ -20,6 +22,10 @@ import View.MatriculaView;
 import View.ProfesorView;
 
 import Dao.Data;
+import Entities.Alumno;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -32,6 +38,13 @@ public class Presentacion {
      */
     public static void main(String[] args) {
         Data data= new Data();
+        try {
+             Alumno alumno= new Alumno();
+             alumno = data.getServiciobusquedas().buscarAlumnoId(4678936);
+             System.out.println(alumno.toString());
+         } catch (NullPointerException |GlobalException | NoDataException | SQLException | InstantiationException | IllegalAccessException ex) {
+             System.out.println(":/");
+         }
           
         AdministradorModel modelAdmin= new AdministradorModel();
         AlumnoModel modelAlum= new AlumnoModel();
@@ -54,9 +67,9 @@ public class Presentacion {
         ProfesorController profesorController=new ProfesorController(profesorView,modelProf,data);
         
         LoginView loginView= new LoginView();
-        LOGIN_VIEW=loginView;
-        LoginController loginController=new LoginController(loginView,modelLogin,data);
-        loginView.setVisible(true);
+        LOGIN_VIEW = loginView;
+        LoginController loginController= new LoginController(loginView,modelLogin,data);
+        //LOGIN_VIEW.setVisible(true);
     }
     public static AdministradorView ADMINISTRADOR_VIEW;
     public static AlumnoView ALUMNO_VIEW; 

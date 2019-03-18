@@ -10,18 +10,20 @@ import AccesoADatos.NoDataException;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
+import oracle.jdbc.OracleTypes;
 
 /**
  *
  * @author Addiel
  */
 public class Service {
-     private static final String DOLOGIN= "{call login(?,?)}";
+     private static final String DOLOGIN= "{?= call login(?,?)}";
      protected Connection conexion= null;
      public Service() {
         
@@ -60,13 +62,15 @@ public class Service {
         CallableStatement pstmt=null;
         
         try {
-            pstmt = conexion.prepareCall(DOLOGIN);
-            pstmt.setInt(1,user);
-             pstmt.setString(2,password);
-            boolean resultado = pstmt.execute();
-            if (resultado == true) {
-                throw new AccesoADatos.NoDataException("No se realizo la inserci�n");
-            }
+            pstmt = conexion.prepareCall("{? = call login(?,?)}");
+            pstmt.registerOutParameter(1, OracleTypes.CURSOR);
+            pstmt.setInt(2,user);
+            pstmt.setString(3,password);
+             pstmt.execute();              
+             ResultSet rs = (ResultSet) pstmt.getObject(1);                                
+                while(rs.next()){
+                    System.out.println(rs.getInt("exist"));
+                } 
             
         } catch (SQLException e) {
             e.printStackTrace();

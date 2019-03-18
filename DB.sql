@@ -31,14 +31,16 @@ CREATE Table Carrera (
 );
 
 CREATE TABLE Usuario (
-    id number NOT NULL UNIQUE,
+    id number,
     clave VARCHAR(50),
-    rol VARCHAR(50)
+    rol VARCHAR(50),
+	CONSTRAINT pkUsuario PRIMARY KEY (id)
 );
 
 CREATE TABLE Administrador (
     id number,
-    nombre varchar(30)
+    nombre varchar(30),
+	CONSTRAINT pAdministrador PRIMARY KEY (id)
 );
 
 CREATE TABLE Profesor (

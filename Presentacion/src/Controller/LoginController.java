@@ -5,10 +5,15 @@
  */
 package Controller;
 
+import AccesoADatos.GlobalException;
+import AccesoADatos.NoDataException;
 import Dao.Data;
 import Entities.Usuario;
 import Model.LoginModel;
 import View.LoginView;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -29,7 +34,23 @@ public class LoginController {
         view.setModel(model);
     }
     
-    public Usuario doLogin(String user, String clave){
+    public Usuario doLogin(int user, String clave){
+        model.clearErrors();
+        Usuario usuario = new Usuario();
+          try {
+             data.getService().doLogin(user,clave);
+          } catch (InstantiationException | IllegalAccessException | GlobalException | NoDataException ex) {
+              JOptionPane.showMessageDialog(null, "Ocurrió un error, asegurese de haber escrito correctamente su usuario y su contraseña ");
+          }
+          return usuario;
+    }
+    public Usuario buscarAdministrador(String user){
+        return new Usuario();
+    }
+    public Usuario buscarEstudiante(String user){
+        return new Usuario();
+    }
+    public Usuario buscarProfesor(String user){
         return new Usuario();
     }
 }

@@ -245,10 +245,6 @@ INSERT INTO Curso VALUES(109,'Administración Bursátil',2,2);
 INSERT INTO Curso VALUES(110,'Elaboración y Evaluación de Proyectos',4,4);
 INSERT INTO Curso VALUES(111,'Investigación de Mercados',2,2);
 
--- Admin
-INSERT INTO Administrador Values(12345,'Administrador1');
-INSERT INTO Usuario values (12345,'admin','Administrador')
-
 -- PROFESORES
 INSERT INTO Profesor VALUES (1763589,'Juan Perez',35,87656789,'juanp@gmail.com');
 INSERT INTO Profesor VALUES (6543789,'Margarita Gomez',31,76427896,'margaritag@gmail.com');
@@ -568,3 +564,6 @@ INSERT INTO Matricula VALUES(4343453,2,40,405,01);
 INSERT INTO Matricula VALUES(4343453,2,42,406,01);
 
 
+-- Admin
+INSERT INTO Administrador Values (12345,'Administrador1');
+INSERT INTO Usuario values (12345,'admin','Administrador');

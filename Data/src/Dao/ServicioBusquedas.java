@@ -352,9 +352,9 @@ public class ServicioBusquedas extends Service{
             pstmt.setInt(2,id);
              pstmt.execute();              
              ResultSet rs = (ResultSet) pstmt.getObject(1);                                
-                while(rs.next()){
+             rs.next();
                     alumnos.add(tipoAlumno(rs));
-                }                                  
+                                                  
         } catch (SQLException e) {
             throw new AccesoADatos.GlobalException(e.getMessage());
         } finally {
