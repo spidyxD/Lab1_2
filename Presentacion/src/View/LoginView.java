@@ -132,9 +132,7 @@ public class LoginView extends javax.swing.JFrame implements java.util.Observer 
             usuario = controller.doLogin( userr , clav);
         if (usuario != null){
             if(usuario.getRol()=="Administrador"){
-                //Administrador admin = controller.buscarAdministrador(user)
-                Presentacion.ADMINISTRADOR_VIEW.setVisible(true);
-                //Presentacion.ADMINISTRADOR_VIEW.getModel().setCurrent(current);
+               // Administrador admin = controller.buscarAdministrador(user)
             }
             if(usuario.getRol()=="Alumno"){
             

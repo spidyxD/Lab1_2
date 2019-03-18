@@ -63,7 +63,7 @@ public class Presentacion {
         LoginView loginView= new LoginView();
         LOGIN_VIEW = loginView;
         LoginController loginController= new LoginController(loginView,modelLogin,data);
-        //LOGIN_VIEW.setVisible(true);
+        LOGIN_VIEW.setVisible(true);
     }
     public static AdministradorView ADMINISTRADOR_VIEW;
     public static AlumnoView ALUMNO_VIEW; 
