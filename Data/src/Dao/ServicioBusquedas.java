@@ -350,14 +350,11 @@ public class ServicioBusquedas extends Service{
             pstmt = conexion.prepareCall("{? = call buscar_Alumno_ced(?)}");
             pstmt.registerOutParameter(1, OracleTypes.CURSOR);
             pstmt.setInt(2,id);
-            pstmt.executeUpdate();
-            // pstmt.execute();              
-             ResultSet rs = (ResultSet) pstmt.getObject(1);  
+             pstmt.execute();              
+             ResultSet rs = (ResultSet) pstmt.getObject(1);    
                 System.out.println(rs);
-                //while(rs.next()){
-                rs.next();
-                    alumnos.add(tipoAlumno(rs));
-                //}
+                while(rs.next()){
+                    alumnos.add(tipoAlumno(rs));}
                                                   
         } catch (SQLException e) {
             throw new AccesoADatos.GlobalException(e.getMessage());
