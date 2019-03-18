@@ -38,13 +38,7 @@ public class Presentacion {
      */
     public static void main(String[] args) {
         Data data= new Data();
-        try {
-             Alumno alumno= new Alumno();
-             alumno = data.getServiciobusquedas().buscarAlumnoId(4678936);
-             System.out.println(alumno.toString());
-         } catch (NullPointerException |GlobalException | NoDataException | SQLException | InstantiationException | IllegalAccessException ex) {
-             System.out.println(":/");
-         }
+       
           
         AdministradorModel modelAdmin= new AdministradorModel();
         AlumnoModel modelAlum= new AlumnoModel();

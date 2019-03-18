@@ -327,7 +327,7 @@ CREATE OR REPLACE FUNCTION buscar_inscritoCarrera(xcodigo in Carrera.codigo%TYPE
                     OPEN c1 FOR 
                     SELECT  *
                     FROM   Alumno
-                    WHERE Alumno.cedula =  xcedula AND Alumno.cedula = Inscripcion.alumno  AND Inscripcion.carrera = Carrera.codigo AND Inscripcion.carrera = Matricula.carrera AND Matricula.grupo = Grupo.nrc AND Grupo.curso = Curso.codigo;  
+                    WHERE cedula =  xcedula;  
                     RETURN c1;   
                 END;
             /
@@ -337,7 +337,7 @@ CREATE OR REPLACE FUNCTION buscar_Profesor_cedula (xcedula in Profesor.cedula%TY
         AS 
         c SYS_REFCURSOR;
         BEGIN
-            OPEN c FOR SELECT *FROM Profesor WHERE cedula = xcedula;
+            OPEN c FOR SELECT * FROM Profesor WHERE cedula = xcedula;
             RETURN c; 
         END;
         /
