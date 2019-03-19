@@ -4,9 +4,6 @@
  * and open the template in the editor.
  */
 package Principal;
-
-import AccesoADatos.GlobalException;
-import AccesoADatos.NoDataException;
 import Controller.AdministradorController;
 import Controller.AlumnoController;
 import Controller.LoginController;
@@ -22,10 +19,6 @@ import View.MatriculaView;
 import View.ProfesorView;
 
 import Dao.Data;
-import Entities.Alumno;
-import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *

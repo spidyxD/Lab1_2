@@ -38,7 +38,7 @@ public class LoginController {
         model.clearErrors();
         Usuario usuario = new Usuario();
           try {
-             data.getService().doLogin(user,clave);
+             data.getService().loginCliente(user,clave);
           } catch (InstantiationException | IllegalAccessException | GlobalException | NoDataException ex) {
               JOptionPane.showMessageDialog(null, "Ocurrió un error, asegurese de haber escrito correctamente su usuario y su contraseña ");
           }

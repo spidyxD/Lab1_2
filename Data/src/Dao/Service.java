@@ -24,6 +24,7 @@ import oracle.jdbc.OracleTypes;
  */
 public class Service {
      private static final String DOLOGIN= "{?= call login(?,?)}";
+     private static final String login = "{?=call login(?,?)}";
      protected Connection conexion= null;
      public Service() {
         
@@ -62,12 +63,12 @@ public class Service {
         CallableStatement pstmt=null;
         
         try {
-            pstmt = conexion.prepareCall("{? = call login(?,?)}");
-            pstmt.registerOutParameter(1, OracleTypes.CURSOR);
+            pstmt = conexion.prepareCall("{?=call login(?,?)}");
             pstmt.setInt(2,user);
             pstmt.setString(3,password);
-             pstmt.execute();              
-             ResultSet rs = (ResultSet) pstmt.getObject(1);                                
+            pstmt.registerOutParameter(1, OracleTypes.CURSOR);
+             boolean exec= pstmt.execute();    
+             ResultSet rs = (ResultSet) pstmt.getObject(1);  
                 while(rs.next()){
                     System.out.println(rs.getInt("exist"));
                 } 
@@ -86,6 +87,56 @@ public class Service {
             }
         }
     }
-    
+      public boolean loginCliente(int user, String password) throws NoDataException, GlobalException, InstantiationException, IllegalAccessException{
+        boolean resp=true;
+        try {
+            conectar();
+        } catch (ClassNotFoundException e) {
+            resp=false;
+            throw new GlobalException("No se ha localizado el driver");
+        } catch (SQLException e) {
+            resp=false;
+            throw new NoDataException("La base de datos no se encuentra disponible");
+        }
+        ResultSet rs = null;
+        CallableStatement pstmt=null;  
+        int respuesta=0;
+        try {            
+            pstmt = conexion.prepareCall(login);            
+            pstmt.registerOutParameter(1, OracleTypes.CURSOR);            
+            pstmt.setInt(2,user);     
+            pstmt.setString(3,password);            
+            pstmt.execute();
+            
+            //********************************
+            rs=(ResultSet) pstmt.getObject(1);
+            while (rs.next()) {
+             respuesta = rs.getInt("exist");
+            }
+             if(respuesta==0){
+             resp=false;}
+            //********************************
+        } catch (SQLException e) {
+          e.printStackTrace();
+            resp=false;
+            throw new GlobalException("Sentencia no valida");
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (pstmt != null) {
+                    pstmt.close();
+                }
+                desconectar();
+            } catch (SQLException e) {
+                resp=false;
+                throw new GlobalException("Estatutos invalidos o nulos");
+            }
+        }
+        
+        return resp;
+        
+    }
      
 }
