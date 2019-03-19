@@ -351,7 +351,11 @@ public class ServicioBusquedas extends Service{
             pstmt.registerOutParameter(1, OracleTypes.CURSOR);
             pstmt.setInt(2,id);
              pstmt.execute();              
+<<<<<<< HEAD
              ResultSet rs = (ResultSet) pstmt.getObject(1);    
+=======
+             ResultSet rs = (ResultSet) pstmt.getObject(1);                 
+>>>>>>> parent of a30ef2b... important updates
                 System.out.println(rs);
                 while(rs.next()){
                     alumnos.add(tipoAlumno(rs));}
