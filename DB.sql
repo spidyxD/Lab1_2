@@ -17,7 +17,7 @@ DROP TABLE Usuario CASCADE CONSTRAINTS;
 
 CREATE TABLE Curso (
      codigo number NOT NULL,
-     nombre VARCHAR(50),
+     nombre VARCHAR(100),
      creditos number,
      horas_semanales number,
      CONSTRAINT pkCurso PRIMARY KEY (codigo)
@@ -25,25 +25,27 @@ CREATE TABLE Curso (
 
 CREATE Table Carrera (
     codigo number NOT NULL,
-    nombre VARCHAR(50),
+    nombre VARCHAR(100),
     titulo VARCHAR(50),
     CONSTRAINT pkCarrera PRIMARY KEY (codigo)
 );
 
 CREATE TABLE Usuario (
-    id number NOT NULL UNIQUE,
+    id number,
     clave VARCHAR(50),
-    rol VARCHAR(50)
+    rol VARCHAR(50),
+	CONSTRAINT pkUsuario PRIMARY KEY (id)
 );
 
 CREATE TABLE Administrador (
     id number,
-    nombre varchar(30)
+    nombre varchar(30),
+	CONSTRAINT pAdministrador PRIMARY KEY (id)
 );
 
 CREATE TABLE Profesor (
     cedula number NOT NULL,
-    nombre VARCHAR(50),
+    nombre VARCHAR(100),
     edad number,
     telefono number,
     email VARCHAR(50),
@@ -52,7 +54,7 @@ CREATE TABLE Profesor (
 
 CREATE TABLE Alumno (
     cedula number NOT NULL,
-    nombre VARCHAR(50),
+    nombre VARCHAR(100),
     fecha_nacimiento date,
     edad number,
     email VARCHAR(50),

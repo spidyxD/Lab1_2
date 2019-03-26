@@ -4,7 +4,6 @@
  * and open the template in the editor.
  */
 package Principal;
-
 import Controller.AdministradorController;
 import Controller.AlumnoController;
 import Controller.LoginController;
@@ -54,9 +53,9 @@ public class Presentacion {
         ProfesorController profesorController=new ProfesorController(profesorView,modelProf,data);
         
         LoginView loginView= new LoginView();
-        LOGIN_VIEW=loginView;
-        LoginController loginController=new LoginController(loginView,modelLogin,data);
-        loginView.setVisible(true);
+        LOGIN_VIEW = loginView;
+        LoginController loginController= new LoginController(loginView,modelLogin,data);
+        LOGIN_VIEW.setVisible(true);
     }
     public static AdministradorView ADMINISTRADOR_VIEW;
     public static AlumnoView ALUMNO_VIEW; 

@@ -10,8 +10,10 @@ package View;
  * @author dh173
  */
 import Controller.LoginController;
+import Entities.Administrador;
 import Entities.Usuario;
 import Model.LoginModel;
+import Principal.Presentacion;
 import java.util.Observable;
 import javax.swing.JOptionPane;
 public class LoginView extends javax.swing.JFrame implements java.util.Observer   {
@@ -122,12 +124,15 @@ public class LoginView extends javax.swing.JFrame implements java.util.Observer 
     }// </editor-fold>//GEN-END:initComponents
 
     private void loginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginButtonActionPerformed
-        String user= id.getText() ;
-        String clav=clave.getText();
-        Usuario usuario= controller.doLogin(user, clav);
+      String user= id.getText() ;
+            String clav=clave.getText();
+            int userr = Integer.parseInt(user);
+            System.out.println("El numero es : " + user);
+            Usuario usuario= new Usuario();
+            usuario = controller.doLogin( userr , clav);
         if (usuario != null){
             if(usuario.getRol()=="Administrador"){
-            
+               // Administrador admin = controller.buscarAdministrador(user)
             }
             if(usuario.getRol()=="Alumno"){
             
@@ -137,7 +142,7 @@ public class LoginView extends javax.swing.JFrame implements java.util.Observer 
             }
         }
     }//GEN-LAST:event_loginButtonActionPerformed
-    LoginController controller;
+    LoginController controller ;
     LoginModel model;
     
     public void setController(LoginController controller){
@@ -199,6 +204,6 @@ public class LoginView extends javax.swing.JFrame implements java.util.Observer 
 
     @Override
     public void update(Observable o, Object o1) {
-      
+      Usuario usuarioCurrent = model.getCurrent();
     }
 }

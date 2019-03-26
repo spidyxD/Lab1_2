@@ -36,26 +36,32 @@ public class Alumno extends Persona{
         this.fecha_nacimiento = fecha_nacimiento;
     }
 
+  @Override
     public String getNombre() {
         return nombre;
     }
 
+  @Override
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
 
+  @Override
     public int getCedula() {
         return cedula;
     }
 
+  @Override
     public void setCedula(int cedula) {
         this.cedula = cedula;
     }
 
+  @Override
     public String getEmail() {
         return email;
     }
 
+  @Override
     public void setEmail(String email) {
         this.email = email;
     }
