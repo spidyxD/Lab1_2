@@ -1,4 +1,4 @@
--- Dispositivos mobiles
+-- Dispositivos moviles
 -- Base de datos para Lab 1 
 DROP TABLE Grupo CASCADE CONSTRAINTS;
 DROP TABLE PlanEstudio;
@@ -374,4 +374,35 @@ CREATE OR REPLACE PROCEDURE hacerMatricula (xalumno in Alumno.cedula%TYPE, xcarr
                     WHERE Alumno.cedula =  xcedula AND Alumno.cedula = Inscripcion.alumno  AND Inscripcion.carrera = Carrera.codigo AND Inscripcion.carrera = Matricula.carrera AND Matricula.grupo = Grupo.nrc AND Grupo.curso = Curso.codigo;  
                     RETURN c1;   
                 END;
-            /*/
+            /
+
+CREATE OR REPLACE FUNCTION verAlumnos () RETURN SYS_REFCURSOR
+    IS 
+    c SYS_REFCURSOR;
+    BEGIN
+        OPEN c FOR SELECT * FROM Alumno;
+         RETURN c; 
+         CLOSE c;  
+    END;
+    /
+
+CREATE OR REPLACE FUNCTION verProfesores () RETURN SYS_REFCURSOR
+    IS 
+    c SYS_REFCURSOR;
+    BEGIN
+        OPEN c FOR SELECT * FROM Profesor;
+         RETURN c; 
+         CLOSE c;  
+    END;
+    /    
+
+
+ CREATE OR REPLACE FUNCTION verCursos () RETURN SYS_REFCURSOR
+    IS 
+    c SYS_REFCURSOR;
+    BEGIN
+        OPEN c FOR SELECT * FROM Curso;
+         RETURN c; 
+         CLOSE c;  
+    END;
+    /   */
