@@ -4,8 +4,15 @@
  * and open the template in the editor.
  */
 package Model;
+import Entities.Alumno;
+import Entities.Grupo;
 import Entities.Profesor;
+import Entities.Rendimiento_grupo;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Vector;
+import javax.swing.DefaultListModel;
 
 /**
  *
@@ -13,6 +20,9 @@ import java.util.HashMap;
  */
 public class ProfesorModel extends java.util.Observable {
     Profesor current;
+    AlumnosProfTableModel alumnos;
+    CalifFinalesTableModel calificaciones;
+    GruposTableModel grupos ;
     HashMap<String,String> errores;
     String mensaje;
     int modo;    
@@ -20,14 +30,60 @@ public class ProfesorModel extends java.util.Observable {
     public ProfesorModel() {
     }
 
-   public void init(){ //init(TipoInstrumento[] tiposIns)
-        //setTiposIns(tipos);
+   public void init(){
         setCurrent(new Profesor());
+        List<Alumno> rows = new ArrayList<Alumno>();
+        List<Grupo> rowss= new ArrayList<Grupo>();
+        List<Rendimiento_grupo> rowsss = new ArrayList<Rendimiento_grupo>();
+        this.setGrupos(rowss);
+        this.setAlumnos(rows);
+        this.setCalificaciones(rowsss);
         clearErrors();
         setChanged();
         notifyObservers();  
     }
 
+   public void setCalificaciones(List<Rendimiento_grupo> rend){
+        int[] cols={CalifFinalesTableModel.NOTA};
+        this.calificaciones =new CalifFinalesTableModel(cols,rend);  
+        setChanged();
+        notifyObservers(); 
+   }
+   public void setAlumnos(List<Alumno> alumnos){
+        int[] cols={AlumnosProfTableModel.NOMBRE,AlumnosProfTableModel.CEDULA,AlumnosProfTableModel.EMAIL};
+        this.alumnos =new AlumnosProfTableModel(cols,alumnos);  
+        setChanged();
+        notifyObservers();        
+    }
+
+    public AlumnosProfTableModel getAlumnos() {
+        return alumnos;
+    }
+    public void setAlumnos(AlumnosProfTableModel alumnos){
+        this.alumnos= alumnos;
+        setChanged();
+        notifyObservers(); 
+    }
+    
+    public GruposTableModel getGrupos() {
+        return grupos;
+    }
+
+    public CalifFinalesTableModel getCalificaciones() {
+        return calificaciones;
+    }
+
+    public void setCalificaciones(CalifFinalesTableModel calificaciones) {
+        this.calificaciones = calificaciones;
+    }
+
+    public void setGrupos(List<Grupo> grupos) {
+        int[] cols={GruposTableModel.NRC,GruposTableModel.CURSO,GruposTableModel.CAPACIDAD,GruposTableModel.HORARIO};
+        this.grupos =new GruposTableModel(cols,grupos);  
+        setChanged();
+        notifyObservers();  
+    }
+   
     public int getModo() {
         return modo;
     }
@@ -73,4 +129,5 @@ public class ProfesorModel extends java.util.Observable {
         setChanged();
         notifyObservers();
     }
+
 }

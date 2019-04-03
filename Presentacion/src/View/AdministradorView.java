@@ -9,13 +9,23 @@ package View;
  *
  * @author dh173
  */
+import AccesoADatos.GlobalException;
+import AccesoADatos.NoDataException;
 import java.util.Observable;
 
 import javax.swing.JOptionPane;
 import Controller.AdministradorController;
+import Controller.AlumnoController;
+import Entities.Administrador;
 import Entities.Alumno;
 import Entities.Usuario;
 import Model.AdministradorModel;
+import Model.AlumnoModel;
+import Principal.Presentacion;
+import java.awt.Color;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 public class AdministradorView extends javax.swing.JFrame implements java.util.Observer   {
 
     /**
@@ -35,154 +45,240 @@ public class AdministradorView extends javax.swing.JFrame implements java.util.O
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        cedula = new javax.swing.JLabel();
-        mantenimientoEstudiantes = new javax.swing.JButton();
+        jPanel2 = new javax.swing.JPanel();
         nombreEst = new javax.swing.JTextField();
-        labelNombre = new javax.swing.JLabel();
-        labelCedula = new javax.swing.JLabel();
-        cedEst = new javax.swing.JTextField();
-        mensajeBusqueda = new javax.swing.JLabel();
         search = new javax.swing.JButton();
+        mensajeBusqueda = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        nombreProf = new javax.swing.JTextField();
+        search1 = new javax.swing.JButton();
+        cerraS = new javax.swing.JButton();
+        jPanel3 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
+        nombre = new javax.swing.JLabel();
+        cedula = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Perfil Administrador");
+        setBackground(new java.awt.Color(255, 255, 255));
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
-
-        cedula.setText("Cedula Admin");
-
-        mantenimientoEstudiantes.setText("Mantenimento De Estudiantes");
-        mantenimientoEstudiantes.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                mantenimientoEstudiantesActionPerformed(evt);
+        jPanel1.setForeground(new java.awt.Color(0, 102, 153));
+        jPanel1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jPanel1MouseClicked(evt);
             }
         });
 
-        nombreEst.setEnabled(false);
+        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel2.setForeground(new java.awt.Color(255, 255, 255));
+        jPanel2.setEnabled(false);
 
-        labelNombre.setText("Nombre");
-        labelNombre.setEnabled(false);
-
-        labelCedula.setText("Cédula");
-        labelCedula.setEnabled(false);
-
-        cedEst.setEnabled(false);
-
-        mensajeBusqueda.setText("Digite el  Nombre o la  Cédula");
-        mensajeBusqueda.setEnabled(false);
-
-        search.setBackground(new java.awt.Color(255, 255, 255));
+        search.setBackground(new java.awt.Color(202, 55, 55));
         search.setForeground(new java.awt.Color(255, 255, 255));
         search.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/buscar.png"))); // NOI18N
-        search.setEnabled(false);
-        search.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                searchActionPerformed(evt);
+        search.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                searchMouseClicked(evt);
             }
         });
 
-        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/administrador.png"))); // NOI18N
+        mensajeBusqueda.setText("Busqueda por Nombre o Cédula");
+
+        jLabel1.setText("Alumno ");
+
+        jLabel3.setText("Profesor");
+
+        nombreProf.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                nombreProfActionPerformed(evt);
+            }
+        });
+
+        search1.setBackground(new java.awt.Color(202, 55, 55));
+        search1.setForeground(new java.awt.Color(255, 255, 255));
+        search1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/buscar.png"))); // NOI18N
+        search1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                search1MouseClicked(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(20, 20, 20)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(nombreEst, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(search, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(nombreProf, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(search1, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(27, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(mensajeBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, 235, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(117, 117, 117))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(mensajeBusqueda)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(26, 26, 26)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(nombreEst, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel1)))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(24, 24, 24)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel3)
+                            .addComponent(nombreProf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(search1, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(search, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(46, Short.MAX_VALUE))
+        );
+
+        cerraS.setBackground(new java.awt.Color(255, 255, 255));
+        cerraS.setForeground(new java.awt.Color(202, 55, 55));
+        cerraS.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/logout.png"))); // NOI18N
+        cerraS.setText("Cerrar Sesion");
+        cerraS.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                cerraSMouseClicked(evt);
+            }
+        });
+
+        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(0, 51, 51));
+        jLabel2.setText("Perfil de Administrador");
+
+        nombre.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        nombre.setText("Administrador");
+
+        cedula.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        cedula.setText("Cedula Admin");
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(nombre, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 39, Short.MAX_VALUE))
+                    .addComponent(cedula, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(nombre, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(cedula, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(21, Short.MAX_VALUE))
+        );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(184, 184, 184)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(labelCedula)
-                                    .addComponent(labelNombre))
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addGap(18, 18, 18)
-                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                            .addComponent(cedEst, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(nombreEst, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addGap(28, 28, 28)
-                                        .addComponent(search, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                            .addComponent(mensajeBusqueda)
-                            .addComponent(mantenimientoEstudiantes))
-                        .addGap(165, 165, 165))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGap(372, 372, 372)
-                        .addComponent(cedula, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(30, Short.MAX_VALUE))
+                .addGap(20, 20, 20)
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(cerraS)
+                .addContainerGap())
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(88, 88, 88)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 94, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(19, 19, 19)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addComponent(cedula, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(56, 56, 56)
-                        .addComponent(mantenimientoEstudiantes)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(mensajeBusqueda)
-                        .addGap(23, 23, 23)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(nombreEst, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(labelNombre))
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(labelCedula)
-                            .addComponent(cedEst, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(search, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(62, Short.MAX_VALUE))
+                        .addGap(20, 20, 20)
+                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(cerraS)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(15, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void searchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchActionPerformed
-        Alumno alumno= null;
-        if(nombreEst.getText()!=""){
-            alumno= controller.SearchPorNombre(nombreEst.getText());
-       }if(cedEst.getText()!=""){
-            alumno= controller.SearchPorCed(cedEst.getText());
-       }
-       if(alumno!=null){
-           
-       }
-                
-    }//GEN-LAST:event_searchActionPerformed
+    private void searchMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_searchMouseClicked
+        if(!"".equals(nombreEst.getText())){
+                try {
+                    controller.busquedaEstudiantes(nombreEst.getText());
+                } catch (GlobalException | NoDataException | SQLException | InstantiationException | IllegalAccessException ex) {
+                   JOptionPane.showMessageDialog(null, "No se encontraron resultados");
+                }
+        }else{
+            JOptionPane.showMessageDialog(null, "Digite un nombre o una cedula");
+        }
+        
+    }//GEN-LAST:event_searchMouseClicked
 
-    private void mantenimientoEstudiantesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mantenimientoEstudiantesActionPerformed
-        mensajeBusqueda.setEnabled(true);
-        mensajeBusqueda.setText("Busqueda de Estudiantes por Nombre o Cédula");
-        labelNombre.setEnabled(true);
-        nombreEst.setEnabled(true);
-        labelCedula.setEnabled(true);
-        cedEst.setEnabled(true);
-        search.setEnabled(true);
-    }//GEN-LAST:event_mantenimientoEstudiantesActionPerformed
+    private void jPanel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel1MouseClicked
+        nombre.setBackground(Color.WHITE);
+    }//GEN-LAST:event_jPanel1MouseClicked
+
+    private void cerraSMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cerraSMouseClicked
+            this.setVisible(false);
+            Presentacion.LOGIN_VIEW.setVisible(true);
+    }//GEN-LAST:event_cerraSMouseClicked
+
+    private void nombreProfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nombreProfActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_nombreProfActionPerformed
+
+    private void search1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_search1MouseClicked
+        if(!"".equals(nombreProf.getText())){
+        try {
+            controller.busquedaProfesores(nombreProf.getText());
+            } catch (GlobalException | NoDataException | SQLException | InstantiationException | IllegalAccessException ex) {
+            JOptionPane.showMessageDialog(null, "No se encontraron resultados");
+        }
+        }else{
+            JOptionPane.showMessageDialog(null, "Digite un nombre o una cedula");
+        }
+    }//GEN-LAST:event_search1MouseClicked
 
     /**
      * @param args the command line arguments
@@ -234,20 +330,27 @@ public class AdministradorView extends javax.swing.JFrame implements java.util.O
         return model;
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTextField cedEst;
     private javax.swing.JLabel cedula;
+    public javax.swing.JButton cerraS;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JLabel labelCedula;
-    private javax.swing.JLabel labelNombre;
-    private javax.swing.JButton mantenimientoEstudiantes;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JLabel mensajeBusqueda;
+    private javax.swing.JLabel nombre;
     private javax.swing.JTextField nombreEst;
+    private javax.swing.JTextField nombreProf;
     private javax.swing.JButton search;
+    private javax.swing.JButton search1;
     // End of variables declaration//GEN-END:variables
 
     @Override
     public void update(Observable o, Object o1) {
-        
+        Administrador admin= model.getCurrent();
+        String ced = Integer.toString(admin.getCedula());
+        cedula.setText("Cedula : "+ced);
+        nombre.setText("Administrador : "+admin.getNombre());
     }
 }

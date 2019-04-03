@@ -6,6 +6,8 @@
 package Entities;
 
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
 
 
 
@@ -15,9 +17,11 @@ import java.sql.Date;
  */
 public class Alumno extends Persona{
   public  Date fecha_nacimiento;
+  Carrera carrera = new Carrera();
 
     public Alumno() {
     }
+  
 
     public Alumno(Date fecha_nacimiento) {
         this.fecha_nacimiento = fecha_nacimiento;
@@ -34,6 +38,14 @@ public class Alumno extends Persona{
 
     public void setFecha_nacimiento(Date fecha_nacimiento) {
         this.fecha_nacimiento = fecha_nacimiento;
+    }
+
+    public Carrera getCarrera() {
+        return carrera;
+    }
+
+    public void setCarrera(Carrera carrera) {
+        this.carrera = carrera;
     }
 
   @Override
@@ -65,7 +77,5 @@ public class Alumno extends Persona{
     public void setEmail(String email) {
         this.email = email;
     }
-
- 
-  
+    
 }

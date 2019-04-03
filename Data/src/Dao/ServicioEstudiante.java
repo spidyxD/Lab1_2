@@ -10,7 +10,6 @@ import Entities.Usuario;
 import java.sql.CallableStatement;
 import java.sql.Date;
 import java.sql.SQLException;
-import java.util.ArrayList;
 
 /**
  *
@@ -19,7 +18,9 @@ import java.util.ArrayList;
 public class ServicioEstudiante extends Service{
     private static final String INSERTARESTUDIANTE= "{call crearAlumno(?,?,?,?,?,?,?)}";
     private static final String MODIFICARESTUDIANTE= "{call modificarAlumno(?,?,?,?,?,?)}";
+    private static final String MODIFICARCORREOESTUDIANTE= "{call modificarCorreoAlumno(?)}";
     private static final String ELIMINARESTUDIANTE= "{call eliminarAlumno(?)}";
+    
      public void insertarEstudiante(Alumno alumno, Usuario user) throws AccesoADatos.GlobalException, AccesoADatos.NoDataException, InstantiationException, IllegalAccessException  	{
         try {
             conectar();
@@ -59,7 +60,38 @@ public class ServicioEstudiante extends Service{
         }
     }
      
-     
+      public void modificarCorreoEstudiante(String email) throws AccesoADatos.GlobalException, AccesoADatos.NoDataException, InstantiationException, IllegalAccessException  	{
+        try {
+            conectar();
+        } catch (ClassNotFoundException e) {
+            throw new AccesoADatos.GlobalException("No se ha localizado el driver");
+        } catch (SQLException e) {
+            throw new AccesoADatos.NoDataException("La base de datos no se encuentra disponible");
+        }
+        CallableStatement pstmt=null;
+        
+        try {
+            pstmt = conexion.prepareCall(MODIFICARCORREOESTUDIANTE);
+            pstmt.setString(1,email);
+            boolean resultado = pstmt.execute();
+            if (resultado == true) {
+                throw new AccesoADatos.NoDataException("No se realizo la inserci�n");
+            }
+            
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new AccesoADatos.GlobalException("Llave duplicada");
+        } finally {
+            try {
+                if (pstmt != null) {
+                    pstmt.close();
+                }
+                desconectar();
+            } catch (SQLException e) {
+                throw new AccesoADatos.GlobalException("Estatutos invalidos o nulos");
+            }
+        }
+    }
      
       public void modificarEstudiante(Alumno alumno, Usuario user) throws AccesoADatos.GlobalException, AccesoADatos.NoDataException, InstantiationException, IllegalAccessException  	{
         try {
@@ -119,36 +151,6 @@ public class ServicioEstudiante extends Service{
             
         } catch (SQLException e) {
             e.printStackTrace();
-            throw new AccesoADatos.GlobalException("Llave duplicada");
-        } finally {
-            try {
-                if (pstmt != null) {
-                    pstmt.close();
-                }
-                desconectar();
-            } catch (SQLException e) {
-                throw new AccesoADatos.GlobalException("Estatutos invalidos o nulos");
-            }
-        }
-    }
-      
-       public ArrayList<Alumno> verAlumnos() throws AccesoADatos.GlobalException, AccesoADatos.NoDataException, InstantiationException, IllegalAccessException  	{
-        try {
-            conectar();
-        } catch (ClassNotFoundException e) {
-            throw new AccesoADatos.GlobalException("No se ha localizado el driver");
-        } catch (SQLException e) {
-            throw new AccesoADatos.NoDataException("La base de datos no se encuentra disponible");
-        }
-        CallableStatement pstmt=null;
-        
-        try {
-            ArrayList<Alumno> alumnos = new ArrayList<>();
-            alumnos = (ArrayList) conexion.prepareCall("SELECT * FROM Alumno;");
-           
-            return alumnos;
-            
-        } catch (SQLException e) {
             throw new AccesoADatos.GlobalException("Llave duplicada");
         } finally {
             try {

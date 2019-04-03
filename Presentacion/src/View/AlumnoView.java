@@ -1,4 +1,5 @@
 /*
+
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -9,9 +10,19 @@ package View;
  *
  * @author dh173
  */
+import AccesoADatos.GlobalException;
+import AccesoADatos.NoDataException;
 import Controller.AlumnoController;
+import Entities.Alumno;
 import Model.AlumnoModel;
+import Principal.Presentacion;
+import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Observable;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 public class AlumnoView extends javax.swing.JFrame implements java.util.Observer   {
 
@@ -20,6 +31,9 @@ public class AlumnoView extends javax.swing.JFrame implements java.util.Observer
      */
     public AlumnoView() {
         initComponents();
+        matricula.setVisible(false);
+        guardar.setVisible(false);
+        msj.setVisible(false);
     }
 
     /**
@@ -31,230 +45,218 @@ public class AlumnoView extends javax.swing.JFrame implements java.util.Observer
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jToolBar1 = new javax.swing.JToolBar();
         jPanel1 = new javax.swing.JPanel();
-        jLabel2 = new javax.swing.JLabel();
-        labelCorreoAlum = new javax.swing.JTextField();
-        labelNomAlum = new javax.swing.JTextField();
-        labelCedAlum = new javax.swing.JTextField();
-        labelTelAlum = new javax.swing.JTextField();
-        botonSave = new javax.swing.JButton();
-        bottonRegsitarNotas = new javax.swing.JButton();
-        bottonEditar = new javax.swing.JButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        listaCursos = new javax.swing.JList<>();
-        jScrollPane3 = new javax.swing.JScrollPane();
-        tablaEditNotas = new javax.swing.JTable();
-        labelfechaNacAlum = new javax.swing.JTextField();
-        labelCarreraAlum = new javax.swing.JTextField();
+        matricula = new javax.swing.JButton();
+        jPanel2 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
         nombre = new javax.swing.JLabel();
-        correo = new javax.swing.JLabel();
-        telefono = new javax.swing.JLabel();
         carrera = new javax.swing.JLabel();
-        fechaNac = new javax.swing.JLabel();
         cedula = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        fechaNac = new javax.swing.JLabel();
+        labelNomAlum = new javax.swing.JTextField();
+        labelCarreraAlum = new javax.swing.JTextField();
+        labelCedAlum = new javax.swing.JTextField();
+        labelfechaNacAlum = new javax.swing.JTextField();
+        correo = new javax.swing.JLabel();
+        labelCorreoAlum = new javax.swing.JTextField();
+        cerraS = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
+        guardar = new javax.swing.JButton();
+        msj = new javax.swing.JLabel();
+
+        jToolBar1.setRollover(true);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("PerfilAlumno");
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jPanel1MouseClicked(evt);
+            }
+        });
 
-        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/Student.png"))); // NOI18N
+        matricula.setBackground(new java.awt.Color(255, 255, 255));
+        matricula.setForeground(new java.awt.Color(202, 55, 55));
+        matricula.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/archivo.png"))); // NOI18N
+        matricula.setText("Matricular");
+        matricula.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                matriculaMouseClicked(evt);
+            }
+        });
 
-        labelCorreoAlum.setEditable(false);
-        labelCorreoAlum.setBackground(new java.awt.Color(255, 255, 255));
-        labelCorreoAlum.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
-        labelCorreoAlum.setBorder(null);
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(0, 51, 51));
+        jLabel1.setText("Perfil de Estudiante");
+
+        nombre.setForeground(new java.awt.Color(0, 51, 51));
+        nombre.setText("Nombre ");
+
+        carrera.setForeground(new java.awt.Color(0, 51, 51));
+        carrera.setText("Carrera");
+
+        cedula.setForeground(new java.awt.Color(0, 51, 51));
+        cedula.setText("Cédula");
+
+        fechaNac.setForeground(new java.awt.Color(0, 51, 51));
+        fechaNac.setText("Fecha de Nacimiento");
 
         labelNomAlum.setEditable(false);
         labelNomAlum.setBackground(new java.awt.Color(255, 255, 255));
+        labelNomAlum.setForeground(new java.awt.Color(0, 51, 51));
         labelNomAlum.setAutoscrolls(false);
         labelNomAlum.setBorder(null);
-        labelNomAlum.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                labelNomAlumActionPerformed(evt);
-            }
-        });
-
-        labelCedAlum.setEditable(false);
-        labelCedAlum.setBackground(new java.awt.Color(255, 255, 255));
-        labelCedAlum.setBorder(null);
-        labelCedAlum.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                labelCedAlumActionPerformed(evt);
-            }
-        });
-
-        labelTelAlum.setEditable(false);
-        labelTelAlum.setBackground(new java.awt.Color(255, 255, 255));
-        labelTelAlum.setBorder(null);
-
-        botonSave.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/check.png"))); // NOI18N
-
-        bottonRegsitarNotas.setText("Ver Historial Academico");
-
-        bottonEditar.setBackground(new java.awt.Color(255, 255, 255));
-        bottonEditar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/editar.png"))); // NOI18N
-        bottonEditar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                bottonEditarActionPerformed(evt);
-            }
-        });
-
-        listaCursos.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
-        jScrollPane1.setViewportView(listaCursos);
-
-        tablaEditNotas.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        jScrollPane3.setViewportView(tablaEditNotas);
-
-        labelfechaNacAlum.setEditable(false);
-        labelfechaNacAlum.setBackground(new java.awt.Color(255, 255, 255));
-        labelfechaNacAlum.setBorder(null);
 
         labelCarreraAlum.setEditable(false);
         labelCarreraAlum.setBackground(new java.awt.Color(255, 255, 255));
+        labelCarreraAlum.setForeground(new java.awt.Color(0, 51, 51));
         labelCarreraAlum.setBorder(null);
-        labelCarreraAlum.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                labelCarreraAlumActionPerformed(evt);
+
+        labelCedAlum.setEditable(false);
+        labelCedAlum.setBackground(new java.awt.Color(255, 255, 255));
+        labelCedAlum.setForeground(new java.awt.Color(0, 51, 51));
+        labelCedAlum.setBorder(null);
+
+        labelfechaNacAlum.setEditable(false);
+        labelfechaNacAlum.setBackground(new java.awt.Color(255, 255, 255));
+        labelfechaNacAlum.setForeground(new java.awt.Color(0, 51, 51));
+        labelfechaNacAlum.setBorder(null);
+
+        correo.setForeground(new java.awt.Color(0, 51, 51));
+        correo.setText("Email");
+
+        labelCorreoAlum.setBackground(new java.awt.Color(255, 255, 255));
+        labelCorreoAlum.setForeground(new java.awt.Color(0, 51, 51));
+        labelCorreoAlum.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
+        labelCorreoAlum.setBorder(null);
+        labelCorreoAlum.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                labelCorreoAlumMouseClicked(evt);
             }
         });
 
-        nombre.setText("Nombre ");
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(fechaNac)
+                            .addComponent(correo))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(labelCorreoAlum)
+                            .addComponent(labelfechaNacAlum)))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 126, Short.MAX_VALUE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(carrera)
+                            .addComponent(nombre)
+                            .addComponent(cedula))
+                        .addGap(63, 63, 63)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(labelCedAlum)
+                            .addComponent(labelCarreraAlum)
+                            .addComponent(labelNomAlum))))
+                .addContainerGap())
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel1)
+                .addGap(18, 18, 18)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(nombre)
+                    .addComponent(labelNomAlum, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(cedula)
+                    .addComponent(labelCedAlum, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(carrera)
+                    .addComponent(labelCarreraAlum, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(fechaNac)
+                    .addComponent(labelfechaNacAlum, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(correo)
+                    .addComponent(labelCorreoAlum, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
 
-        correo.setText("Correo Electronico ");
+        cerraS.setBackground(new java.awt.Color(255, 255, 255));
+        cerraS.setForeground(new java.awt.Color(202, 55, 55));
+        cerraS.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/logout.png"))); // NOI18N
+        cerraS.setText("Cerrar Sesion");
+        cerraS.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                cerraSMouseClicked(evt);
+            }
+        });
 
-        telefono.setText("Telefono");
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/UNA2LINE.jpg"))); // NOI18N
 
-        carrera.setText("Carrera");
+        guardar.setBackground(new java.awt.Color(255, 255, 255));
+        guardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/check.png"))); // NOI18N
+        guardar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                guardarMouseClicked(evt);
+            }
+        });
 
-        fechaNac.setText("Fecha de Nacimiento");
-
-        cedula.setText("Cédula");
-
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/matricular.png"))); // NOI18N
-        jButton1.setText("Matricular");
+        msj.setForeground(new java.awt.Color(124, 209, 96));
+        msj.setText("Email Actualizado");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(17, 17, 17)
-                        .addComponent(jLabel2)
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(nombre)
-                                .addGap(37, 37, 37)
-                                .addComponent(labelNomAlum, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(correo)
-                                    .addComponent(telefono))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(labelTelAlum, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(labelCorreoAlum, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                        .addComponent(cerraS)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(matricula))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(76, 76, 76)
-                        .addComponent(bottonEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(botonSave, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(287, 287, 287)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(fechaNac)
-                        .addGap(18, 18, 18)
-                        .addComponent(labelfechaNacAlum, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addComponent(cedula)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(labelCedAlum, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(66, 66, 66))
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addComponent(carrera)
-                            .addGap(34, 34, 34)
-                            .addComponent(labelCarreraAlum, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(0, 0, Short.MAX_VALUE))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jButton1))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(bottonRegsitarNotas, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addComponent(jScrollPane3)))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(msj)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(guardar, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 1, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(31, 31, 31)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(carrera)
-                                    .addComponent(labelCarreraAlum, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(22, 22, 22)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(nombre)
-                                    .addComponent(labelNomAlum, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(correo)
-                            .addComponent(labelCorreoAlum, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(cedula)
-                            .addComponent(labelCedAlum, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(telefono)
-                            .addComponent(labelTelAlum, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(fechaNac)
-                            .addComponent(labelfechaNacAlum, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(62, 62, 62)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(bottonEditar)
-                    .addComponent(botonSave, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(4, 4, 4)
-                        .addComponent(bottonRegsitarNotas, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton1)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(guardar, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(msj))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 48, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(matricula)
+                    .addComponent(cerraS))
+                .addGap(22, 22, 22))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -271,21 +273,43 @@ public class AlumnoView extends javax.swing.JFrame implements java.util.Observer
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void labelNomAlumActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_labelNomAlumActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_labelNomAlumActionPerformed
+    private void cerraSMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cerraSMouseClicked
+        if(cerraS.getText()=="Cerrar Sesion"){
+            this.setVisible(false);
+            Presentacion.LOGIN_VIEW.setVisible(true);
+        }else{
+            this.setVisible(false);
+            Presentacion.ADMINISTRADOR_VIEW.setVisible(true);
+        }
+    }//GEN-LAST:event_cerraSMouseClicked
 
-    private void labelCedAlumActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_labelCedAlumActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_labelCedAlumActionPerformed
+    private void matriculaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_matriculaMouseClicked
+        
+        try {
+            controller.matricular();
+            this.setVisible(false);
+        } catch (GlobalException | NoDataException | SQLException | InstantiationException | IllegalAccessException ex) {
+           
+        }
+    }//GEN-LAST:event_matriculaMouseClicked
 
-    private void labelCarreraAlumActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_labelCarreraAlumActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_labelCarreraAlumActionPerformed
+    private void labelCorreoAlumMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_labelCorreoAlumMouseClicked
+        guardar.setVisible(true);
+    }//GEN-LAST:event_labelCorreoAlumMouseClicked
 
-    private void bottonEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bottonEditarActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_bottonEditarActionPerformed
+    private void jPanel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel1MouseClicked
+        guardar.setVisible(false);
+        msj.setVisible(false);
+    }//GEN-LAST:event_jPanel1MouseClicked
+
+    private void guardarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_guardarMouseClicked
+        try {
+            controller.guardar(labelCorreoAlum.getText());
+            msj.setVisible(true);
+        } catch (GlobalException | NoDataException | InstantiationException | IllegalAccessException ex) {
+            JOptionPane.showMessageDialog(null, "Ocurrió un error");
+        }
+    }//GEN-LAST:event_guardarMouseClicked
 
     /**
      * @param args the command line arguments
@@ -337,32 +361,37 @@ public class AlumnoView extends javax.swing.JFrame implements java.util.Observer
         return model;
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton botonSave;
-    private javax.swing.JButton bottonEditar;
-    private javax.swing.JButton bottonRegsitarNotas;
     private javax.swing.JLabel carrera;
     private javax.swing.JLabel cedula;
+    public javax.swing.JButton cerraS;
     private javax.swing.JLabel correo;
     private javax.swing.JLabel fechaNac;
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton guardar;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JToolBar jToolBar1;
     private javax.swing.JTextField labelCarreraAlum;
     private javax.swing.JTextField labelCedAlum;
     private javax.swing.JTextField labelCorreoAlum;
     private javax.swing.JTextField labelNomAlum;
-    private javax.swing.JTextField labelTelAlum;
     private javax.swing.JTextField labelfechaNacAlum;
-    private javax.swing.JList<String> listaCursos;
+    public javax.swing.JButton matricula;
+    private javax.swing.JLabel msj;
     private javax.swing.JLabel nombre;
-    public static javax.swing.JTable tablaEditNotas;
-    private javax.swing.JLabel telefono;
     // End of variables declaration//GEN-END:variables
 
     @Override
     public void update(Observable o, Object o1) {
+        Alumno alumno= new Alumno();
+        alumno= model.getCurrent();
+        labelNomAlum.setText(alumno.getNombre());
+        String ced = Integer.toString(alumno.getCedula());
+        labelCedAlum.setText(ced);
+        labelCarreraAlum.setText(alumno.getCarrera().nombre);
+        labelCorreoAlum.setText(alumno.getEmail());
+        //labelfechaNacAlum.setText(""+alumno.getFecha_nacimiento().getTime());
         
     }
 }

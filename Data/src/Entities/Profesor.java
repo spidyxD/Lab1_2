@@ -16,7 +16,7 @@ public class Profesor extends Persona
     public Profesor() {
     }
 
-    public Profesor(int telefono, String nombre, int cedula, String email, int userN) {
+    public Profesor(int telefono, String nombre, int cedula, String email, int userN,String correo) {
         super(nombre, cedula, email);
         this.telefono = telefono;
     }

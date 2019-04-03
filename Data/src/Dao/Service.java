@@ -24,7 +24,6 @@ import oracle.jdbc.OracleTypes;
  */
 public class Service {
      private static final String DOLOGIN= "{?= call login(?,?)}";
-     private static final String login = "{?=call login(?,?)}";
      protected Connection conexion= null;
      public Service() {
         
@@ -33,7 +32,7 @@ public class Service {
     protected void conectar() throws SQLException,ClassNotFoundException, InstantiationException, IllegalAccessException 
     {
             Class.forName("oracle.jdbc.OracleDriver").newInstance();
-            conexion = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl","system","hr");    
+            conexion = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:ORCL","system","hr");    
     }
     
     protected void desconectar() throws SQLException{
@@ -52,8 +51,9 @@ public class Service {
         return null;
     }
     
-    public void doLogin(int user, String password) throws InstantiationException, IllegalAccessException, GlobalException, NoDataException{
-                try {
+    public boolean doLogin(int user, String password) throws InstantiationException, IllegalAccessException, GlobalException, NoDataException{
+        boolean resp= true;       
+        try {
             conectar();
         } catch (ClassNotFoundException e) {
             throw new AccesoADatos.GlobalException("No se ha localizado el driver");
@@ -61,7 +61,7 @@ public class Service {
             throw new AccesoADatos.NoDataException("La base de datos no se encuentra disponible");
         }
         CallableStatement pstmt=null;
-        
+        int respuesta =0;
         try {
             pstmt = conexion.prepareCall("{?=call login(?,?)}");
             pstmt.setInt(2,user);
@@ -70,8 +70,10 @@ public class Service {
              boolean exec= pstmt.execute();    
              ResultSet rs = (ResultSet) pstmt.getObject(1);  
                 while(rs.next()){
-                    System.out.println(rs.getInt("exist"));
+                    respuesta=rs.getInt("exist");
                 } 
+                if(respuesta==0){
+             resp=false;}
             
         } catch (SQLException e) {
             e.printStackTrace();
@@ -86,57 +88,7 @@ public class Service {
                 throw new AccesoADatos.GlobalException("Estatutos invalidos o nulos");
             }
         }
-    }
-      public boolean loginCliente(int user, String password) throws NoDataException, GlobalException, InstantiationException, IllegalAccessException{
-        boolean resp=true;
-        try {
-            conectar();
-        } catch (ClassNotFoundException e) {
-            resp=false;
-            throw new GlobalException("No se ha localizado el driver");
-        } catch (SQLException e) {
-            resp=false;
-            throw new NoDataException("La base de datos no se encuentra disponible");
-        }
-        ResultSet rs = null;
-        CallableStatement pstmt=null;  
-        int respuesta=0;
-        try {            
-            pstmt = conexion.prepareCall(login);            
-            pstmt.registerOutParameter(1, OracleTypes.CURSOR);            
-            pstmt.setInt(2,user);     
-            pstmt.setString(3,password);            
-            pstmt.execute();
-            
-            //********************************
-            rs=(ResultSet) pstmt.getObject(1);
-            while (rs.next()) {
-             respuesta = rs.getInt("exist");
-            }
-             if(respuesta==0){
-             resp=false;}
-            //********************************
-        } catch (SQLException e) {
-          e.printStackTrace();
-            resp=false;
-            throw new GlobalException("Sentencia no valida");
-        } finally {
-            try {
-                if (rs != null) {
-                    rs.close();
-                }
-                if (pstmt != null) {
-                    pstmt.close();
-                }
-                desconectar();
-            } catch (SQLException e) {
-                resp=false;
-                throw new GlobalException("Estatutos invalidos o nulos");
-            }
-        }
-        
         return resp;
-        
     }
      
 }

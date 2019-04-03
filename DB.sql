@@ -1,4 +1,4 @@
--- Dispositivos moviles
+-- Dispositivos mobiles
 -- Base de datos para Lab 1 
 DROP TABLE Grupo CASCADE CONSTRAINTS;
 DROP TABLE PlanEstudio;
@@ -66,7 +66,7 @@ CREATE TABLE Ciclo (
     descripcion VARCHAR(30),
     fecha_inicio date,
     fecha_finalizacion date,
-     CONSTRAINT pkCiclo PRIMARY KEY(id)
+    CONSTRAINT pkCiclo PRIMARY KEY(id)
 );
 
 CREATE TABLE Grupo (
@@ -75,6 +75,7 @@ CREATE TABLE Grupo (
     capacidad number,
     horario VARCHAR(50),
     profesor number,
+	ciclo int , 
     CONSTRAINT pkGrupo PRIMARY KEY(nrc),
     CONSTRAINT fkGrupo FOREIGN KEY (curso) REFERENCES Curso(codigo)
 );
@@ -103,7 +104,7 @@ CREATE TABLE Matricula (
     curso number,
     grupo number,
     ciclo number,
-    CONSTRAINT pkMatricula PRIMARY KEY (carrera, alumno, curso),
+    CONSTRAINT pkMatricula PRIMARY KEY (carrera, alumno, curso, ciclo),
     CONSTRAINT fkMat1 FOREIGN KEY (alumno) REFERENCES Alumno(cedula),
     CONSTRAINT fkMat2 FOREIGN KEY (carrera) REFERENCES Carrera(codigo),
     CONSTRAINT fkMat3 FOREIGN KEY (grupo) REFERENCES Grupo(nrc),
@@ -140,6 +141,8 @@ CREATE OR REPLACE PROCEDURE modificarAlumno (xnombre in Alumno.nombre%TYPE,xedad
         COMMIT;
     END modificarAlumno;
     /
+	
+
 CREATE OR REPLACE PROCEDURE eliminarAlumno (xcedula in Alumno.cedula%TYPE)
     IS 
     BEGIN
@@ -240,8 +243,9 @@ CREATE OR REPLACE FUNCTION buscar_curso_nombre (xnombre in Curso.nombre%TYPE)
         /
 
 -- SI FUNCIONA
-CREATE OR REPLACE FUNCTION buscar_carrera_id (xcodigo in Carrera.codigo%TYPE) RETURN SYS_REFCURSOR
-    IS 
+CREATE OR REPLACE FUNCTION buscar_carrera_id (xcodigo in Carrera.codigo%TYPE) 
+RETURN SYS_REFCURSOR
+    AS 
     c SYS_REFCURSOR;
     BEGIN
         OPEN c FOR SELECT *FROM Carrera WHERE codigo = xcodigo;
@@ -261,6 +265,16 @@ CREATE OR REPLACE FUNCTION buscar_curso_carrera(xcarrera in Carrera.codigo%TYPE 
     END;
     / 
 
+CREATE OR REPLACE FUNCTION buscar_grupo_curso(xcurso in Grupo.curso%TYPE ) 
+     RETURN SYS_REFCURSOR
+     AS 
+    c SYS_REFCURSOR;
+    BEGIN
+        OPEN c FOR SELECT DISTINCT * FROM Grupo WHERE Grupo.curso=xcurso;
+         RETURN c; 
+         CLOSE c;  
+    END;
+    / 
 CREATE OR REPLACE FUNCTION buscar_cursoXAlumno(xcedula in Alumno.cedula%TYPE ) 
      RETURN SYS_REFCURSOR
      AS 
@@ -282,6 +296,17 @@ CREATE OR REPLACE FUNCTION buscar_AlumnoXCurso(xcodigo in Curso.codigo%TYPE )
          CLOSE c;  
     END;
     / 
+	
+	CREATE OR REPLACE FUNCTION buscar_AlumnoXGrupo(xnrc in Grupo.nrc%TYPE ) 
+     RETURN SYS_REFCURSOR
+     AS 
+    c SYS_REFCURSOR;
+    BEGIN
+        OPEN c FOR SELECT DISTINCT * FROM Alumno, Matricula WHERE Matricula.alumno =  Alumno.cedula  AND Matricula.grupo = xnrc;
+         RETURN c;  
+         CLOSE c;  
+    END;
+    / 
 
 CREATE OR REPLACE FUNCTION buscar_cursoXProfesor(xcedula in Profesor.cedula%TYPE ) 
      RETURN SYS_REFCURSOR
@@ -293,7 +318,16 @@ CREATE OR REPLACE FUNCTION buscar_cursoXProfesor(xcedula in Profesor.cedula%TYPE
          CLOSE c;  
     END;
     / 
-
+CREATE OR REPLACE FUNCTION buscar_grupoXProfesor(xcedula in Profesor.cedula%TYPE ) 
+     RETURN SYS_REFCURSOR
+     AS 
+    c SYS_REFCURSOR;
+    BEGIN
+        OPEN c FOR SELECT * FROM Grupo WHERE Grupo.profesor = xcedula;
+         RETURN c; 
+         CLOSE c;  
+    END;
+    / 
 CREATE OR REPLACE FUNCTION buscar_inscritoCarrera(xcodigo in Carrera.codigo%TYPE ) 
      RETURN SYS_REFCURSOR
      AS 
@@ -318,6 +352,18 @@ CREATE OR REPLACE FUNCTION buscar_inscritoCarrera(xcodigo in Carrera.codigo%TYPE
                     RETURN c1;   
                 END;
                 /
+				
+				
+    CREATE OR REPLACE FUNCTION buscar_Profesor_nombre (xnombre in VARCHAR) 
+            RETURN SYS_REFCURSOR
+                AS 
+                    c1 SYS_REFCURSOR;
+                BEGIN
+                    OPEN c1 FOR 
+                    SELECT  * FROM Profesor WHERE nombre = xnombre;  
+                    RETURN c1;   
+                END;
+                /
 -- SI FUNCIONA
    CREATE OR REPLACE FUNCTION buscar_Alumno_ced (xcedula in Alumno.cedula%TYPE) 
          RETURN SYS_REFCURSOR
@@ -327,7 +373,7 @@ CREATE OR REPLACE FUNCTION buscar_inscritoCarrera(xcodigo in Carrera.codigo%TYPE
                     OPEN c1 FOR 
                     SELECT  *
                     FROM   Alumno
-                    WHERE Alumno.cedula =  xcedula AND Alumno.cedula = Inscripcion.alumno  AND Inscripcion.carrera = Carrera.codigo AND Inscripcion.carrera = Matricula.carrera AND Matricula.grupo = Grupo.nrc AND Grupo.curso = Curso.codigo;  
+                    WHERE cedula =  xcedula;  
                     RETURN c1;   
                 END;
             /
@@ -337,7 +383,7 @@ CREATE OR REPLACE FUNCTION buscar_Profesor_cedula (xcedula in Profesor.cedula%TY
         AS 
         c SYS_REFCURSOR;
         BEGIN
-            OPEN c FOR SELECT *FROM Profesor WHERE cedula = xcedula;
+            OPEN c FOR SELECT * FROM Profesor WHERE cedula = xcedula;
             RETURN c; 
         END;
         /
@@ -361,48 +407,62 @@ CREATE OR REPLACE PROCEDURE hacerMatricula (xalumno in Alumno.cedula%TYPE, xcarr
         COMMIT;
     END hacerMatricula;
     /
-
-
-   /* CREATE OR REPLACE FUNCTION buscar_Alumno_ced (xcedula in Alumno.cedula%TYPE) 
-         RETURN SYS_REFCURSOR
-                AS 
-                    c1 SYS_REFCURSOR;
-                BEGIN
-                    OPEN c1 FOR 
-                    SELECT  Alumno.cedula, Alumno.nombre, Alumno.email, Alumno.fecha_nacimiento, Carrera.nombre, Curso.nombre  FROM    
-                    Alumno, Inscripcion, Carrera, Matricula, Curso, Grupo  
-                    WHERE Alumno.cedula =  xcedula AND Alumno.cedula = Inscripcion.alumno  AND Inscripcion.carrera = Carrera.codigo AND Inscripcion.carrera = Matricula.carrera AND Matricula.grupo = Grupo.nrc AND Grupo.curso = Curso.codigo;  
-                    RETURN c1;   
-                END;
-            /
-
-CREATE OR REPLACE FUNCTION verAlumnos () RETURN SYS_REFCURSOR
-    IS 
-    c SYS_REFCURSOR;
-    BEGIN
-        OPEN c FOR SELECT * FROM Alumno;
-         RETURN c; 
-         CLOSE c;  
-    END;
-    /
-
-CREATE OR REPLACE FUNCTION verProfesores () RETURN SYS_REFCURSOR
-    IS 
-    c SYS_REFCURSOR;
-    BEGIN
-        OPEN c FOR SELECT * FROM Profesor;
-         RETURN c; 
-         CLOSE c;  
-    END;
-    /    
-
-
- CREATE OR REPLACE FUNCTION verCursos () RETURN SYS_REFCURSOR
-    IS 
-    c SYS_REFCURSOR;
-    BEGIN
-        OPEN c FOR SELECT * FROM Curso;
-         RETURN c; 
-         CLOSE c;  
-    END;
-    /   */
+	
+CREATE OR REPLACE FUNCTION buscar_Usuario_id (xid in Usuario.id%TYPE) 
+    RETURN SYS_REFCURSOR
+        AS 
+        c SYS_REFCURSOR;
+        BEGIN
+            OPEN c FOR SELECT * FROM Usuario WHERE id = xid;
+            RETURN c; 
+        END;
+        /
+		
+CREATE OR REPLACE FUNCTION buscar_Matricula_Ciclo(xCiclo in Matricula.ciclo%TYPE) 
+    RETURN SYS_REFCURSOR
+        AS 
+        c SYS_REFCURSOR;
+        BEGIN
+            OPEN c FOR SELECT * FROM Matricula WHERE ciclo = xCiclo;
+            RETURN c; 
+        END;
+        /
+		
+		
+CREATE OR REPLACE FUNCTION buscar_Administrador_id (xid in Administrador.id%TYPE) 
+    RETURN SYS_REFCURSOR
+        AS 
+        c SYS_REFCURSOR;
+        BEGIN
+            OPEN c FOR SELECT * FROM Administrador WHERE id = xid;
+            RETURN c; 
+        END;
+        /
+CREATE OR REPLACE FUNCTION buscar_Ciclo_id (xid in Ciclo.id%TYPE) 
+    RETURN SYS_REFCURSOR
+        AS 
+        c SYS_REFCURSOR;
+        BEGIN
+            OPEN c FOR SELECT * FROM Ciclo WHERE id = xid;
+            RETURN c; 
+        END;
+        /
+CREATE OR REPLACE FUNCTION buscar_Grupo_id (xid in Grupo.nrc%TYPE) 
+    RETURN SYS_REFCURSOR
+        AS 
+        c SYS_REFCURSOR;
+        BEGIN
+            OPEN c FOR SELECT * FROM Grupo WHERE nrc = xid;
+            RETURN c; 
+        END;
+        /
+		
+CREATE OR REPLACE FUNCTION buscar_CarreraXAlumno (xid in Inscripcion.alumno%TYPE) 
+    RETURN SYS_REFCURSOR
+        AS 
+        c SYS_REFCURSOR;
+        BEGIN
+            OPEN c FOR SELECT * FROM Inscripcion WHERE alumno = xid;
+            RETURN c; 
+        END;
+        /

@@ -10,10 +10,12 @@ package Entities;
  * @author dh173
  */
 public class Administrador extends Persona{
+    @Override
     public String getNombre() {
         return nombre;
     }
 
+    @Override
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }

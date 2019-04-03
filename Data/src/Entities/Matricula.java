@@ -15,8 +15,17 @@ public class Matricula {
     public Curso course;
     public Profesor teacher;
     public Ciclo cycle;
+    public Grupo grupo;
 
     public Matricula() {
+    }
+
+    public Grupo getGrupo() {
+        return grupo;
+    }
+
+    public void setGrupo(Grupo grupo) {
+        this.grupo = grupo;
     }
 
     public Matricula(Alumno student, Carrera major, Curso course, Profesor teacher, Ciclo cycle) {
@@ -65,6 +74,11 @@ public class Matricula {
 
     public void setCycle(Ciclo cycle) {
         this.cycle = cycle;
+    }
+
+    @Override
+    public String toString() {
+        return course.getNombre() + " " + grupo.getNrc() + " " + course.getCreditos() + " " + grupo.getHorario() ;
     }
     
     

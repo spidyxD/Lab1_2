@@ -21,20 +21,12 @@ public class AdministradorModel extends java.util.Observable {
     public AdministradorModel() {
     }
 
-   public void init(){ //init(TipoInstrumento[] tiposIns)
-        //setTiposIns(tipos);
+
+   public void init(){
         setCurrent(new Administrador());
         clearErrors();
         setChanged();
         notifyObservers();  
-    }
-
-    public int getModo() {
-        return modo;
-    }
-
-    public void setModo(int modo) {
-        this.modo = modo;
     }
     
     public String getMensaje() {

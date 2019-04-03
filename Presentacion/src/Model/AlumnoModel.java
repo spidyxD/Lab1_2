@@ -6,6 +6,7 @@
 package Model;
 
 import Entities.Alumno;
+import Entities.Carrera;
 import java.util.HashMap;
 
 /**
@@ -20,6 +21,7 @@ public class AlumnoModel extends java.util.Observable {
 
     public AlumnoModel() {
     }
+
 
    public void init(){ //init(TipoInstrumento[] tiposIns)
         //setTiposIns(tipos);
