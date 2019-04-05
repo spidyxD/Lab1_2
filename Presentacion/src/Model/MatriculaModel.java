@@ -23,7 +23,6 @@ public class MatriculaModel extends java.util.Observable {
     MatriculaTable sistemaMat;
     DefaultListModel<String> cursosMatriculados = new DefaultListModel<>();
     Administrador matriculador;
-    Carrera carrera;
     HashMap<String,String> errores;
     String mensaje;
     int modo;  
@@ -48,15 +47,6 @@ public class MatriculaModel extends java.util.Observable {
         notifyObservers();  
     }
 
-    public Carrera getCarrera() {
-        return carrera;
-    }
-
-    public void setCarrera(Carrera carrera) {
-        this.carrera = carrera;
-        setChanged();
-        notifyObservers();  
-    }
     
      public void init(){ 
         setCurrent(new Alumno());

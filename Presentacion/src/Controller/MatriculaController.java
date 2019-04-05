@@ -15,6 +15,7 @@ import Model.MatriculaModel;
 import View.MatriculaView;
 import java.sql.SQLException;
 import java.util.List;
+import javax.swing.DefaultListModel;
 
 /**
  *
@@ -36,7 +37,35 @@ public class MatriculaController {
     public void matricular(int row) throws GlobalException, NoDataException, SQLException, InstantiationException, IllegalAccessException{
         model.clearErrors();
         Grupo seleccionado = model.getSistemaMat().getRowAt(row);
-        data.getServiciogenerales().matricularCurso(model.getCurrent(),model.getCarrera(), seleccionado.getCurso(), seleccionado, seleccionado.getCiclo());
-        
+        data.getServiciogenerales().matricularCurso(model.getCurrent(), model.getCurrent().getCarrera(), seleccionado.getCurso(), seleccionado, seleccionado.getCiclo());
+        model.getCurrent().setCreditos(model.getCurrent().getCreditos()+seleccionado.getCurso().getCreditos());
+        String cred = Integer.toString(model.getCurrent().getCreditos());
+        view.creditos.setText("Creditos : "+cred);
+        DefaultListModel<String> gruposs = model.getCursosMatriculados();
+        gruposs.addElement(seleccionado.toString());
+        model.setCursosMatriculados(gruposs);
+    }
+    public void borrarCurso(String curso , int select) throws GlobalException, NoDataException, SQLException, InstantiationException, IllegalAccessException{
+        int tamano = curso.length() -1;
+        boolean condition = true;
+        String numero = "";
+        do{
+                
+                char numerito  = curso.charAt(tamano);
+                if (Character.isDigit(numerito)){
+                numero = numerito + numero;
+                }else{
+                condition = false;
+                }
+           
+            tamano--;
+        }while(condition && tamano>=0);
+        int nrc = Integer.parseInt(numero);
+        Grupo g = data.getServiciobusquedas().buscarGrupoId(nrc);
+        data.getServiciogenerales().eliminarMatricula(model.getCurrent(), nrc);
+        model.getCurrent().setCreditos(model.getCurrent().getCreditos()-g.getCurso().getCreditos());
+        String cred = Integer.toString(model.getCurrent().getCreditos());
+        view.creditos.setText("Creditos : "+cred);
+        model.getCursosMatriculados().removeElementAt(select);
     }
 }

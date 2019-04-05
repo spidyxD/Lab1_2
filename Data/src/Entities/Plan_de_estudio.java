@@ -10,10 +10,10 @@ package Entities;
  * @author Addiel
  */
 public class Plan_de_estudio {
-    public Curso curso;
-    public Carrera carrera;
-    public int anno;
-    public Ciclo ciclo;
+    public Curso curso = new Curso();
+    public Carrera carrera = new Carrera();
+    public int anno ;
+    public Ciclo ciclo = new Ciclo();
 
     public Plan_de_estudio() {
     }

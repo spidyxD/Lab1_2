@@ -50,7 +50,9 @@ public class AlumnoController {
         matModel.clearErrors();
         matModel.setCurrent(alumno);
         List<Matricula> matriculados = data.getServiciobusquedas().buscarMatriculaCiclo(Presentacion.CICLO.getCodigo());
+        int creditos =0;
         for(int i =0 ; i< matriculados.size(); i++){
+            creditos = creditos + matriculados.get(i).getCourse().getCreditos();
              matModel.getCursosMatriculados().addElement(matriculados.get(i).toString());
         }
         List<Curso> cursos = data.getServiciobusquedas().buscarCursoXCarrera(alumno.getCarrera().getCodigo());
@@ -59,7 +61,10 @@ public class AlumnoController {
             grupos.addAll(data.getServiciobusquedas().buscarGrupoCurso(cursos.get(i).getCodigo()));
         }
         matModel.setSistemaMat(grupos);
+        String cred = Integer.toString(creditos);
         Presentacion.MATRICULA_VIEW.setModel(matModel);
+        model.getCurrent().setCreditos(creditos);
+        Presentacion.MATRICULA_VIEW.creditos.setText("Creditos : "+model.getCurrent().getCreditos());
         Presentacion.MATRICULA_VIEW.setVisible(true);
         view.setVisible(false);
     }

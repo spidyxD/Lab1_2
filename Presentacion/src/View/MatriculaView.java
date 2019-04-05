@@ -20,6 +20,8 @@ import Principal.Presentacion;
 import java.awt.Point;
 import java.sql.SQLException;
 import java.util.Observable;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 public class MatriculaView extends javax.swing.JFrame implements java.util.Observer   {
 
@@ -44,8 +46,6 @@ public class MatriculaView extends javax.swing.JFrame implements java.util.Obser
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         NombreEstudiante = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        cursosMatriculados = new javax.swing.JList<>();
         delete = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
@@ -55,10 +55,14 @@ public class MatriculaView extends javax.swing.JFrame implements java.util.Obser
         cedulaAl = new javax.swing.JLabel();
         carreraAl = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
-        jScrollPane3 = new javax.swing.JScrollPane();
-        tablaCursos = new javax.swing.JTable();
         jButton2 = new javax.swing.JButton();
         ciclo = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tablaCursos = new javax.swing.JTable();
+        cerraS = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        cursosMatriculados = new javax.swing.JList<>();
+        creditos = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Matricular");
@@ -78,23 +82,14 @@ public class MatriculaView extends javax.swing.JFrame implements java.util.Obser
         jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 20, 180, 26));
         jPanel1.add(NombreEstudiante, new org.netbeans.lib.awtextra.AbsoluteConstraints(194, 0, 193, 20));
 
-        cursosMatriculados.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
-        cursosMatriculados.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                cursosMatriculadosMouseClicked(evt);
-            }
-        });
-        jScrollPane1.setViewportView(cursosMatriculados);
-
-        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 50, 310, 92));
-
         delete.setBackground(new java.awt.Color(255, 255, 255));
         delete.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/delete.png"))); // NOI18N
-        jPanel1.add(delete, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 150, 41, -1));
+        delete.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                deleteMouseClicked(evt);
+            }
+        });
+        jPanel1.add(delete, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 120, 41, -1));
 
         jLabel2.setText("Nombre ");
 
@@ -151,39 +146,6 @@ public class MatriculaView extends javax.swing.JFrame implements java.util.Obser
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
 
-        jScrollPane3.setBackground(new java.awt.Color(255, 255, 255));
-
-        tablaCursos.setFont(new java.awt.Font("Tahoma", 2, 12)); // NOI18N
-        tablaCursos.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false
-            };
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        tablaCursos.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tablaCursosMouseClicked(evt);
-            }
-        });
-        jScrollPane3.setViewportView(tablaCursos);
-        if (tablaCursos.getColumnModel().getColumnCount() > 0) {
-            tablaCursos.getColumnModel().getColumn(0).setResizable(false);
-            tablaCursos.getColumnModel().getColumn(1).setResizable(false);
-        }
-
         jButton2.setBackground(new java.awt.Color(255, 255, 255));
         jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/matricular.png"))); // NOI18N
         jButton2.setText("Agregar");
@@ -195,6 +157,34 @@ public class MatriculaView extends javax.swing.JFrame implements java.util.Obser
 
         ciclo.setText("CICLO ");
 
+        tablaCursos.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        tablaCursos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tablaCursosMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(tablaCursos);
+
+        cerraS.setBackground(new java.awt.Color(255, 255, 255));
+        cerraS.setForeground(new java.awt.Color(202, 55, 55));
+        cerraS.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/logout.png"))); // NOI18N
+        cerraS.setText("Regresar");
+        cerraS.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                cerraSMouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -202,57 +192,65 @@ public class MatriculaView extends javax.swing.JFrame implements java.util.Obser
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGap(20, 20, 20)
                 .addComponent(ciclo)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 590, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(636, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 680, Short.MAX_VALUE)
                 .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addComponent(cerraS)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButton2)
+                .addGap(19, 19, 19))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addComponent(ciclo)
-                .addGap(16, 16, 16)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 23, Short.MAX_VALUE)
-                .addComponent(jButton2))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cerraS))
+                .addContainerGap(29, Short.MAX_VALUE))
         );
 
-        jPanel1.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 190, 610, 300));
+        jPanel1.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 240, 690, 320));
+
+        cursosMatriculados.setModel(new javax.swing.AbstractListModel<String>() {
+            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+            public int getSize() { return strings.length; }
+            public String getElementAt(int i) { return strings[i]; }
+        });
+        cursosMatriculados.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                cursosMatriculadosMouseClicked(evt);
+            }
+        });
+        jScrollPane2.setViewportView(cursosMatriculados);
+
+        jPanel1.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 50, 260, 120));
+
+        creditos.setText("Creditos : ");
+        jPanel1.add(creditos, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 200, -1, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 621, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 510, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 568, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void cursosMatriculadosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cursosMatriculadosMouseClicked
-        String select =cursosMatriculados.getSelectedValue();
-        //JOptionPane.showMessageDialog(null, select);
-        delete.setVisible(true);
-    }//GEN-LAST:event_cursosMatriculadosMouseClicked
-
-    private void tablaCursosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaCursosMouseClicked
-       jButton2.setVisible(rootPaneCheckingEnabled);
-    }//GEN-LAST:event_tablaCursosMouseClicked
-
     private void jButton2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseClicked
          Point point = evt.getPoint();
-              int row=this.tablaCursos.getSelectedRow();
+              int row=tablaCursos.getSelectedRow();
               int col= tablaCursos.columnAtPoint(point);
               try {
                 controller.matricular(row);
@@ -265,6 +263,33 @@ public class MatriculaView extends javax.swing.JFrame implements java.util.Obser
         delete.setVisible(false);
         jButton2.setVisible(false);
     }//GEN-LAST:event_jPanel1MouseClicked
+
+    private void cursosMatriculadosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cursosMatriculadosMouseClicked
+
+        delete.setVisible(true);
+    }//GEN-LAST:event_cursosMatriculadosMouseClicked
+
+    private void tablaCursosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaCursosMouseClicked
+        jButton2.setVisible(true);
+    }//GEN-LAST:event_tablaCursosMouseClicked
+
+    private void deleteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteMouseClicked
+        String seleccionado = cursosMatriculados.getSelectedValue();
+        int select  = cursosMatriculados.getSelectedIndex();
+        try {
+            controller.borrarCurso(seleccionado,select);
+            JOptionPane.showMessageDialog(null, "Curso Borrado ");
+        } catch (GlobalException | NoDataException | SQLException | InstantiationException | IllegalAccessException ex) {
+           JOptionPane.showMessageDialog(null, "Ocurrió un error");
+        }
+    }//GEN-LAST:event_deleteMouseClicked
+
+    private void cerraSMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cerraSMouseClicked
+       
+            this.setVisible(false);
+            Presentacion.ADMINISTRADOR_VIEW.setVisible(true);
+        
+    }//GEN-LAST:event_cerraSMouseClicked
 
     /**
      * @param args the command line arguments
@@ -306,7 +331,9 @@ public class MatriculaView extends javax.swing.JFrame implements java.util.Obser
     private javax.swing.JLabel NombreEstudiante;
     private javax.swing.JLabel carreraAl;
     private javax.swing.JLabel cedulaAl;
+    public javax.swing.JButton cerraS;
     private javax.swing.JLabel ciclo;
+    public javax.swing.JLabel creditos;
     private javax.swing.JList<String> cursosMatriculados;
     private javax.swing.JButton delete;
     private javax.swing.JButton jButton2;
@@ -318,9 +345,9 @@ public class MatriculaView extends javax.swing.JFrame implements java.util.Obser
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel nombreAl;
-    public static javax.swing.JTable tablaCursos;
+    private javax.swing.JTable tablaCursos;
     // End of variables declaration//GEN-END:variables
     MatriculaController controller;
     MatriculaModel model;
@@ -336,6 +363,7 @@ public class MatriculaView extends javax.swing.JFrame implements java.util.Obser
     public MatriculaModel getModel() {
         return model;
     }
+    
     @Override
     public void update(Observable o, Object o1) {
        nombreAl.setText(model.getCurrent().getNombre());

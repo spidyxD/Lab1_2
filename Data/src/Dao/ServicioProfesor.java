@@ -165,8 +165,7 @@ public class ServicioProfesor extends Service{
             ArrayList<Profesor> profes = new ArrayList<>();     
             Statement stmt = conexion.createStatement();
             ResultSet rs = stmt.executeQuery("SELECT * FROM Profesor");   
-          //  pstmt.setInt(2,codigo);              
-                System.out.println(rs);
+          //  pstmt.setInt(2,codigo);      
                 while(rs.next()){
                     profes.add(tipoProfesor(rs));
                 }

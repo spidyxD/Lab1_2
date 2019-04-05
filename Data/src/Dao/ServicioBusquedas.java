@@ -67,6 +67,7 @@ public class ServicioBusquedas extends Service{
             g.setNrc(rs.getInt("nrc"));
             int idProf = rs.getInt("profesor");
             int Ciclo = rs.getInt("ciclo");
+            g.setCiclo(this.buscarCicloId(Ciclo));
             g.setPorfesor(this.buscarProfeId(idProf));
             g.setCurso(this.buscarCursoId(rs.getInt("curso")));
             return g;
@@ -208,8 +209,7 @@ public class ServicioBusquedas extends Service{
             pstmt.registerOutParameter(1, OracleTypes.CURSOR);
             pstmt.setInt(2,id);
             pstmt.execute();
-            ResultSet rs = (ResultSet) pstmt.getObject(1);                
-            System.out.println(rs);                
+            ResultSet rs = (ResultSet) pstmt.getObject(1);   
               while(rs.next()){
                    carrera= rs.getInt("carrera");
                 }                 
@@ -243,8 +243,7 @@ public class ServicioBusquedas extends Service{
             pstmt.registerOutParameter(1, OracleTypes.CURSOR);
             pstmt.setInt(2,xcodigo);
             pstmt.execute();
-            ResultSet rs = (ResultSet) pstmt.getObject(1);                
-            System.out.println(rs);                
+            ResultSet rs = (ResultSet) pstmt.getObject(1);              
               while(rs.next()){
                     cursos.add(tipoCurso(rs));
                 }                 
@@ -278,8 +277,7 @@ public class ServicioBusquedas extends Service{
                 pstmt.registerOutParameter(1, OracleTypes.CURSOR);
                 pstmt.setString(2,xnombre);
                 pstmt.execute();
-                ResultSet rs = (ResultSet) pstmt.getObject(1);               
-                    System.out.println(rs);
+                ResultSet rs = (ResultSet) pstmt.getObject(1);
                     while(rs.next()){
                         cursos.add(tipoCurso(rs));
                 }
@@ -455,8 +453,7 @@ public class ServicioBusquedas extends Service{
             pstmt.registerOutParameter(1, OracleTypes.CURSOR);
             pstmt.setInt(2,codigo); 
             pstmt.execute();   
-            ResultSet rs = (ResultSet) pstmt.getObject(1);                
-                System.out.println(rs);
+            ResultSet rs = (ResultSet) pstmt.getObject(1);   
                 while(rs.next()){
                     cursos.add(tipoCurso(rs));
                 }
@@ -491,8 +488,7 @@ public class ServicioBusquedas extends Service{
             pstmt.registerOutParameter(1, OracleTypes.CURSOR);
             pstmt.setInt(2,codigo); 
             pstmt.execute();   
-            ResultSet rs = (ResultSet) pstmt.getObject(1);                
-                System.out.println(rs);
+            ResultSet rs = (ResultSet) pstmt.getObject(1);   
                 while(rs.next()){
                     grupos.add(tipoGrupo(rs));
                 }
@@ -527,8 +523,7 @@ public class ServicioBusquedas extends Service{
             pstmt.registerOutParameter(1, OracleTypes.CURSOR);
             pstmt.setInt(2,id);
             pstmt.execute();               
-             ResultSet rs = (ResultSet) pstmt.getObject(1);                 
-                System.out.println(rs);
+             ResultSet rs = (ResultSet) pstmt.getObject(1);  
                 while(rs.next()){
                     profesores.add(tipoProfesor(rs));
                 }                                
@@ -565,7 +560,6 @@ public class ServicioBusquedas extends Service{
              pstmt.execute();              
 
              ResultSet rs = (ResultSet) pstmt.getObject(1);    
-                System.out.println(rs);
                 while(rs.next()){
                     alumnos.add(tipoAlumno(rs));}
                 int idC= this.buscarCarreraXAlumno(id);
@@ -604,8 +598,7 @@ public class ServicioBusquedas extends Service{
             pstmt.registerOutParameter(1, OracleTypes.CURSOR);
             pstmt.setString(2,nombre);
              pstmt.execute();               
-             ResultSet rs = (ResultSet) pstmt.getObject(1);               
-                System.out.println(rs);
+             ResultSet rs = (ResultSet) pstmt.getObject(1); 
                 while(rs.next()){
                     alumnos.add(tipoAlumno(rs));
                 }                       
@@ -639,8 +632,7 @@ public class ServicioBusquedas extends Service{
             pstmt.registerOutParameter(1, OracleTypes.CURSOR);
             pstmt.setString(2,nombre);
              pstmt.execute();               
-             ResultSet rs = (ResultSet) pstmt.getObject(1);               
-                System.out.println(rs);
+             ResultSet rs = (ResultSet) pstmt.getObject(1); 
                 while(rs.next()){
                     profes.add(tipoProfesor(rs));
                 }                       
@@ -674,8 +666,7 @@ public class ServicioBusquedas extends Service{
             pstmt.registerOutParameter(1, OracleTypes.CURSOR);
             pstmt.setInt(2,id);
              pstmt.execute();             
-             ResultSet rs = (ResultSet) pstmt.getObject(1);               
-                System.out.println(rs);
+             ResultSet rs = (ResultSet) pstmt.getObject(1);  
                 while(rs.next()){
                     cursos.add(tipoCurso(rs));
                 }                        
@@ -711,8 +702,7 @@ public class ServicioBusquedas extends Service{
             pstmt.registerOutParameter(1, OracleTypes.CURSOR);
             pstmt.setInt(2,codigo);
              pstmt.execute();              
-             ResultSet rs = (ResultSet) pstmt.getObject(1);               
-                System.out.println(rs);
+             ResultSet rs = (ResultSet) pstmt.getObject(1);   
                 while(rs.next()){
                     alumnos.add(tipoAlumno(rs));
                 }               
@@ -745,8 +735,7 @@ public class ServicioBusquedas extends Service{
             pstmt.registerOutParameter(1, OracleTypes.CURSOR);
             pstmt.setInt(2,codigo);
              pstmt.execute();              
-             ResultSet rs = (ResultSet) pstmt.getObject(1);               
-                System.out.println(rs);
+             ResultSet rs = (ResultSet) pstmt.getObject(1); 
                 while(rs.next()){
                     alumnos.add(tipoAlumno(rs));
                 }               
@@ -781,8 +770,6 @@ public class ServicioBusquedas extends Service{
             pstmt.setInt(2,codigo);
              pstmt.execute();               
              ResultSet rs = (ResultSet) pstmt.getObject(1); 
-                
-                System.out.println(rs);
                 while(rs.next()){
                     cursos.add(tipoCurso(rs));
                 }               
@@ -816,8 +803,6 @@ public class ServicioBusquedas extends Service{
             pstmt.setInt(2,codigo);
              pstmt.execute();               
              ResultSet rs = (ResultSet) pstmt.getObject(1); 
-                
-                System.out.println(rs);
                 while(rs.next()){
                     grupos.add(tipoGrupo(rs));
                 }               
@@ -853,8 +838,7 @@ public class ServicioBusquedas extends Service{
             pstmt.registerOutParameter(1, OracleTypes.CURSOR);
             pstmt.setInt(2,codigo);
              pstmt.execute();   
-             ResultSet rs = (ResultSet) pstmt.getObject(1);                
-                System.out.println(rs);
+             ResultSet rs = (ResultSet) pstmt.getObject(1);   
                 while(rs.next()){
                     alumnos.add(tipoAlumno(rs));
                 }          
@@ -891,7 +875,6 @@ public class ServicioBusquedas extends Service{
              pstmt.execute();              
 
              ResultSet rs = (ResultSet) pstmt.getObject(1);    
-                System.out.println(rs);
                 while(rs.next()){
                     usuarios.add(tipoUsuario(rs));}
                                                   
@@ -927,7 +910,6 @@ public class ServicioBusquedas extends Service{
              pstmt.execute();              
 
              ResultSet rs = (ResultSet) pstmt.getObject(1);    
-                System.out.println(rs);
                 while(rs.next()){
                     administradores.add(tipoAdministrador(rs));}
                                                   

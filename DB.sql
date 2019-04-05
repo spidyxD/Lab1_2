@@ -104,7 +104,7 @@ CREATE TABLE Matricula (
     curso number,
     grupo number,
     ciclo number,
-    CONSTRAINT pkMatricula PRIMARY KEY (carrera, alumno, curso, ciclo),
+    CONSTRAINT pkMatricula PRIMARY KEY (alumno, carrera, curso, grupo, ciclo),
     CONSTRAINT fkMat1 FOREIGN KEY (alumno) REFERENCES Alumno(cedula),
     CONSTRAINT fkMat2 FOREIGN KEY (carrera) REFERENCES Carrera(codigo),
     CONSTRAINT fkMat3 FOREIGN KEY (grupo) REFERENCES Grupo(nrc),
@@ -406,7 +406,7 @@ CREATE OR REPLACE PROCEDURE hacerMatricula (xalumno in Alumno.cedula%TYPE, xcarr
         INSERT INTO Matricula VALUES(xalumno, xcarrera,xcurso,xgrupo, xciclo);
         COMMIT;
     END hacerMatricula;
-    /
+    /	
 	
 CREATE OR REPLACE FUNCTION buscar_Usuario_id (xid in Usuario.id%TYPE) 
     RETURN SYS_REFCURSOR
@@ -466,3 +466,12 @@ CREATE OR REPLACE FUNCTION buscar_CarreraXAlumno (xid in Inscripcion.alumno%TYPE
             RETURN c; 
         END;
         /
+		
+	
+CREATE OR REPLACE PROCEDURE matriculaDelete(xal in Alumno.cedula%TYPE , xg in Grupo.nrc%TYPE)
+    IS 
+    BEGIN
+        DELETE Matricula WHERE alumno = xal AND grupo = xg;
+        COMMIT;
+    END matriculaDelete;
+    /

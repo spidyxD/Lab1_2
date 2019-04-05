@@ -45,12 +45,12 @@ public class LoginView extends javax.swing.JFrame implements java.util.Observer 
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         id = new javax.swing.JTextField();
-        clave = new javax.swing.JTextField();
         loginButton = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         cargando = new javax.swing.JLabel();
+        clave = new javax.swing.JPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -65,7 +65,6 @@ public class LoginView extends javax.swing.JFrame implements java.util.Observer 
         jLabel2.setText("Contraseña");
         jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 130, 76, 22));
         jPanel1.add(id, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 100, 99, -1));
-        jPanel1.add(clave, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 130, 99, -1));
 
         loginButton.setBackground(new java.awt.Color(255, 255, 255));
         loginButton.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
@@ -94,6 +93,7 @@ public class LoginView extends javax.swing.JFrame implements java.util.Observer 
         cargando.setForeground(new java.awt.Color(255, 255, 255));
         cargando.setText("Cargando........");
         jPanel1.add(cargando, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 200, -1, -1));
+        jPanel1.add(clave, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 130, 100, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -175,7 +175,7 @@ public class LoginView extends javax.swing.JFrame implements java.util.Observer 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel cargando;
-    private javax.swing.JTextField clave;
+    private javax.swing.JPasswordField clave;
     private javax.swing.JTextField id;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

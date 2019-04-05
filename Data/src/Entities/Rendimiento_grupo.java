@@ -10,10 +10,10 @@ package Entities;
  * @author Addiel
  */
 public class Rendimiento_grupo extends Persona{
-    public Curso curso;
-    public Alumno alumno;
-    public int calificacion;
-    public Profesor profesor;
+    public Curso curso = new Curso();
+    public Alumno alumno = new Alumno();
+    public int calificacion ;
+    public Profesor profesor = new Profesor();
     public Rendimiento_grupo() {
     }
 

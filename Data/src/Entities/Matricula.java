@@ -10,12 +10,12 @@ package Entities;
  * @author Addiel
  */
 public class Matricula {
-    public Alumno student;
-    public Carrera major;
-    public Curso course;
-    public Profesor teacher;
-    public Ciclo cycle;
-    public Grupo grupo;
+    public Alumno student = new Alumno();
+    public Carrera major = new Carrera();
+    public Curso course = new Curso();
+    public Profesor teacher = new Profesor();
+    public Ciclo cycle = new Ciclo();
+    public Grupo grupo = new Grupo();
 
     public Matricula() {
     }
@@ -78,7 +78,7 @@ public class Matricula {
 
     @Override
     public String toString() {
-        return course.getNombre() + " " + grupo.getNrc() + " " + course.getCreditos() + " " + grupo.getHorario() ;
+        return course.getNombre() + " "  + " " + course.getCreditos() + " " + grupo.getHorario() + " "+grupo.getNrc() ;
     }
     
     
