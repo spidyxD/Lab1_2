@@ -25,23 +25,28 @@ import oracle.jdbc.OracleTypes;
 public class Service {
      private static final String DOLOGIN= "{?= call login(?,?)}";
      protected Connection conexion= null;
-     public Service() {
+    private static Service uniqueInstance;
+    
+    public static Service instance(){
+        if (uniqueInstance == null){
+            uniqueInstance = new Service();
+        }
+        return uniqueInstance;
+    }
+    public Service() {
         
     }
-    
     protected void conectar() throws SQLException,ClassNotFoundException, InstantiationException, IllegalAccessException 
     {
             Class.forName("oracle.jdbc.OracleDriver").newInstance();
-            conexion = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:ORCL","system","hr");    
-    }
-    
+            conexion =  DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe","sys as sysdba","K1n9r4d2");  
+    }    
     protected void desconectar() throws SQLException{
         if(!conexion.isClosed())
         {
             conexion.close();
         }
     }
-
     private Connection getJdbcMydbsource() throws NamingException {
         Context c = new InitialContext();
         try {
@@ -49,8 +54,7 @@ public class Service {
         } catch (NamingException | SQLException ex) {
         }
         return null;
-    }
-    
+    }    
     public boolean doLogin(int user, String password) throws InstantiationException, IllegalAccessException, GlobalException, NoDataException{
         boolean resp= true;       
         try {
@@ -63,7 +67,7 @@ public class Service {
         CallableStatement pstmt=null;
         int respuesta =0;
         try {
-            pstmt = conexion.prepareCall("{?=call login(?,?)}");
+            pstmt = conexion.prepareCall(DOLOGIN);
             pstmt.setInt(2,user);
             pstmt.setString(3,password);
             pstmt.registerOutParameter(1, OracleTypes.CURSOR);

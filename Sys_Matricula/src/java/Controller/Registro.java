@@ -37,7 +37,17 @@ public class Registro extends HttpServlet {
             case "/RegistroEstudiante":
                 this.doRegisterStudent(request, response);
                 break;
-            default:break;
+            default:
+                try{
+                 request.getRequestDispatcher("Home.jsp").
+                         forward( request, response);
+                }
+                catch(Exception e){ String error = e.getMessage();
+                     request.setAttribute("error",error);
+                     request.getRequestDispatcher("Error.jsp").forward(request, response);
+
+                 }
+                 break;
         }
     }
 

@@ -6,8 +6,6 @@
 package Entities;
 
 import java.sql.Date;
-import java.util.ArrayList;
-import java.util.List;
 
 
 
@@ -18,13 +16,21 @@ import java.util.List;
 public class Alumno extends Persona{
   public  Date fecha_nacimiento;
   Carrera carrera = new Carrera();
-
+  int creditos ;
     public Alumno() {
     }
   
 
     public Alumno(Date fecha_nacimiento) {
         this.fecha_nacimiento = fecha_nacimiento;
+    }
+
+    public int getCreditos() {
+        return creditos;
+    }
+
+    public void setCreditos(int creditos) {
+        this.creditos = creditos;
     }
 
     public Alumno(Date fecha_nacimiento, String nombre, int cedula, String email, int userN) {

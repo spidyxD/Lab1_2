@@ -5,18 +5,23 @@
  */
 package Controller;
 
+import Dao.Data;
+import Entities.Carrera;
+import Entities.Ciclo;
 import java.io.IOException;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author Addiel
  */
-@WebServlet(name = "Matricula", urlPatterns = {"/Matricular"})
+@WebServlet(name = "Matricula", urlPatterns = {"/doMatricula,/goMatricula"})
 public class Matricula extends HttpServlet {
 
     /**
@@ -28,13 +33,26 @@ public class Matricula extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        switch (request.getServletPath()) {            
-            case "/Matricular":
+        switch (request.getServletPath()) {
+            case "/goMatricula":
+                this.goToMatricula(request, response);
+                break;            
+            case "/doMatricula":
                 this.doMatricula(request, response);
                 break;
-            default:break;
+            default:
+                try{
+                 request.getRequestDispatcher("Home.jsp").
+                         forward( request, response);
+                }
+                catch(Exception e){ String error = e.getMessage();
+                     request.setAttribute("error",error);
+                     request.getRequestDispatcher("Error.jsp").forward(request, response);
+
+                 }
+                 break;
         }
     }
 
@@ -75,14 +93,32 @@ public class Matricula extends HttpServlet {
     @Override
     public String getServletInfo() {
         return "Short description";
-    }// </editor-fold>
-
-    private void doMatricula(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-       try{
+    }// </editor-fold>  
+    private void goToMatricula(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        try{
+        /*HttpSession s = request.getSession(true);           
+        List<Ciclo> ciclos = Data.instance().getServiciobusquedas().verCiclos();      
+        List<Carrera> carreras = Data.instance().getServiciobusquedas().verCarreras();
+        System.out.println(ciclos.size() + carreras.size());
+        request.setAttribute("ciclos", ciclos);
+        request.setAttribute("carreras", carreras);*/
         request.getRequestDispatcher("Matricula.jsp").
                 forward( request, response);
        }
-       catch(Exception e){ String error = e.getMessage();
+       catch(Exception e){
+           String error = e.getMessage();
+            request.setAttribute("error",error);
+            request.getRequestDispatcher("Error.jsp").forward(request, response);
+            
+        }
+    }
+    private void doMatricula(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+      try{       
+        request.getRequestDispatcher("Matricula.jsp").
+                forward( request, response);
+       }
+       catch(Exception e){
+           String error = e.getMessage();
             request.setAttribute("error",error);
             request.getRequestDispatcher("Error.jsp").forward(request, response);
             

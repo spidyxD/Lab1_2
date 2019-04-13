@@ -14,8 +14,8 @@ import java.util.Date;
 public class Ciclo {
     public int codigo;
     public String descripcion;
-    public Date fecha_inicio;
-    public Date fecha_finalizacion;
+    public Date fecha_inicio = new Date();
+    public Date fecha_finalizacion = new Date();
 
     public Ciclo() {
     }

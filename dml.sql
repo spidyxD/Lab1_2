@@ -574,4 +574,7 @@ INSERT INTO Matricula VALUES(4343453,2,51,500,03);
 INSERT INTO Administrador Values (207680641,'Estefany Hernandez Arce');
 INSERT INTO Usuario values (207680641,'admin','Administrador');
 
+INSERT INTO Administrador Values (116360595,'Roger Amador Villagra');
+INSERT INTO Usuario values (116360595,'admin','Administrador');
+
 commit;

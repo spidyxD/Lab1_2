@@ -12,7 +12,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import oracle.jdbc.OracleTypes;
 
 /**
  *
@@ -22,21 +21,14 @@ public class ServicioProfesor extends Service{
     private static final String INSERTARPROFESOR= "{call crearProfesor(?,?,?,?,?,?)}";
     private static final String MODIFICARPROFESOR= "{call modificarProfesor(?,?,?,?,?,?)}";
     private static final String ELMINARPROFESOR= "{call eliminarProfesor(?)}";
-    
-      private Profesor tipoProfesor(ResultSet rs){
-        try{
-            Profesor p = new Profesor();
-            p.setCedula(rs.getInt("cedula"));
-            p.setEdad(rs.getInt("edad"));
-            p.setEmail(rs.getString("email"));
-            p.setTelefono(rs.getInt("telefono"));
-            p.setNombre(rs.getString("nombre"));
-            return p;
+    private static ServicioProfesor uniqueInstance;
+    public static ServicioProfesor instance(){
+        if (uniqueInstance == null){
+            uniqueInstance = new ServicioProfesor();
         }
-        catch (SQLException ex) {
-            return null;
-        }
+        return uniqueInstance;
     }
+     
     public void insertarProfesor(Profesor profesor, Usuario user) throws AccesoADatos.GlobalException, AccesoADatos.NoDataException, InstantiationException, IllegalAccessException  	{
         try {
             conectar();
@@ -74,11 +66,8 @@ public class ServicioProfesor extends Service{
                 throw new AccesoADatos.GlobalException("Estatutos invalidos o nulos");
             }
         }
-    }
-     
-     
-     
-      public void modificarProfesor(Profesor profesor, Usuario user) throws AccesoADatos.GlobalException, AccesoADatos.NoDataException, InstantiationException, IllegalAccessException  	{
+    }               
+    public void modificarProfesor(Profesor profesor, Usuario user) throws AccesoADatos.GlobalException, AccesoADatos.NoDataException, InstantiationException, IllegalAccessException  	{
         try {
             conectar();
         } catch (ClassNotFoundException e) {
@@ -114,9 +103,8 @@ public class ServicioProfesor extends Service{
                 throw new AccesoADatos.GlobalException("Estatutos invalidos o nulos");
             }
         }
-    }
-      
-      public void eliminarProfesor(int codigo) throws AccesoADatos.GlobalException, AccesoADatos.NoDataException, InstantiationException, IllegalAccessException  	{
+    }      
+    public void eliminarProfesor(int codigo) throws AccesoADatos.GlobalException, AccesoADatos.NoDataException, InstantiationException, IllegalAccessException  	{
         try {
             conectar();
         } catch (ClassNotFoundException e) {
@@ -148,9 +136,7 @@ public class ServicioProfesor extends Service{
                 throw new AccesoADatos.GlobalException("Estatutos invalidos o nulos");
             }
         }
-    }
-      
-      
+    }            
     public ArrayList<Profesor> verProfesores() throws AccesoADatos.GlobalException, AccesoADatos.NoDataException, InstantiationException, IllegalAccessException  	{
         try {
             conectar();
@@ -164,11 +150,11 @@ public class ServicioProfesor extends Service{
         try {
             ArrayList<Profesor> profes = new ArrayList<>();     
             Statement stmt = conexion.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT * FROM Profesor");   
-          //  pstmt.setInt(2,codigo);              
-                System.out.println(rs);
+            ResultSet rs = stmt.executeQuery("SELECT * FROM Profesor");
+             ServicioBusquedas sb = new ServicioBusquedas();
+          //  pstmt.setInt(2,codigo);      
                 while(rs.next()){
-                    profes.add(tipoProfesor(rs));
+                    profes.add(sb.tipoProfesor(rs));
                 }
             return profes;
             

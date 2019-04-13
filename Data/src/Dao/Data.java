@@ -16,7 +16,13 @@ public class Data{
     private ServicioEstudiante servicioestudiante;
     private ServicioGenerales serviciogenerales;
     private ServicioProfesor servicioProfesor;
-
+    private static Data uniqueInstance;    
+    public static Data instance(){
+        if (uniqueInstance == null){
+            uniqueInstance = new Data();
+        }
+        return uniqueInstance;
+    }
     public Data() {
         service = new Service();
         serviciobusquedas = new ServicioBusquedas();

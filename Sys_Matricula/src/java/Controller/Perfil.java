@@ -5,18 +5,31 @@
  */
 package Controller;
 
+import AccesoADatos.GlobalException;
+import AccesoADatos.NoDataException;
+import Dao.Data;
+import Entities.Alumno;
+import Entities.Profesor;
+import Entities.Usuario;
+import com.google.gson.Gson;
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author Addiel
  */
-@WebServlet(name = "Perfil", urlPatterns = {"/perfil","/EditarAlumno","/EditarProfesor"})
+@WebServlet(name = "Perfil", urlPatterns = {"/goPerfil","/EditarAlumno","/EditarProfesor"})
 public class Perfil extends HttpServlet {
 
     /**
@@ -29,9 +42,9 @@ public class Perfil extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
      protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+            throws ServletException, IOException, GlobalException, NoDataException, InstantiationException, IllegalAccessException {
           switch (request.getServletPath()) {          
-              case "/perfil":
+              case "/goPerfil":
                 this.loadProfile(request, response);
                 break;
               case "/EditarAlumno":
@@ -67,7 +80,17 @@ public class Perfil extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+         try {
+             processRequest(request, response);
+         } catch (GlobalException ex) {
+             Logger.getLogger(Perfil.class.getName()).log(Level.SEVERE, null, ex);
+         } catch (NoDataException ex) {
+             Logger.getLogger(Perfil.class.getName()).log(Level.SEVERE, null, ex);
+         } catch (InstantiationException ex) {
+             Logger.getLogger(Perfil.class.getName()).log(Level.SEVERE, null, ex);
+         } catch (IllegalAccessException ex) {
+             Logger.getLogger(Perfil.class.getName()).log(Level.SEVERE, null, ex);
+         }
     }
 
     /**
@@ -81,7 +104,17 @@ public class Perfil extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+         try {
+             processRequest(request, response);
+         } catch (GlobalException ex) {
+             Logger.getLogger(Perfil.class.getName()).log(Level.SEVERE, null, ex);
+         } catch (NoDataException ex) {
+             Logger.getLogger(Perfil.class.getName()).log(Level.SEVERE, null, ex);
+         } catch (InstantiationException ex) {
+             Logger.getLogger(Perfil.class.getName()).log(Level.SEVERE, null, ex);
+         } catch (IllegalAccessException ex) {
+             Logger.getLogger(Perfil.class.getName()).log(Level.SEVERE, null, ex);
+         }
     }
 
     /**
@@ -94,8 +127,27 @@ public class Perfil extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
-    private void doUpdateStudent(HttpServletRequest request, HttpServletResponse response) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    private void doUpdateStudent(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException, GlobalException, NoDataException, InstantiationException, IllegalAccessException {
+            try{
+            HttpSession s = request.getSession(true);
+            BufferedReader readerOff = new BufferedReader(new InputStreamReader(request.getPart("offerer").getInputStream()));
+            BufferedReader readerLog = new BufferedReader(new InputStreamReader(request.getPart("login").getInputStream()));
+            PrintWriter out = response.getWriter();
+            Gson gson = new Gson();
+            Alumno alumn = gson.fromJson(readerOff, Alumno.class);
+            
+            System.out.println(alumn.getNombre());
+            Usuario user = gson.fromJson(readerLog, Usuario.class);
+             System.out.println(user.getUsername());
+            Data.instance().getServicioestudiante().modificarEstudiante(alumn, user);           
+            response.setContentType("application/json; charset=UTF-8");
+            out.write(gson.toJson(alumn));
+            response.setStatus(200); //update successfull
+            }  catch (Exception e) {
+            String error = e.getMessage();
+            request.setAttribute("error", error);  
+            response.setStatus(401); //si hay un error en el update
+        }
     }
 
     private void loadProfile(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -110,8 +162,27 @@ public class Perfil extends HttpServlet {
         }
     }
 
-    private void doUpdateProfessor(HttpServletRequest request, HttpServletResponse response) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    private void doUpdateProfessor(HttpServletRequest request, HttpServletResponse response) throws GlobalException, NoDataException, InstantiationException, IllegalAccessException, IOException, ServletException {
+            try {
+            HttpSession s = request.getSession(true);
+            BufferedReader readerOff = new BufferedReader(new InputStreamReader(request.getPart("offerer").getInputStream()));
+            BufferedReader readerLog = new BufferedReader(new InputStreamReader(request.getPart("login").getInputStream()));
+            PrintWriter out = response.getWriter();
+            Gson gson = new Gson();
+            Profesor prof = gson.fromJson(readerOff, Profesor.class);
+            
+            System.out.println(prof.getNombre());
+            Usuario user = gson.fromJson(readerLog, Usuario.class);
+            System.out.println(user.getUsername());
+            Data.instance().getServicioProfesor().modificarProfesor(prof, user);           
+            response.setContentType("application/json; charset=UTF-8");
+            out.write(gson.toJson(prof));
+            response.setStatus(200); //update successfull
+            }  catch (Exception e) {
+            String error = e.getMessage();
+            request.setAttribute("error", error);  
+            response.setStatus(401); //si hay un error en el update
+        }
     }
 
 }

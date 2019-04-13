@@ -30,7 +30,63 @@
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>Perfil</servlet-name>
-        <url-pattern>/perfil</url-pattern>
+        <url-pattern>/goPerfil</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Perfil</servlet-name>
+        <url-pattern>/EditarAlumno</url-pattern>
+    </servlet-mapping>
+     <servlet-mapping>
+        <servlet-name>Perfil</servlet-name>
+        <url-pattern>/EditarProfesor</url-pattern>
+    </servlet-mapping>    
+     <servlet-mapping>
+        <servlet-name>Matricula</servlet-name>
+        <url-pattern>/goMatricula</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Matricula</servlet-name>
+        <url-pattern>/doMatricula</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Login</servlet-name>
+        <url-pattern>/doLogin</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Login</servlet-name>
+        <url-pattern>/doLogout</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Busqueda</servlet-name>
+        <url-pattern>/BusquedaCurso</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Busqueda</servlet-name>
+        <url-pattern>/BusquedaProfesor</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Busqueda</servlet-name>
+        <url-pattern>/BusquedaAlumnos</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Busqueda</servlet-name>
+        <url-pattern>/BusquedaCarrera</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Busqueda</servlet-name>
+        <url-pattern>/BusquedaCiclos</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Busqueda</servlet-name>
+        <url-pattern>/BusquedaGrupos</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Busqueda</servlet-name>
+        <url-pattern>/BusquedaCursoXcarrera</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Busqueda</servlet-name>
+        <url-pattern>/BusquedaAlumnoXcurso</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

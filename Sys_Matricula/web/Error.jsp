@@ -9,9 +9,16 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <%@ include file="includes.jspf" %>         
+        <title>404 error</title>
     </head>
+     <header>
+          <%@ include file="NavBar.jspf" %>
+     </header>
     <body>
-        <h1>Hello World!</h1>
+        <h1>Page not found</h1>
     </body>
+      <footer >        
+      <%@ include file="footer.jspf" %>       
+    </footer>
 </html>

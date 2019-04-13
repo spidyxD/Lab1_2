@@ -15,7 +15,7 @@
       
           <%@ include file="Login.jspf" %>
            
-        <title>Home</title>
+        <title>Perfil</title>
     </head>
      <header>
           <%@ include file="NavBar.jspf" %>
@@ -40,54 +40,67 @@
                     <h5 class="mb-3">Descripción</h5>
                     <div class="row">
                         <div class="col-md-6">
-                            <h6>About</h6>
+                            <h6><strong>Datos personales</strong></h6>
                             <p>
-                                Web Designer, UI/UX Engineer
+                                Nombre:
+                                <br>
+                                Cedula:
+                                 <br>
+                                Edad:
+                                 <br>
+                                Fecha de nacimiento:
+                                 <br>
+                                Telefono:
+                                 <br>
+                                Email:
+                                 <br>
                             </p>
-                            <h6>Hobbies</h6>
+                            <h6><strong>Datos de la carrera</strong></h6>
                             <p>
-                                Indie music, skiing and hiking. I love the great outdoors.
+                                Carrera que cursa:
+                                 <br>
+                                Cursos matriculados:
+                                 <br>
+                                Total creditos:
+                                 <br>
                             </p>
                         </div>
                         <div class="col-md-6">
-                            <h6>Recent badges</h6>
-                            <a href="#" class="badge badge-dark badge-pill">html5</a>
-                            <a href="#" class="badge badge-dark badge-pill">react</a>
-                            <a href="#" class="badge badge-dark badge-pill">codeply</a>
-                            <a href="#" class="badge badge-dark badge-pill">angularjs</a>
-                            <a href="#" class="badge badge-dark badge-pill">css3</a>
-                            <a href="#" class="badge badge-dark badge-pill">jquery</a>
-                            <a href="#" class="badge badge-dark badge-pill">bootstrap</a>
-                            <a href="#" class="badge badge-dark badge-pill">responsive-design</a>
+                            <h6>Cursos matriculados</h6>
+                            <a href="#" class="badge badge-dark badge-pill">Programacion</a>
+                            <a href="#" class="badge badge-dark badge-pill">Bases de datos</a>
+                            <a href="#" class="badge badge-dark badge-pill">Redes</a>
+                            <a href="#" class="badge badge-dark badge-pill">Operativos</a>
+                            <a href="#" class="badge badge-dark badge-pill">Robotica</a>                            
                             <hr>                            
                         </div>
                         <div class="col-md-12">
-                            <h5 class="mt-2"><span class="fa fa-clock-o ion-clock float-right"></span> Recent Activity</h5>
+                            <h5 class="mt-2"><span class="fa fa-clock-o ion-clock float-right"></span> Detalle de Cursos</h5>
                             <table class="table table-sm table-hover table-striped">
                                 <tbody>                                    
                                     <tr>
                                         <td>
-                                            <strong>Abby</strong> joined ACME Project Team in <strong>`Collaboration`</strong>
+                                            <strong>Programacion</strong> Horario: <strong>Creditos:  </strong>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td>
-                                            <strong>Gary</strong> deleted My Board1 in <strong>`Discussions`</strong>
+                                            <strong>Bases de datos</strong> Horario: <strong>Creditos:  </strong>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td>
-                                            <strong>Kensington</strong> deleted MyBoard3 in <strong>`Discussions`</strong>
+                                            <strong>Redes</strong> Horario: <strong>Creditos:  </strong>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td>
-                                            <strong>John</strong> deleted My Board1 in <strong>`Discussions`</strong>
+                                            <strong>Operativos</strong> Horario: <strong>Creditos:  </strong>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td>
-                                            <strong>Skell</strong> deleted his post Look at Why this is.. in <strong>`Discussions`</strong>
+                                            <strong>Robotica</strong> Horario: <strong>Creditos:  </strong>
                                         </td>
                                     </tr>
                                 </tbody>
@@ -98,33 +111,33 @@
                 </div>
                 <div class="tab-pane" id="messages">
                     <div class="alert alert-info alert-dismissable">
-                        <a class="panel-close close" data-dismiss="alert">×</a> This is an <strong>.alert</strong>. Use this to show important messages to the user.
+                        <a class="panel-close close" data-dismiss="alert">×</a> Esta informacion <strong>no es oficial</strong>. Vease solo como referencia.
                     </div>
                     <table class="table table-hover table-striped">
                         <tbody>                                    
                             <tr>
                                 <td>
-                                   <span class="float-right font-weight-bold">3 hrs ago</span> Here is your a link to the latest summary report from the..
+                                   <span class="float-right font-weight-bold">3 nvl</span> Nivel de carrera
                                 </td>
                             </tr>
                             <tr>
                                 <td>
-                                   <span class="float-right font-weight-bold">Yesterday</span> There has been a request on your account since that was..
+                                   <span class="float-right font-weight-bold"> Ciclo 1, 2019 </span>Ciclo actual:
                                 </td>
                             </tr>
                             <tr>
                                 <td>
-                                   <span class="float-right font-weight-bold">9/10</span> Porttitor vitae ultrices quis, dapibus id dolor. Morbi venenatis lacinia rhoncus. 
+                                   <span class="float-right font-weight-bold"> 7.85</span> PGA:
                                 </td>
                             </tr>
                             <tr>
                                 <td>
-                                   <span class="float-right font-weight-bold">9/4</span> Vestibulum tincidunt ullamcorper eros eget luctus. 
+                                   <span class="float-right font-weight-bold">ninguno</span>  Pendientes de pago:
                                 </td>
                             </tr>
                             <tr>
                                 <td>
-                                   <span class="float-right font-weight-bold">9/4</span> Maxamillion ais the fix for tibulum tincidunt ullamcorper eros. 
+                                   <span class="float-right font-weight-bold">48 creditos</span> Total de creditos globales 
                                 </td>
                             </tr>
                         </tbody> 
@@ -218,7 +231,7 @@
                 </div>
             </div>
             <div class="col-lg-4 order-lg-1 text-center" >
-                        <img id="photo" src="Resources/user2.png" class="mx-auto img-fluid img-circle d-block" alt="avatar">
+                        <img id="photo" src="Resources/images/user2.png" class="mx-auto img-fluid img-circle d-block" alt="avatar">
                         <!--h6 class="mt-2">Upload a different photo</h6>
                         <label class="custom-file">
                             <input type="file" id="file" class="custom-file-input">

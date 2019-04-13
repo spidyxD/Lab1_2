@@ -20,10 +20,17 @@ import java.sql.SQLException;
  */
 public class ServicioGenerales extends Service {
     private static final String REPORTENOTAS= "{call reporteNotas(?,?,?,?)}";
-    private static final String MATRICULARCURSO= "{call hacerMtricula(?,?,?,?,?)}";
+    private static final String MATRICULARCURSO= "{call hacerMatricula(?,?,?,?,?)}";
+    private static final String ELIMINARMATRICULA ="{call matriculaDelete(?,?)}";
     private static final String GENERARPLANESTUDIO= "{call generarPlanEstudio(?,?,?,?)}";
-    
-     public void reportarNotas(Rendimiento_grupo rg) throws AccesoADatos.GlobalException, AccesoADatos.NoDataException, SQLException, InstantiationException, IllegalAccessException  	{
+    private static ServicioGenerales uniqueInstance;
+    public static ServicioGenerales instance(){
+        if (uniqueInstance == null){
+            uniqueInstance = new ServicioGenerales();
+        }
+        return uniqueInstance;
+    }
+    public void reportarNotas(Rendimiento_grupo rg) throws AccesoADatos.GlobalException, AccesoADatos.NoDataException, SQLException, InstantiationException, IllegalAccessException  	{
         try {
             conectar();
         } catch (ClassNotFoundException e) {
@@ -57,8 +64,7 @@ public class ServicioGenerales extends Service {
                 throw new AccesoADatos.GlobalException("Estatutos invalidos o nulos");
             }
         }
-    }
-     
+    }     
     public void matricularCurso(Alumno a, Carrera c ,Curso cu,Grupo g, Ciclo cl) throws AccesoADatos.GlobalException, AccesoADatos.NoDataException, SQLException, InstantiationException, IllegalAccessException  	{
         try {
             conectar();
@@ -94,8 +100,40 @@ public class ServicioGenerales extends Service {
                 throw new AccesoADatos.GlobalException("Estatutos invalidos o nulos");
             }
         }
-    } 
-    
+    }     
+    public void eliminarMatricula(Alumno a, int  g) throws AccesoADatos.GlobalException, AccesoADatos.NoDataException, SQLException, InstantiationException, IllegalAccessException  	{
+        try {
+            conectar();
+        } catch (ClassNotFoundException e) {
+            throw new AccesoADatos.GlobalException("No se ha localizado el driver");
+        } catch (SQLException e) {
+            throw new AccesoADatos.NoDataException("La base de datos no se encuentra disponible");
+        }
+        CallableStatement pstmt=null;
+        
+        try {
+            pstmt = conexion.prepareCall(ELIMINARMATRICULA);          
+            pstmt.setInt(1,a.getCedula());
+            pstmt.setInt(2,g);
+            boolean resultado = pstmt.execute();
+            if (resultado == true) {
+                throw new AccesoADatos.NoDataException("No se realizo la inserci�n");
+            }
+            
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new AccesoADatos.GlobalException("Llave duplicada");
+        } finally {
+            try {
+                if (pstmt != null) {
+                    pstmt.close();
+                }
+                desconectar();
+            } catch (SQLException e) {
+                throw new AccesoADatos.GlobalException("Estatutos invalidos o nulos");
+            }
+        }
+    }     
     public void generarPlanEstudio(Carrera ca ,Curso cu, Ciclo cl) throws AccesoADatos.GlobalException, AccesoADatos.NoDataException, SQLException, InstantiationException, IllegalAccessException  	{
         try {
             conectar();
@@ -130,4 +168,5 @@ public class ServicioGenerales extends Service {
             }
         }
     }
+   
 }

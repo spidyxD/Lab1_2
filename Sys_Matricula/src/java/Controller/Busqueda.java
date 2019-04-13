@@ -17,7 +17,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Addiel
  */
-@WebServlet(name = "Busqueda", urlPatterns = {"/Busqueda"})
+@WebServlet(name = "Busqueda", urlPatterns = {"/BusquedaCurso","/BusquedaProfesor","/BusquedaAlumnos","/BusquedaCarrera","/BusquedaCiclos","/BusquedaGrupos","/BusquedaAlumnoXcurso","/BusquedaCursoXcarrera"})
 public class Busqueda extends HttpServlet {
 
     /**
@@ -56,7 +56,20 @@ public class Busqueda extends HttpServlet {
             case "/BusquedaCiclos"://al inicio de la busqueda
                 this.doSearchCiclos(request, response);
                 break;    
-                
+            case "/BusquedaGrupos"://al inicio de la busqueda
+                this.doSearchGrupos(request, response);
+                break; 
+            default:
+                      try{
+                       request.getRequestDispatcher("Home.jsp").
+                               forward( request, response);
+                      }
+                      catch(Exception e){ String error = e.getMessage();
+                           request.setAttribute("error",error);
+                           request.getRequestDispatcher("Error.jsp").forward(request, response);
+
+                       }
+                       break;
         }
     }
 
@@ -124,6 +137,10 @@ public class Busqueda extends HttpServlet {
     }
 
     private void doSearchCiclos(HttpServletRequest request, HttpServletResponse response) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    private void doSearchGrupos(HttpServletRequest request, HttpServletResponse response) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
