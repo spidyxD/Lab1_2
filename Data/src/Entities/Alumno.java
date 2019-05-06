@@ -5,7 +5,7 @@
  */
 package Entities;
 
-import java.sql.Date;
+
 
 
 
@@ -14,40 +14,40 @@ import java.sql.Date;
  * @author Addiel
  */
 public class Alumno extends Persona{
-  public  Date fecha_nacimiento;
+  public  String fechaN;
   Carrera carrera = new Carrera();
   int creditos ;
     public Alumno() {
     }
   
 
-    public Alumno(Date fecha_nacimiento) {
-        this.fecha_nacimiento = fecha_nacimiento;
+    public Alumno(String fechaN) {
+        this.fechaN = fechaN;
     }
 
     public int getCreditos() {
-        return creditos;
+        return this.creditos;
     }
 
     public void setCreditos(int creditos) {
         this.creditos = creditos;
     }
 
-    public Alumno(Date fecha_nacimiento, String nombre, int cedula, String email, int userN) {
+    public Alumno(String fechaN, String nombre, int cedula, String email) {
         super(nombre, cedula, email);
-        this.fecha_nacimiento = fecha_nacimiento;
+        this.fechaN = fechaN;
     }
 
-    public Date getFecha_nacimiento() {
-        return fecha_nacimiento;
+    public String getFecha_nacimiento() {
+        return this.fechaN;
     }
 
-    public void setFecha_nacimiento(Date fecha_nacimiento) {
-        this.fecha_nacimiento = fecha_nacimiento;
+    public void setFecha_nacimiento(String fechaN) {
+        this.fechaN = fechaN;
     }
 
     public Carrera getCarrera() {
-        return carrera;
+        return this.carrera;
     }
 
     public void setCarrera(Carrera carrera) {
@@ -56,7 +56,7 @@ public class Alumno extends Persona{
 
   @Override
     public String getNombre() {
-        return nombre;
+        return this.nombre;
     }
 
   @Override
@@ -66,7 +66,7 @@ public class Alumno extends Persona{
 
   @Override
     public int getCedula() {
-        return cedula;
+        return this.cedula;
     }
 
   @Override
@@ -76,12 +76,20 @@ public class Alumno extends Persona{
 
   @Override
     public String getEmail() {
-        return email;
+        return this.email;
     }
 
   @Override
     public void setEmail(String email) {
         this.email = email;
+    }
+    @Override
+    public int getTelefono() {
+        return telefono;
+    }
+    @Override
+    public void setTelefono(int telefono) {
+        this.telefono = telefono;
     }
     
 }

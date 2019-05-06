@@ -7,7 +7,7 @@
 <div id="Log" class="modal">
    
   
-  <form id="modalLog" class="modal-content animate" action="javascript:doLogin();" method="post">
+  <form id="modalLog" class="modal-content animate" action="javascript:;" onsubmit="validateLogin(this)" method="POST">
     <div class="imgcontainer">
       <span onclick="document.getElementById('Log').style.display='none'" class="close" title="Close Modal">&times;</span>
       <img src="Resources/images/user1.png" alt="Avatar" class="avatar">
@@ -17,7 +17,7 @@
       <input type="text" id="username" class="form-control"  placeholder="Enter Username" name="username" required>
 
       <label for="psw"><b>Password</b></label>
-      <input type="password" id="password" class="form-control"  placeholder="Enter Password" name="password" required>
+      <input type="password" id="clave" class="form-control"  placeholder="Enter Password" name="password" required>
         
       <button type="submit">Login</button>
      

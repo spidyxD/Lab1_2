@@ -31,7 +31,7 @@ public class Rendimiento_grupo extends Persona{
     }
 
     public Curso getCurso() {
-        return curso;
+        return this.curso;
     }
 
     public void setCurso(Curso curso) {
@@ -39,7 +39,7 @@ public class Rendimiento_grupo extends Persona{
     }
 
     public Alumno getAlumno() {
-        return alumno;
+        return this.alumno;
     }
 
     public void setAlumno(Alumno alumno) {
@@ -47,7 +47,7 @@ public class Rendimiento_grupo extends Persona{
     }
 
     public int getCalificacion() {
-        return calificacion;
+        return this.calificacion;
     }
 
     public void setCalificacion(int calificacion) {
@@ -55,7 +55,7 @@ public class Rendimiento_grupo extends Persona{
     }
 
     public String getNombre() {
-        return nombre;
+        return this.nombre;
     }
 
     public void setNombre(String nombre) {
@@ -63,7 +63,7 @@ public class Rendimiento_grupo extends Persona{
     }
 
     public int getCedula() {
-        return cedula;
+        return this.cedula;
     }
 
     public void setCedula(int cedula) {
@@ -71,7 +71,7 @@ public class Rendimiento_grupo extends Persona{
     }
 
     public String getEmail() {
-        return email;
+        return this.email;
     }
 
     public void setEmail(String email) {
@@ -79,7 +79,7 @@ public class Rendimiento_grupo extends Persona{
     }
 
     public Profesor getProfesor() {
-        return profesor;
+        return this.profesor;
     }
 
     public void setProfesor(Profesor profesor) {

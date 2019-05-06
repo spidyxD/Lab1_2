@@ -24,7 +24,7 @@ public class Carrera {
     }
 
     public int getCodigo() {
-        return codigo;
+        return this.codigo;
     }
 
     public void setCodigo(int codigo) {
@@ -32,7 +32,7 @@ public class Carrera {
     }
 
     public String getNombre() {
-        return nombre;
+        return this.nombre;
     }
 
     public void setNombre(String nombre) {
@@ -40,7 +40,7 @@ public class Carrera {
     }
 
     public String getCreditos() {
-        return titulo;
+        return this.titulo;
     }
 
     public void setCreditos(String titulo) {
@@ -48,7 +48,7 @@ public class Carrera {
     }
 
     public String getTitulo() {
-        return titulo;
+        return this.titulo;
     }
 
     public void setTitulo(String titulo) {

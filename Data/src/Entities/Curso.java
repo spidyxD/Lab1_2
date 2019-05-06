@@ -26,7 +26,7 @@ public class Curso {
     }
 
     public int getCodigo() {
-        return codigo;
+        return this.codigo;
     }
 
     public void setCodigo(int codigo) {
@@ -34,7 +34,7 @@ public class Curso {
     }
 
     public String getNombre() {
-        return nombre;
+        return this.nombre;
     }
 
     public void setNombre(String nombre) {
@@ -42,7 +42,7 @@ public class Curso {
     }
 
     public int getCreditos() {
-        return creditos;
+        return this.creditos;
     }
 
     public void setCreditos(int creditos) {
@@ -50,7 +50,7 @@ public class Curso {
     }
 
     public float getHoras_semanales() {
-        return horas_semanales;
+        return this.horas_semanales;
     }
 
     public void setHoras_semanales(float horas_semanales) {

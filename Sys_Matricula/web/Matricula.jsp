@@ -4,6 +4,9 @@
     Author     : Addiel
 --%>
 
+<%@page import="java.util.ArrayList"%>
+<%@page import="Entities.Grupo"%>
+<%@page import="Entities.Curso"%>
 <%@page import="Entities.Carrera"%>
 <%@page import="Entities.Ciclo"%>
 <%@page import="java.util.List"%>
@@ -15,8 +18,11 @@
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-         
-      
+        <!-- ESTO ES ORO PARA CONTROLAR DATATABLES CON PAGINACION -->
+        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
+        <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
+         <script type="text/javascript" src="Resources/js/myScripts.js"></script>
+         <!-- FIN https://datatables.net/ -->
           <%@ include file="Login.jspf" %>
           <title>Matricula</title>
     </head>
@@ -24,81 +30,90 @@
           <%@ include file="NavBar.jspf" %>
      </header>
     <body>
-        <!-- <//jsp:useBean id="carreras" scope="request" type="List<Ciclo>" class="java.util.ArrayList"/>
-        <//jsp:useBean id="ciclos" scope="request" type="List<Carrera>" class="java.util.ArrayList"/> -->
+        
+         <%ArrayList<Ciclo> ciclos = (ArrayList<Ciclo>)session.getAttribute("ciclos");%>
+         <%ArrayList<Carrera> carreras = (ArrayList<Carrera>)session.getAttribute("carreras");%>
+         <%ArrayList<Curso> cursos = (ArrayList<Curso>)session.getAttribute("cursos");%>
         <div class="container">
-            <form>
+            <form role="form" action="javascript:;" onsubmit="matriculador(this)" method="POST">
                 <div class="form-row">
                   <div class="col-md-4 mb-3">
                     <label for="validationServer01" id="validationServer05">Ciclo</label>
-                      <select class="custom-select">                    
-                        <option selected>Open this select menu</option>
-                        <option value="1">One</option>
-                        <option value="2">Two</option>
-                        <option value="3">Three</option>
+                      <select class="custom-select">
+                       <option selected readonly>Escoge un ciclo</option>
+                        < <% for(Ciclo cl: ciclos){ %>                      
+                        <option value="1"> <%= cl.getDescripcion() %></option>
+                        <%}%> 
                       </select>
                   </div>
                   <div class="col-md-4 mb-3">
                     <label for="validationServer02" id="validationServer03">Carrera</label>                  
-                      <select class="custom-select">                     
-                        <option selected>Open this select menu</option>
-                        <option value="1">One</option>
-                        <option value="2">Two</option>
-                        <option value="3">Three</option>
+                      <select class="custom-select" id="carrera">
+                       <option selected readonly>Escoge una carrera</option>
+                        <% for(Carrera ca : carreras){ %>                      
+                         <option value="1"> <%= ca.getNombre() %></option>
+                        <%}%> 
                       </select>
-                      
                   </div>                  
-                    <div class="col-md-4 mb-3">
-                    <label for="validationServer03" id="validationServer04">Grupo</label>
-                     <select class="custom-select">
-                        <option selected>Open this select menu</option>
-                        <option value="1">One</option>
-                        <option value="2">Two</option>
-                        <option value="3">Three</option>
-                      </select>
-                  </div>
-                  
-                </div>
-                 <div class="form-row">                 
-                    <div class="col-md-6 mb-3">
-                    <label for="validationTooltip01">Buscar curso</label>                    
-                     <input class="form-control" id="validationTooltip01" type="search" placeholder="Search" aria-label="Search">                       
-                    </div>
-                    <div class="col-md-6 mb-3">
-                        <p>&nbsp</p>   
-                        <button class="btn btn-outline-info btn-sm" type="submit" style="width: 100px;">Search</button>                       
-                   </div>                    
-                </div>
+                                 
+                </div>              
                 <div class="form-row">
                     <div class="col-md-12 mb-3">
-                        <table class="table table-hover">
-                        <thead class="thead-dark">
-                          <tr>
-                            <th scope="col">#</th>
-                            <th scope="col">Codigo</th>
-                            <th scope="col">Nombre del curso</th>
-                            <th scope="col">Creditos</th>
-                            <th scope="col">Horas semanales</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <tr>
-                            <th scope="row"><input type="checkbox" id="course" ></th>
-                            <td>59</td>
-                            <td>Fundamentos de Informatica</td>
-                            <td>3</td>
-                             <td>3 horas</td>
-                          </tr>                         
-                        </tbody>
-                      </table>                    
+                          
+                        <div id="matriculadorTable_wrapper" class="dataTables_wrapper dt-bootstrap4">
+                           
+                            <div class="row">
+                                <div class="col-sm-12">
+                            <table id="matriculadorTable" class="table table-striped table-bordered dataTable table-hover " role="grid" aria-describedby="matriculadorTable_info" style="width: 100%;" width="100%" cellspacing="0">
+                                <thead class="thead-dark">
+                                     </th></tr>
+                                  <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Codigo</th>
+                                    <th scope="col">Nombre del curso</th>
+                                    <th scope="col">Creditos</th>
+                                    <th scope="col">Horas semanales</th>
+                                    <th scope="col">Grupo</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                    <% for(Curso c : cursos){ %>
+                                    <tr  id="course">
+                                    <th scope="row"><input type="checkbox" ></th>
+                                    <td><%= c.getCodigo()%></td>
+                                    <td><%= c.getNombre() %></td>
+                                    <td><%= c.getCreditos()%></td>
+                                    <td><%= c.getHoras_semanales()%></td>
+                                      <td>
+                                        <select class="custom-select">
+                                        <option selected disabled>Seleccione ...</option> 
+                                        <option >1</option> 
+                                        <option >2</option>   
+                                        <option >3</option>  
+                                        <option >4</option> 
+                                        <option >5</option> 
+                                              
+                                     </select>
+                                        </td>
+                                      </tr>                              
+                                    <%}%>
+                                   
+                                </tbody>      
+                            </table>
+                        </div>
+                    </div>                   
                     </div>
-                </div>    
-                 <button class="btn btn-info btn-sm" type="submit" style="width: auto;">Matricular</button>
-              </form>
-             
+                    </div>
+                    <script>
+                         $(document).ready(function () {
+                        $('#matriculadorTable').DataTable();
+                        $('.dataTables_length').addClass('bs-select');
+                      });
+                    </script>
+                </div>
+                          <button class="btn btn-info btn-sm" type="submit" style="width: auto;">Matricular</button>        
+              </form>               
         </div>
     </body>
-    <footer >        
-      <%@ include file="footer.jspf" %>       
-    </footer>
+    
 </html>

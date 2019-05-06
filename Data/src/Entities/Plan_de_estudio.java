@@ -26,7 +26,7 @@ public class Plan_de_estudio {
     }
 
     public Curso getCurso() {
-        return curso;
+        return this.curso;
     }
 
     public void setCurso(Curso curso) {
@@ -34,7 +34,7 @@ public class Plan_de_estudio {
     }
 
     public Carrera getCarrera() {
-        return carrera;
+        return this.carrera;
     }
 
     public void setCarrera(Carrera carrera) {
@@ -42,7 +42,7 @@ public class Plan_de_estudio {
     }
 
     public int getAnno() {
-        return anno;
+        return this.anno;
     }
 
     public void setAnno(int anno) {
@@ -50,7 +50,7 @@ public class Plan_de_estudio {
     }
 
     public Ciclo getCiclo() {
-        return ciclo;
+        return this.ciclo;
     }
 
     public void setCiclo(Ciclo ciclo) {

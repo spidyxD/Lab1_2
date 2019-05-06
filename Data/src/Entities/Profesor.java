@@ -11,7 +11,6 @@ package Entities;
  */
 public class Profesor extends Persona
 {
-    public int telefono;
 
     public Profesor() {
     }
@@ -20,45 +19,45 @@ public class Profesor extends Persona
         super(nombre, cedula, email);
         this.telefono = telefono;
     }
-
+    @Override
     public int getTelefono() {
-        return telefono;
+        return this.telefono;
     }
-
+    @Override
     public void setTelefono(int telefono) {
         this.telefono = telefono;
     }
-
+    @Override
     public String getNombre() {
-        return nombre;
+        return this.nombre;
     }
-
+    @Override
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
-
+    @Override
     public int getCedula() {
-        return cedula;
+        return this.cedula;
     }
-
+    @Override
     public void setCedula(int cedula) {
         this.cedula = cedula;
     }
-
+    @Override
     public String getEmail() {
-        return email;
+        return this.email;
     }
-
+    @Override
     public void setEmail(String email) {
         this.email = email;
     }
-
+    @Override
     public int getEdad() {
-        return Edad;
+        return this.edad;
     }
-
+    @Override
     public void setEdad(int Edad) {
-        this.Edad = Edad;
+        this.edad = Edad;
     }
     
 }

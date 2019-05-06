@@ -5,13 +5,26 @@
  */
 package Controller;
 
+import AccesoADatos.GlobalException;
+import AccesoADatos.NoDataException;
+import Dao.Data;
+import Entities.Carrera;
+import Entities.Curso;
+import com.google.gson.Gson;
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.sql.SQLException;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -30,7 +43,7 @@ public class Busqueda extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
      protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+            throws ServletException, IOException, GlobalException, NoDataException, SQLException, InstantiationException, IllegalAccessException {
         
         switch (request.getServletPath()) {
             //Para Jobs
@@ -85,7 +98,19 @@ public class Busqueda extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+         try {
+             processRequest(request, response);
+         } catch (GlobalException ex) {
+             Logger.getLogger(Busqueda.class.getName()).log(Level.SEVERE, null, ex);
+         } catch (NoDataException ex) {
+             Logger.getLogger(Busqueda.class.getName()).log(Level.SEVERE, null, ex);
+         } catch (SQLException ex) {
+             Logger.getLogger(Busqueda.class.getName()).log(Level.SEVERE, null, ex);
+         } catch (InstantiationException ex) {
+             Logger.getLogger(Busqueda.class.getName()).log(Level.SEVERE, null, ex);
+         } catch (IllegalAccessException ex) {
+             Logger.getLogger(Busqueda.class.getName()).log(Level.SEVERE, null, ex);
+         }
     }
 
     /**
@@ -99,7 +124,19 @@ public class Busqueda extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+         try {
+             processRequest(request, response);
+         } catch (GlobalException ex) {
+             Logger.getLogger(Busqueda.class.getName()).log(Level.SEVERE, null, ex);
+         } catch (NoDataException ex) {
+             Logger.getLogger(Busqueda.class.getName()).log(Level.SEVERE, null, ex);
+         } catch (SQLException ex) {
+             Logger.getLogger(Busqueda.class.getName()).log(Level.SEVERE, null, ex);
+         } catch (InstantiationException ex) {
+             Logger.getLogger(Busqueda.class.getName()).log(Level.SEVERE, null, ex);
+         } catch (IllegalAccessException ex) {
+             Logger.getLogger(Busqueda.class.getName()).log(Level.SEVERE, null, ex);
+         }
     }
 
     /**
@@ -113,35 +150,86 @@ public class Busqueda extends HttpServlet {
     }// </editor-fold>
 
     private void doSearchStudents(HttpServletRequest request, HttpServletResponse response) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try{
+            HttpSession http =  request.getSession(true);
+            BufferedReader readerLog = request.getReader();
+            PrintWriter out = response.getWriter();
+            Gson gson = new Gson();       
+       }
+       catch(Exception e){}
     }
 
     private void doSearchProfesors(HttpServletRequest request, HttpServletResponse response) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try{
+            HttpSession http =  request.getSession(true);
+            BufferedReader readerLog = request.getReader();
+            PrintWriter out = response.getWriter();
+            Gson gson = new Gson();       
+       }
+       catch(Exception e){}
     }
 
-    private void doSearchCourses(HttpServletRequest request, HttpServletResponse response) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    private void doSearchCourses(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException, GlobalException, NoDataException, SQLException, InstantiationException, IllegalAccessException {       
+         try{
+            HttpSession http = request.getSession(true);
+            BufferedReader readerCurso = new BufferedReader(new InputStreamReader(request.getPart("curso").getInputStream()));
+            List<Curso> cursos = Data.instance().getServicioCursos().verCursos();                
+            PrintWriter out = response.getWriter();
+            Gson gson = new Gson();
+            String curso = gson.fromJson(readerCurso, String.class);   
+       }
+       catch(Exception e){}
     }
 
     private void doSearchCarrers(HttpServletRequest request, HttpServletResponse response) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+         try{
+            HttpSession http =  request.getSession(true);
+            BufferedReader readerLog = request.getReader();
+            PrintWriter out = response.getWriter();
+            Gson gson = new Gson();       
+       }
+       catch(Exception e){}
     }
 
     private void doSearchStudentsXcourse(HttpServletRequest request, HttpServletResponse response) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+         try{
+            HttpSession http =  request.getSession(true);
+            BufferedReader readerLog = request.getReader();
+            PrintWriter out = response.getWriter();
+            Gson gson = new Gson();       
+       }
+       catch(Exception e){}
     }
 
-    private void doSearchCoursesXcarrer(HttpServletRequest request, HttpServletResponse response) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    private void doSearchCoursesXcarrer(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException, GlobalException, NoDataException, SQLException, InstantiationException, IllegalAccessException {
+        HttpSession http = request.getSession(true);       
+        List<Curso> cursos = Data.instance().getServiciobusquedas().buscarCursoXCarrera(0);
+        List<Carrera> carreras = (List<Carrera>) request.getAttribute("carreras");
+        PrintWriter out = response.getWriter();
+        Gson gson = new Gson();
+        String carrera = (String) request.getAttribute("carrera");
+        
     }
 
     private void doSearchCiclos(HttpServletRequest request, HttpServletResponse response) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+         try{
+            HttpSession http =  request.getSession(true);
+            BufferedReader readerLog = request.getReader();
+            PrintWriter out = response.getWriter();
+            Gson gson = new Gson();       
+       }
+       catch(Exception e){}
     }
 
     private void doSearchGrupos(HttpServletRequest request, HttpServletResponse response) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+       try{
+            HttpSession http =  request.getSession(true);
+            BufferedReader readerLog = request.getReader();
+            PrintWriter out = response.getWriter();
+            Gson gson = new Gson();
+            String curso = "";
+       }
+       catch(Exception e){}
     }
 
 }

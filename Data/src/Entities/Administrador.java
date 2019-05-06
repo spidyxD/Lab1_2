@@ -12,7 +12,7 @@ package Entities;
 public class Administrador extends Persona{
     @Override
     public String getNombre() {
-        return nombre;
+        return this.nombre;
     }
 
     @Override
@@ -21,7 +21,7 @@ public class Administrador extends Persona{
     }
 
     public int getCedula() {
-        return cedula;
+        return this.cedula;
     }
 
     public void setCedula(int cedula) {

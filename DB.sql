@@ -58,8 +58,11 @@ CREATE TABLE Alumno (
     fecha_nacimiento date,
     edad number,
     email VARCHAR(50),
+    telefono number
     CONSTRAINT pkAlumno PRIMARY KEY (cedula)
 ); 
+--Alter table Alumno add telefono number;
+
 
 CREATE TABLE Ciclo (
     id number NOT NULL,
@@ -71,12 +74,12 @@ CREATE TABLE Ciclo (
 
 CREATE TABLE Grupo (
     nrc number NOT NULL,
-    curso number,
+    curso number NOT NULL,
     capacidad number,
     horario VARCHAR(50),
     profesor number,
 	ciclo int , 
-    CONSTRAINT pkGrupo PRIMARY KEY(nrc),
+    CONSTRAINT pkGrupo PRIMARY KEY(nrc,curso),
     CONSTRAINT fkGrupo FOREIGN KEY (curso) REFERENCES Curso(codigo)
 );
 
@@ -107,7 +110,7 @@ CREATE TABLE Matricula (
     CONSTRAINT pkMatricula PRIMARY KEY (carrera, alumno, curso, ciclo),
     CONSTRAINT fkMat1 FOREIGN KEY (alumno) REFERENCES Alumno(cedula),
     CONSTRAINT fkMat2 FOREIGN KEY (carrera) REFERENCES Carrera(codigo),
-    CONSTRAINT fkMat3 FOREIGN KEY (grupo) REFERENCES Grupo(nrc),
+    CONSTRAINT fkMat3 FOREIGN KEY (grupo,curso) REFERENCES Grupo(nrc,curso),
     CONSTRAINT fkMat4 FOREIGN KEY (curso) REFERENCES Curso(codigo),
     CONSTRAINT fkMat5 FOREIGN KEY (ciclo) REFERENCES Ciclo(id)
 );
@@ -124,22 +127,22 @@ CREATE TABLE PlanEstudio (
 );
 
 -- SI FUNCIONA
-CREATE OR REPLACE PROCEDURE crearAlumno (xcedula in Alumno.cedula%TYPE, xnombre in Alumno.nombre%TYPE, xedad in Alumno.edad%TYPE, xemail in Alumno.email%TYPE, xfechaN in Alumno.fecha_nacimiento%TYPE,xusername in Usuario.id%TYPE, xclave in Usuario.clave%TYPE )
+CREATE OR REPLACE PROCEDURE crearAlumno (xcedula in Alumno.cedula%TYPE, xnombre in Alumno.nombre%TYPE, xedad in Alumno.edad%TYPE, xemail in Alumno.email%TYPE, xfechaN in Alumno.fecha_nacimiento%TYPE,xtelefono in Alumno.telefono%TYPE,xusername in Usuario.id%TYPE, xclave in Usuario.clave%TYPE )
     IS 
     BEGIN
-        INSERT into Alumno VALUES(xcedula, xnombre, xfechaN, xedad,xemail); 
+        INSERT into Alumno VALUES(xcedula, xnombre, TO_DATE(xfechaN, 'YYYY-MM-DD'), xedad,xemail,xtelefono); 
         INSERT into Usuario VALUES(xcedula, xclave, 'Alumno');
         COMMIT;
-    END crearAlumno;
+    END;
     /
 
-CREATE OR REPLACE PROCEDURE modificarAlumno (xnombre in Alumno.nombre%TYPE,xedad in Alumno.edad%TYPE, xemail in Alumno.email%TYPE, xfechaN in Alumno.fecha_nacimiento%TYPE,xusername in Usuario.id%TYPE, xclave in Usuario.clave%TYPE )
+CREATE OR REPLACE PROCEDURE modificarAlumno (xnombre in Alumno.nombre%TYPE,xedad in Alumno.edad%TYPE, xemail in Alumno.email%TYPE, xfechaN in varchar,xtelefono in Alumno.telefono%TYPE,xusername in Usuario.id%TYPE, xclave in Usuario.clave%TYPE )
     IS 
     BEGIN
-        UPDATE  Alumno set nombre = xnombre, edad = xedad, email = xemail, fecha_nacimiento = xfechaN; 
-        UPDATE  Usuario set clave = xclave, rol ='Alumno';
+        UPDATE  Alumno set nombre = xnombre, edad = xedad, email = xemail, fecha_nacimiento = TO_DATE(xfechaN, 'YYYY-MM-DD'), telefono = xtelefono where cedula = xusername; 
+        UPDATE  Usuario set clave = xclave where id = xusername;
         COMMIT;
-    END modificarAlumno;
+    END;
     /
 	
 
@@ -149,7 +152,7 @@ CREATE OR REPLACE PROCEDURE eliminarAlumno (xcedula in Alumno.cedula%TYPE)
         DELETE Alumno WHERE cedula = xcedula;
         DELETE Usuario WHERE id = xcedula;
         COMMIT;
-    END eliminarAlumno;
+    END;
     /
 -- SI FUNCIONA
 CREATE OR REPLACE PROCEDURE crearProfesor (xcedula in Profesor.cedula%TYPE, xnombre in Profesor.nombre%TYPE,xedad in Profesor.edad%TYPE, xemail in Profesor.email%TYPE, xtelefono in Profesor.telefono%TYPE,xusername in Usuario.id%TYPE, xclave in Usuario.clave%TYPE )
@@ -158,16 +161,16 @@ CREATE OR REPLACE PROCEDURE crearProfesor (xcedula in Profesor.cedula%TYPE, xnom
         INSERT into Profesor VALUES(xcedula, xnombre, xedad, xtelefono, xemail); 
         INSERT into Usuario VALUES(xcedula, xclave, 'Profesor');
         COMMIT;
-    END crearProfesor;
+    END;
     /
 
 CREATE OR REPLACE PROCEDURE modificarProfesor (xnombre in Profesor.nombre%TYPE,xedad in Alumno.edad%TYPE, xemail in Profesor.email%TYPE, xtelefono in Profesor.telefono%TYPE,xusername in Usuario.id%TYPE, xclave in Usuario.clave%TYPE )
     IS
     BEGIN
-        UPDATE  Profesor SET nombre = xnombre, edad = xedad, telefono = xtelefono, email = xemail; 
-        UPDATE  Usuario SET clave = xclave, rol = 'Profesor';
+        UPDATE  Profesor SET nombre = xnombre, edad = xedad, telefono = xtelefono, email = xemail where cedula = xusername;
+        UPDATE  Usuario SET clave = xclave where id = xusername;
         COMMIT;
-    END modificarProfesor;
+    END;
     /
 
 CREATE OR REPLACE PROCEDURE eliminarProfesor (xcedula in Alumno.cedula%TYPE)
@@ -176,7 +179,7 @@ CREATE OR REPLACE PROCEDURE eliminarProfesor (xcedula in Alumno.cedula%TYPE)
         DELETE Profesor WHERE cedula = xcedula;
         DELETE Usuario WHERE id = xcedula;
         COMMIT;
-    END eliminarProfesor;
+    END;
     /
 -- SI FUNCIONA
 CREATE OR REPLACE PROCEDURE crearCurso (xcodigo in Curso.codigo%TYPE, xnombre in Curso.nombre%TYPE, xcreditos in Curso.creditos%TYPE, xhorasS in Curso.horas_semanales%TYPE)
@@ -192,7 +195,7 @@ CREATE OR REPLACE PROCEDURE modificarCurso (xnombre in Curso.nombre%TYPE, xcredi
     BEGIN
         UPDATE Curso set  nombre =  xnombre, creditos = xcreditos, horas_semanales = xhorasS; 
         COMMIT;
-    END modificarCurso;
+    END;
     /
 
 CREATE OR REPLACE PROCEDURE eliminarCurso (xcodigo in Alumno.cedula%TYPE)
@@ -200,7 +203,7 @@ CREATE OR REPLACE PROCEDURE eliminarCurso (xcodigo in Alumno.cedula%TYPE)
     BEGIN
         DELETE Curso WHERE codigo = xcodigo;
         COMMIT;
-    END eliminarCurso;
+    END;
     /
 -- SI FUNCIONA
 CREATE OR REPLACE PROCEDURE reporteNotas (xcurso in Curso.codigo%TYPE, xalumno in Alumno.cedula%TYPE, xprofesor in Profesor.cedula%TYPE, xcalificacion in Rendimiento_Grupo.calificacion%TYPE)
@@ -208,7 +211,7 @@ CREATE OR REPLACE PROCEDURE reporteNotas (xcurso in Curso.codigo%TYPE, xalumno i
     BEGIN
         INSERT into Rendimiento_Grupo VALUES(xcurso, xalumno, xprofesor, xcalificacion); 
         COMMIT;
-    END reporteNotas;
+    END;
     /
 -- SI FUNCIONA
 CREATE OR REPLACE PROCEDURE generarPlanEstudio (xcurso in Curso.codigo%TYPE, xcarrera in Carrera.codigo%TYPE,xanno in PlanEstudio.anno%TYPE, xciclo in Ciclo.id%TYPE)
@@ -216,7 +219,7 @@ CREATE OR REPLACE PROCEDURE generarPlanEstudio (xcurso in Curso.codigo%TYPE, xca
     BEGIN
         INSERT into PlanEstudio VALUES(xcurso, xcarrera, xanno, xciclo); 
         COMMIT;
-    END generarPlanEstudio;
+    END;
     /
 
 -- SI FUNCIONA
@@ -462,7 +465,7 @@ CREATE OR REPLACE FUNCTION buscar_CarreraXAlumno (xid in Inscripcion.alumno%TYPE
         AS 
         c SYS_REFCURSOR;
         BEGIN
-            OPEN c FOR SELECT * FROM Inscripcion WHERE alumno = xid;
+            OPEN c FOR SELECT carrera FROM Inscripcion WHERE alumno = xid;
             RETURN c; 
         END;
         /

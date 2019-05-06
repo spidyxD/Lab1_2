@@ -38,9 +38,9 @@ public class Service {
     }
     protected void conectar() throws SQLException,ClassNotFoundException, InstantiationException, IllegalAccessException 
     {
-            Class.forName("oracle.jdbc.OracleDriver").newInstance();
-            conexion =  DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe","sys as sysdba","K1n9r4d2");  
-    }    
+        Class.forName("oracle.jdbc.OracleDriver").newInstance();
+        conexion = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe","sys as sysdba","k1n9r4d2");    
+    }  
     protected void desconectar() throws SQLException{
         if(!conexion.isClosed())
         {
@@ -71,10 +71,10 @@ public class Service {
             pstmt.setInt(2,user);
             pstmt.setString(3,password);
             pstmt.registerOutParameter(1, OracleTypes.CURSOR);
-             boolean exec= pstmt.execute();    
+            pstmt.execute();    
              ResultSet rs = (ResultSet) pstmt.getObject(1);  
                 while(rs.next()){
-                    respuesta=rs.getInt("exist");
+                    respuesta=rs.getInt("EXIST");
                 } 
                 if(respuesta==0){
              resp=false;}

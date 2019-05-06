@@ -24,7 +24,7 @@ public class Usuario {
     }
 
     public int getUsername() {
-        return username;
+        return this.username;
     }
 
     public void setUsername(int username) {
@@ -32,7 +32,7 @@ public class Usuario {
     }
 
     public String getClave() {
-        return clave;
+        return this.clave;
     }
 
     public void setClave(String clave) {
@@ -40,7 +40,7 @@ public class Usuario {
     }
 
     public String getRol() {
-        return rol;
+        return this.rol;
     }
 
     public void setRol(String rol) {

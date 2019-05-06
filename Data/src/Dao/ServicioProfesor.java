@@ -46,7 +46,7 @@ public class ServicioProfesor extends Service{
             pstmt.setInt(3,profesor.getEdad());
             pstmt.setString(4, profesor.getEmail());
             pstmt.setInt(5, profesor.getTelefono());
-            pstmt.setInt(6,profesor.getCedula());
+            pstmt.setInt(6,user.getUsername());
             pstmt.setString(7,user.getClave() );
             boolean resultado = pstmt.execute();
             if (resultado == true) {
@@ -83,13 +83,12 @@ public class ServicioProfesor extends Service{
             pstmt.setInt(2,profesor.getEdad());
             pstmt.setString(3, profesor.getEmail());
             pstmt.setInt(4, profesor.getTelefono());
-            pstmt.setInt(5,profesor.getCedula());
+            pstmt.setInt(5,user.getUsername());
             pstmt.setString(6,user.getClave() );
-            boolean resultado = pstmt.execute();
-            if (resultado == true) {
-                throw new AccesoADatos.NoDataException("No se realizo la inserci�n");
-            }
-            
+            pstmt.executeUpdate();
+           /*if (count < 0){
+               throw new AccesoADatos.GlobalException("Error al actualizar informacion del alumno");
+           }*/            
         } catch (SQLException e) {
             e.printStackTrace();
             throw new AccesoADatos.GlobalException("Llave duplicada");

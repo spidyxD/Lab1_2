@@ -13,7 +13,8 @@ public class Persona {
     public String nombre;
     public int cedula;
     public String email;
-    public int Edad;
+    public int edad;
+    public int telefono;
     public Persona() {
     }
 
@@ -23,8 +24,16 @@ public class Persona {
         this.email = email;
     }
 
+    public int getTelefono() {
+        return telefono;
+    }
+
+    public void setTelefono(int telefono) {
+        this.telefono = telefono;
+    }
+
     public String getNombre() {
-        return nombre;
+        return this.nombre;
     }
 
     public void setNombre(String nombre) {
@@ -32,7 +41,7 @@ public class Persona {
     }
 
     public int getCedula() {
-        return cedula;
+        return this.cedula;
     }
 
     public void setCedula(int cedula) {
@@ -40,7 +49,7 @@ public class Persona {
     }
 
     public String getEmail() {
-        return email;
+        return this.email;
     }
 
     public void setEmail(String email) {
@@ -48,11 +57,11 @@ public class Persona {
     }
 
     public int getEdad() {
-        return Edad;
+        return this.edad;
     }
 
     public void setEdad(int Edad) {
-        this.Edad = Edad;
+        this.edad = Edad;
     }
     
 }

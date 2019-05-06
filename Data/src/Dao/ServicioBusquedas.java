@@ -18,6 +18,7 @@ import Entities.Profesor;
 import Entities.Rendimiento_grupo;
 import Entities.Usuario;
 import java.sql.CallableStatement;
+import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -53,15 +54,15 @@ public class ServicioBusquedas extends Service{
     public Grupo tipoGrupo(ResultSet rs) throws GlobalException, NoDataException, InstantiationException, IllegalAccessException{
         try{
             Grupo g = new Grupo();
-            g.setCapacidad(rs.getInt("capacidad"));
-            g.setCurso(tipoCurso(rs));
+            g.setCapacidad(rs.getInt("capacidad"));        
             g.setHorario(rs.getString("horario"));
             g.setNrc(rs.getInt("nrc"));
             int idProf = rs.getInt("profesor");
             int Ciclo = rs.getInt("ciclo");
+            int Curso = rs.getInt("curso");
             g.setCiclo(this.buscarCicloId(Ciclo));
             g.setPorfesor(this.buscarProfeId(idProf));
-            g.setCurso(this.buscarCursoId(rs.getInt("curso")));
+            g.setCurso(this.buscarCursoId(Curso));
             return g;
         }
         catch (SQLException ex) {
@@ -105,8 +106,9 @@ public class ServicioBusquedas extends Service{
             Alumno a = new Alumno();
             a.setCedula(rs.getInt("cedula"));
             a.setEdad(rs.getInt("edad"));
+            a.setTelefono(rs.getInt("telefono"));
             a.setEmail(rs.getString("email"));
-            a.setFecha_nacimiento(rs.getDate("fecha_nacimiento"));
+            a.setFecha_nacimiento(rs.getDate("fecha_nacimiento").toString());
             a.setNombre(rs.getString("nombre"));
             int carrera= this.buscarCarreraXAlumno(a.getCedula());
             a.setCarrera(this.buscarCarreraId(carrera));
@@ -279,7 +281,7 @@ public class ServicioBusquedas extends Service{
            }
             return cursos.get(0);
        }
-    public Carrera buscarCarreraId(int codigo) throws AccesoADatos.GlobalException, AccesoADatos.NoDataException, SQLException, InstantiationException, IllegalAccessException  	{
+    public Carrera buscarCarreraId(int codigo) throws AccesoADatos.GlobalException, AccesoADatos.NoDataException, SQLException, InstantiationException, IllegalAccessException{
             ArrayList<Carrera> carreras = new ArrayList();
             try {
                conectar();
@@ -982,6 +984,39 @@ public class ServicioBusquedas extends Service{
                     carreras.add(tipoCarrera(rs));
                 }
             return carreras;
+            
+        } catch (SQLException e) {
+            throw new AccesoADatos.GlobalException("Llave duplicada");
+        } finally {
+            try {
+                if (pstmt != null) {
+                    pstmt.close();
+                }
+                desconectar();
+            } catch (SQLException e) {
+                throw new AccesoADatos.GlobalException("Estatutos invalidos o nulos");
+            }
+        }
+    }   
+    
+    public ArrayList<Grupo> verGrupos() throws AccesoADatos.GlobalException, AccesoADatos.NoDataException, InstantiationException, IllegalAccessException  	{
+        try {
+            conectar();
+        } catch (ClassNotFoundException e) {
+            throw new AccesoADatos.GlobalException("No se ha localizado el driver");
+        } catch (SQLException e) {
+            throw new AccesoADatos.NoDataException("La base de datos no se encuentra disponible");
+        }
+        CallableStatement pstmt=null;
+        
+        try {
+            ArrayList<Grupo> grupos = new ArrayList<>();     
+            Statement stmt = conexion.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT * FROM Grupo");  
+                while(rs.next()){
+                    grupos.add(tipoGrupo(rs));
+                }
+            return grupos;
             
         } catch (SQLException e) {
             throw new AccesoADatos.GlobalException("Llave duplicada");

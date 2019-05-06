@@ -20,7 +20,7 @@ import java.util.ArrayList;
  */
 public class ServicioEstudiante extends Service{
     private static final String INSERTARESTUDIANTE= "{call crearAlumno(?,?,?,?,?,?,?)}";
-    private static final String MODIFICARESTUDIANTE= "{call modificarAlumno(?,?,?,?,?,?)}";
+    private static final String MODIFICARESTUDIANTE= "{call modificarAlumno(?,?,?,?,?,?,?)}";
     private static final String MODIFICARCORREOESTUDIANTE= "{call modificarCorreoAlumno(?)}";
     private static final String ELIMINARESTUDIANTE= "{call eliminarAlumno(?)}";
     private static ServicioEstudiante uniqueInstance;
@@ -47,7 +47,7 @@ public class ServicioEstudiante extends Service{
            pstmt.setString(2,alumno.getNombre());
            pstmt.setInt(3,alumno.getEdad());
            pstmt.setString(4, alumno.getEmail());
-           pstmt.setDate(5,alumno.getFecha_nacimiento());
+           pstmt.setString(5,alumno.getFecha_nacimiento());
            pstmt.setInt(6,alumno.getCedula());
            pstmt.setString(7,user.getClave() );
            boolean resultado = pstmt.execute();
@@ -101,7 +101,7 @@ public class ServicioEstudiante extends Service{
            }
        }
    }     
-    public void modificarEstudiante(Alumno alumno, Usuario user) throws AccesoADatos.GlobalException, AccesoADatos.NoDataException, InstantiationException, IllegalAccessException  	{
+    public void modificarEstudiante(Alumno alumno, Usuario user) throws AccesoADatos.GlobalException, AccesoADatos.NoDataException, InstantiationException, IllegalAccessException, Exception  	{
        try {
            conectar();
        } catch (ClassNotFoundException e) {
@@ -110,23 +110,24 @@ public class ServicioEstudiante extends Service{
            throw new AccesoADatos.NoDataException("La base de datos no se encuentra disponible");
        }
        CallableStatement pstmt=null;
-
+       
        try {
            pstmt = conexion.prepareCall(MODIFICARESTUDIANTE);
            pstmt.setString(1,alumno.getNombre());
            pstmt.setInt(2,alumno.getEdad());
-           pstmt.setString(3, alumno.getEmail());
-           pstmt.setDate(4, (Date) alumno.getFecha_nacimiento());
-           pstmt.setInt(5,alumno.getCedula());
-           pstmt.setString(6,user.getClave() );
-           boolean resultado = pstmt.execute();
-           if (resultado == true) {
-               throw new AccesoADatos.NoDataException("No se realizo la inserci�n");
-           }
-
+           pstmt.setString(3,alumno.getEmail());
+           pstmt.setString(4,alumno.getFecha_nacimiento());
+           pstmt.setInt(5,alumno.getTelefono());
+           pstmt.setInt(6,user.getUsername());
+           pstmt.setString(7,user.getClave());
+           pstmt.executeUpdate();
+           /*if (count < 0){
+               throw new AccesoADatos.GlobalException("Error al actualizar informacion del alumno");
+           }*/
+        
        } catch (SQLException e) {
            e.printStackTrace();
-           throw new AccesoADatos.GlobalException("Llave duplicada");
+           throw new AccesoADatos.GlobalException(e.getMessage());
        } finally {
            try {
                if (pstmt != null) {
@@ -134,7 +135,7 @@ public class ServicioEstudiante extends Service{
                }
                desconectar();
            } catch (SQLException e) {
-               throw new AccesoADatos.GlobalException("Estatutos invalidos o nulos");
+               throw new AccesoADatos.GlobalException(e.getMessage());
            }
        }
    }      

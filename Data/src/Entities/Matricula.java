@@ -21,7 +21,7 @@ public class Matricula {
     }
 
     public Grupo getGrupo() {
-        return grupo;
+        return this.grupo;
     }
 
     public void setGrupo(Grupo grupo) {
@@ -37,7 +37,7 @@ public class Matricula {
     }
 
     public Alumno getStudent() {
-        return student;
+        return this.student;
     }
 
     public void setStudent(Alumno student) {
@@ -45,7 +45,7 @@ public class Matricula {
     }
 
     public Carrera getMajor() {
-        return major;
+        return this.major;
     }
 
     public void setMajor(Carrera major) {
@@ -53,7 +53,7 @@ public class Matricula {
     }
 
     public Curso getCourse() {
-        return course;
+        return this.course;
     }
 
     public void setCourse(Curso course) {
@@ -61,7 +61,7 @@ public class Matricula {
     }
 
     public Profesor getTeacher() {
-        return teacher;
+        return this.teacher;
     }
 
     public void setTeacher(Profesor teacher) {
@@ -69,7 +69,7 @@ public class Matricula {
     }
 
     public Ciclo getCycle() {
-        return cycle;
+        return this.cycle;
     }
 
     public void setCycle(Ciclo cycle) {
@@ -78,7 +78,7 @@ public class Matricula {
 
     @Override
     public String toString() {
-        return course.getNombre() + " "  + " " + course.getCreditos() + " " + grupo.getHorario() + " "+grupo.getNrc() ;
+        return this.course.getNombre() + " "  + " " + this.course.getCreditos() + " " + this.grupo.getHorario() + " "+ this.grupo.getNrc() ;
     }
     
     

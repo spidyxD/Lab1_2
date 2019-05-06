@@ -5,8 +5,12 @@
  */
 package Dao;
 
+import Entities.Curso;
 import java.sql.CallableStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
 
 /**
  *
@@ -91,5 +95,39 @@ public class ServicioCursos extends Service {
                 throw new AccesoADatos.GlobalException("Estatutos invalidos o nulos");
             }
         }
-    }         
+    } 
+     public ArrayList<Curso> verCursos() throws AccesoADatos.GlobalException, AccesoADatos.NoDataException, InstantiationException, IllegalAccessException  	{
+        try {
+            conectar();
+        } catch (ClassNotFoundException e) {
+            throw new AccesoADatos.GlobalException("No se ha localizado el driver");
+        } catch (SQLException e) {
+            throw new AccesoADatos.NoDataException("La base de datos no se encuentra disponible");
+        }
+        CallableStatement pstmt=null;
+        
+        try {
+            ArrayList<Curso> cursos = new ArrayList<>();     
+            Statement stmt = conexion.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT * FROM Curso"); 
+            ServicioBusquedas sb = new ServicioBusquedas();
+          //  pstmt.setInt(2,codigo);      
+                while(rs.next()){
+                    cursos.add(sb.tipoCurso(rs));
+                }
+            return cursos;
+            
+        } catch (SQLException e) {
+            throw new AccesoADatos.GlobalException("Llave duplicada");
+        } finally {
+            try {
+                if (pstmt != null) {
+                    pstmt.close();
+                }
+                desconectar();
+            } catch (SQLException e) {
+                throw new AccesoADatos.GlobalException("Estatutos invalidos o nulos");
+            }
+        }
+    }  
 }

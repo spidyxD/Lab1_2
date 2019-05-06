@@ -4,10 +4,10 @@
 <footer class="page-footer" >
   <div class="container">
     <div class="row">
-      <div class="col s3">
-        <h5 class="white-text">Sys_Matricula  © 2018</h5>
+      <div class="col s6">
+        <h5 class="white-text">Sys_Matricula  © 2019</h5>
       </div>
-        <div class="col s3">                   
+        <div class="col s6">                   
             <a class="grey-text text-lighten-4 right" href="https://github.com/spidyxD/Lab1_2" target="_blank">GitHub</a>           
         </div>   
     </div>

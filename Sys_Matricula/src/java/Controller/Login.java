@@ -13,13 +13,20 @@ import Dao.Data;
 import Dao.Service;
 import Entities.Administrador;
 import Entities.Alumno;
+import Entities.Carrera;
+import Entities.Curso;
 import Entities.Profesor;
 import Entities.Usuario;
+import Services.Servicio_Busquedas;
+import Services.Servicio_Estudiantes;
+import Services.Servicio_Profesor;
+import Services.Servicios_Generales;
 import com.google.gson.Gson;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
@@ -57,12 +64,13 @@ public class Login extends HttpServlet {
                 this.doLogout(request,response);
                 break;
             default:
-                   try{
+               try{
                 request.getRequestDispatcher("Home.jsp").
                         forward( request, response);
-               }
-               catch(Exception e){ String error = e.getMessage();
-                    request.setAttribute("error",error);
+                }
+               catch(Exception e){ 
+                    String error = e.getMessage();
+                    request.setAttribute("error",e);
                     request.getRequestDispatcher("Error.jsp").forward(request, response);
 
                 }
@@ -140,45 +148,71 @@ public class Login extends HttpServlet {
             PrintWriter out = response.getWriter();
             Gson gson = new Gson();           
             Usuario aux = gson.fromJson(readerLog, Usuario.class);           
-            Service s = new Service();
-            String user = " ";
+            Service s = new Service();          
+            Administrador admin = new Administrador();
+            Profesor prof = new Profesor();
+            Alumno alumn = new Alumno();
+            ArrayList<Profesor> profes =  Servicio_Profesor.instance().verProfesores();
+            ArrayList<Alumno> alumnos = Servicio_Estudiantes.instance().verAlumnos();
+            ArrayList<Carrera> carreras = Servicio_Busquedas.instance().verCarreras();
+            ArrayList<Curso> cursos = Servicio_Busquedas.instance().verCursos();
+            ArrayList<Curso> cursosProf = new ArrayList();
+            ArrayList<Curso> cursosAlumn = new ArrayList();
+            Carrera cAl = new Carrera();
              if(s.doLogin(aux.getUsername(), aux.getClave())){
-             Usuario u = Data.instance().getServiciobusquedas().buscarUsuarioId(aux.getUsername());
+             Usuario u = Servicio_Busquedas.instance().buscarUsuarioId(aux.getUsername());
              switch(u.getRol()){
-                 case "admin":
-                     Administrador admin = new Administrador();
-                     admin =Data.instance().getServiciobusquedas().buscarAdministradorId(u.getUsername());
-                     http.setAttribute("admin", admin);
-                     http.setAttribute("user", user);
-                     out.write(gson.toJson(u));
-                     response.setStatus(200); // successfull
-                     request.getRequestDispatcher("Perfil.jsp").
-                        forward( request, response);
+                 case "Administrador":
+                    admin = Data.instance().getServiciobusquedas().buscarAdministradorId(u.getUsername());                                               
+                    out.write(gson.toJson(u));
+                    http.setAttribute("user", u);            
+                    http.setAttribute("admin", admin);
+                    http.setAttribute("carreras", carreras);
+                    http.setAttribute("cursos", cursos);
+                    http.setAttribute("alumnos", alumnos);
+                    http.setAttribute("profes", profes);
+                    response.setStatus(200); // successfull                   
                  break;
                  case "Profesor":
-                     Profesor prof = new Profesor();
-                     prof = Data.instance().getServiciobusquedas().buscarProfeId(u.getUsername());
-                     http.setAttribute("prof", prof);
-                     http.setAttribute("user", u);
-                      out.write(gson.toJson(u));
-                     response.setStatus(200); // successfull
-                     request.getRequestDispatcher("Perfil.jsp").
-                        forward( request, response);
+                     prof = Data.instance().getServiciobusquedas().buscarProfeId(u.getUsername());   
+                     cursosProf = Servicio_Busquedas.instance().buscarCursoXprofesor(prof.getCedula());                   
+                     out.write(gson.toJson(u));
+                     http.setAttribute("user", u);                        
+                     http.setAttribute("prof", prof); 
+                     http.setAttribute("cursosProf", cursosProf);
+                     response.setStatus(200); // successfull                    
                  break; 
                  case "Alumno":
-                     Alumno alumn = new Alumno();
                      alumn = Data.instance().getServiciobusquedas().buscarAlumnoId(u.getUsername());
+                     cursosAlumn = Data.instance().getServiciobusquedas().buscarCursosXAlumno(u.getUsername());
+                     cAl = Data.instance().getServiciobusquedas().buscarCarreraId(Data.instance().getServiciobusquedas().buscarCarreraXAlumno(u.getUsername()));
+                     out.write(gson.toJson(u));
+                     http.setAttribute("user", u);                                    
                      http.setAttribute("alumn", alumn);
-                     http.setAttribute("user", u);
-                      out.write(gson.toJson(u));
-                     response.setStatus(200); // successfull
-                     request.getRequestDispatcher("Perfil.jsp").
-                        forward( request, response);
+                     http.setAttribute("carrera", cAl);
+                     http.setAttribute("cursosAlum", cursosAlumn);
+                     response.setStatus(200); // successfull                   
                  break; 
                  default: 
-                     response.setStatus(400); // faild
+                     http.setAttribute("user", u); 
+                     response.setStatus(200); // faild
+                     request.getRequestDispatcher("Home.jsp").
+                        forward( request, response);
                      break;
-                }               
+                }
+                //http.setAttribute("user", u); 
+                http.setAttribute("carrera", cAl);
+                http.setAttribute("cursosAlum", cursosAlumn);
+                http.setAttribute("admin", admin);
+                http.setAttribute("alumn", alumn);
+                http.setAttribute("prof", prof);    
+                http.setAttribute("carreras", carreras);
+                http.setAttribute("cursos", cursos);
+                http.setAttribute("alumnos", alumnos);
+                http.setAttribute("profes", profes);
+                http.setAttribute("cursosProf", cursosProf);
+               request.getRequestDispatcher("Perfil.jsp").
+                        forward( request, response);
             }                                     
             else {
                 throw new Exception("Usuario o contaseña invalidos");
@@ -187,14 +221,16 @@ public class Login extends HttpServlet {
        catch(Exception e){ String error = e.getMessage();
             request.setAttribute("error",error);
             response.setStatus(400); // faild
-            request.getRequestDispatcher("Error.jsp").forward(request, response);
-            
+            request.getRequestDispatcher("Error.jsp").forward(request, response);           
         }
     }
 
     protected void doLogout(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
          try{
-         request.getSession().invalidate();     
+         request.getSession().invalidate();
+         request.removeAttribute("admin");
+         request.removeAttribute("prof");
+         request.removeAttribute("alumn");
         request.getRequestDispatcher("Home.jsp").
                 forward( request, response);
        }

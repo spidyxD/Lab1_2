@@ -21,7 +21,7 @@ public class Grupo {
     }
 
     public int getNrc() {
-        return nrc;
+        return this.nrc;
     }
 
    
@@ -30,7 +30,7 @@ public class Grupo {
     }
 
     public String getHorario() {
-        return horario;
+        return this.horario;
     }
 
     public void setHorario(String horario) {
@@ -38,7 +38,7 @@ public class Grupo {
     }
 
     public int getCapacidad() {
-        return capacidad;
+        return this.capacidad;
     }
 
     public void setCapacidad(int capacidad) {
@@ -46,7 +46,7 @@ public class Grupo {
     }
 
     public Ciclo getCiclo() {
-        return ciclo;
+        return this.ciclo;
     }
 
     public void setCiclo(Ciclo ciclo) {
@@ -54,7 +54,7 @@ public class Grupo {
     }
 
     public Curso getCurso() {
-        return curso;
+        return this.curso;
     }
 
     public void setCurso(Curso curso) {
@@ -62,7 +62,7 @@ public class Grupo {
     }
 
     public Profesor getPorfesor() {
-        return porfesor;
+        return this.porfesor;
     }
 
     public void setPorfesor(Profesor porfesor) {

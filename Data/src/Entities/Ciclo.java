@@ -34,7 +34,7 @@ public class Ciclo {
     }
 
     public int getCodigo() {
-        return codigo;
+        return this.codigo;
     }
 
     public void setCodigo(int tipo) {
@@ -42,7 +42,7 @@ public class Ciclo {
     }
 
     public Date getFecha_inicio() {
-        return fecha_inicio;
+        return this.fecha_inicio;
     }
 
     public void setFecha_inicio(Date fecha_inicio) {
@@ -50,7 +50,7 @@ public class Ciclo {
     }
 
     public Date getFecha_finalizacion() {
-        return fecha_finalizacion;
+        return this.fecha_finalizacion;
     }
 
     public void setFecha_finalizacion(Date fecha_finalizacion) {
@@ -58,7 +58,7 @@ public class Ciclo {
     }
 
     public String getDescripcion() {
-        return descripcion;
+        return this.descripcion;
     }
 
     public void setDescripcion(String descripcion) {

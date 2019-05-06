@@ -5,8 +5,8 @@
         <servlet-class>Controller.Login</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>Registro</servlet-name>
-        <servlet-class>Controller.Registro</servlet-class>
+        <servlet-name>Administrador</servlet-name>
+        <servlet-class>Controller.Administrador</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>Matricula</servlet-name>
@@ -18,7 +18,7 @@
     </servlet>
     <servlet>
         <servlet-name>Busqueda</servlet-name>
-        <servlet-class>Controller.Busqueda</servlet-class>       
+        <servlet-class>Controller.Busqueda</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>Perfil</servlet-name>
@@ -36,11 +36,11 @@
         <servlet-name>Perfil</servlet-name>
         <url-pattern>/EditarAlumno</url-pattern>
     </servlet-mapping>
-     <servlet-mapping>
+    <servlet-mapping>
         <servlet-name>Perfil</servlet-name>
         <url-pattern>/EditarProfesor</url-pattern>
-    </servlet-mapping>    
-     <servlet-mapping>
+    </servlet-mapping>
+    <servlet-mapping>
         <servlet-name>Matricula</servlet-name>
         <url-pattern>/goMatricula</url-pattern>
     </servlet-mapping>
@@ -88,6 +88,32 @@
         <servlet-name>Busqueda</servlet-name>
         <url-pattern>/BusquedaAlumnoXcurso</url-pattern>
     </servlet-mapping>
+     <servlet-mapping>
+        <servlet-name>Administrador</servlet-name>
+        <url-pattern>/RegistroEstudiante</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Administrador</servlet-name>
+        <url-pattern>/RegistroProfesor</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Administrador</servlet-name>
+        <url-pattern>/ModificarEstudiante</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Administrador</servlet-name>
+        <url-pattern>/ModificarProfesor</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Administrador</servlet-name>
+        <url-pattern>/EliminarEstudiante</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Administrador</servlet-name>
+        <url-pattern>/EliminarProfesor</url-pattern>
+    </servlet-mapping>
+  
+    
     <session-config>
         <session-timeout>
             30

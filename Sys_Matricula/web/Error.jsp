@@ -16,7 +16,9 @@
           <%@ include file="NavBar.jspf" %>
      </header>
     <body>
+        
         <h1>Page not found</h1>
+        
     </body>
       <footer >        
       <%@ include file="footer.jspf" %>       

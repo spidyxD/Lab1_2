@@ -5,9 +5,11 @@
  */
 package Controller;
 
-import Dao.Data;
 import Entities.Carrera;
 import Entities.Ciclo;
+import Entities.Curso;
+import Entities.Grupo;
+import Services.Servicio_Busquedas;
 import java.io.IOException;
 import java.util.List;
 import javax.servlet.ServletException;
@@ -96,12 +98,16 @@ public class Matricula extends HttpServlet {
     }// </editor-fold>  
     private void goToMatricula(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try{
-        /*HttpSession s = request.getSession(true);           
-        List<Ciclo> ciclos = Data.instance().getServiciobusquedas().verCiclos();      
-        List<Carrera> carreras = Data.instance().getServiciobusquedas().verCarreras();
+        HttpSession s = request.getSession(true);           
+        List<Ciclo> ciclos = Servicio_Busquedas.instance().verCiclos();      
+        List<Carrera> carreras = Servicio_Busquedas.instance().verCarreras();
+        List<Curso> cursos = Servicio_Busquedas.instance().verCursos();
+        //List<Grupo> grupos = Servicio_Busquedas.instance().verGrupos();
         System.out.println(ciclos.size() + carreras.size());
-        request.setAttribute("ciclos", ciclos);
-        request.setAttribute("carreras", carreras);*/
+        s.setAttribute("ciclos", ciclos);
+        s.setAttribute("carreras", carreras);
+        s.setAttribute("cursos",cursos);
+        //request.setAttribute("grupos",grupos);
         request.getRequestDispatcher("Matricula.jsp").
                 forward( request, response);
        }
