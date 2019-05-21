@@ -22,9 +22,9 @@ public class Servicio_Estudiantes {
         }
         return uniqueInstance;
     }  
-    public void insertarEstudiante(Alumno alumno, Usuario user){           
+    public void insertarEstudiante(Alumno alumno, Usuario user, int carrera){           
      try{
-            Data.instance().getServicioestudiante().insertarEstudiante(alumno, user);
+            Data.instance().getServicioestudiante().insertarEstudiante(alumno, user, carrera);
         }
         catch(Exception e){}
     }
@@ -54,4 +54,12 @@ public class Servicio_Estudiantes {
         catch(Exception e){}
            throw new Exception();
      }
+     
+   public void modificarEstudianteAdmin(Alumno alumno, int carrera) {
+        try{
+                Data.instance().getServicioestudiante().modificarEstudianteAdmin(alumno, carrera);
+            }
+            catch(Exception e){}
+    }   
+     
 }

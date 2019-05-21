@@ -102,6 +102,15 @@
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>Administrador</servlet-name>
+        <url-pattern>/ModificarCurso</url-pattern>
+    </servlet-mapping>
+    
+    <servlet-mapping>
+        <servlet-name>Administrador</servlet-name>
+        <url-pattern>/ModificarCarrera</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Administrador</servlet-name>
         <url-pattern>/ModificarProfesor</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
@@ -112,8 +121,22 @@
         <servlet-name>Administrador</servlet-name>
         <url-pattern>/EliminarProfesor</url-pattern>
     </servlet-mapping>
-  
-    
+    <servlet-mapping>
+        <servlet-name>Administrador</servlet-name>
+        <url-pattern>/EliminarCurso</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Administrador</servlet-name>
+        <url-pattern>/EliminarCarrera</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Administrador</servlet-name>
+        <url-pattern>/ModificarProfesorAdmin</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Administrador</servlet-name>
+        <url-pattern>/ModificarAlumnoAdmin</url-pattern>
+    </servlet-mapping>
     <session-config>
         <session-timeout>
             30

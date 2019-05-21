@@ -57,4 +57,19 @@ public class Servicios_Generales {
         catch(Exception e){}
          return false;
     }
+    
+     public void modificarCarrera(int xcodigo,String xnombre, String xtitulo){
+     try{
+           Data.instance().getServiciogenerales().modificarCarrera(xcodigo, xnombre, xtitulo);
+      }
+      catch(Exception e){}    
+    }
+    public void eliminarCarrera(int codigo){
+     try{
+         Data.instance().getServiciogenerales().eliminarCarrera(codigo);
+     }
+     catch(Exception e){}
+ } 
+    
+    
 }

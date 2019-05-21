@@ -141,6 +141,7 @@ public class Login extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
+     @SuppressWarnings("empty-statement")
     protected void doLogin(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, GlobalException, NoDataException, SQLException, InstantiationException, IllegalAccessException {
         try{
             HttpSession http =  request.getSession(true);
@@ -158,6 +159,10 @@ public class Login extends HttpServlet {
             ArrayList<Curso> cursos = Servicio_Busquedas.instance().verCursos();
             ArrayList<Curso> cursosProf = new ArrayList();
             ArrayList<Curso> cursosAlumn = new ArrayList();
+            while(alumnos.remove(null));
+            while(profes.remove(null));
+            while(cursos.remove(null));
+            while(carreras.remove(null));
             Carrera cAl = new Carrera();
              if(s.doLogin(aux.getUsername(), aux.getClave())){
              Usuario u = Servicio_Busquedas.instance().buscarUsuarioId(aux.getUsername());

@@ -50,4 +50,10 @@ public class Servicio_Profesor {
         throw new Exception();
     } 
 
+     public void modificarProfesorAdmin(Profesor profesor){
+         try{
+            Data.instance().getServicioProfesor().modificarProfesorAdmin(profesor);
+        }
+        catch(Exception e){}
+    }
 }

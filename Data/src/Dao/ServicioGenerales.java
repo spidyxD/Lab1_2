@@ -23,6 +23,8 @@ public class ServicioGenerales extends Service {
     private static final String MATRICULARCURSO= "{call hacerMatricula(?,?,?,?,?)}";
     private static final String ELIMINARMATRICULA ="{call matriculaDelete(?,?)}";
     private static final String GENERARPLANESTUDIO= "{call generarPlanEstudio(?,?,?,?)}";
+     private static final String MODIFICARRERA= "{call modificarCarrera(?,?,?)}";
+     private static final String ELIMINARCARRERA= "{call eliminarCarrera(?)}";
     private static ServicioGenerales uniqueInstance;
     public static ServicioGenerales instance(){
         if (uniqueInstance == null){
@@ -169,4 +171,72 @@ public class ServicioGenerales extends Service {
         }
     }
    
+    public void eliminarCarrera(int codigo) throws AccesoADatos.GlobalException, AccesoADatos.NoDataException, InstantiationException, IllegalAccessException  	{
+       try {
+           conectar();
+       } catch (ClassNotFoundException e) {
+           throw new AccesoADatos.GlobalException("No se ha localizado el driver");
+       } catch (SQLException e) {
+           throw new AccesoADatos.NoDataException("La base de datos no se encuentra disponible");
+       }
+       CallableStatement pstmt=null;
+
+       try {
+           pstmt = conexion.prepareCall(ELIMINARCARRERA);
+           pstmt.setInt(1,codigo);
+           boolean resultado = pstmt.execute();
+           if (resultado == true) {
+               throw new AccesoADatos.NoDataException("No se realizo la inserci�n");
+           }
+
+       } catch (SQLException e) {
+           e.printStackTrace();
+           throw new AccesoADatos.GlobalException("Llave duplicada");
+       } finally {
+           try {
+               if (pstmt != null) {
+                   pstmt.close();
+               }
+               desconectar();
+           } catch (SQLException e) {
+               throw new AccesoADatos.GlobalException("Estatutos invalidos o nulos");
+           }
+       }
+   }     
+    
+    
+     public void modificarCarrera(int xcodigo,String xnombre, String xtitulo) throws AccesoADatos.GlobalException, AccesoADatos.NoDataException, SQLException, InstantiationException, IllegalAccessException  	{
+        try {
+            conectar();
+        } catch (ClassNotFoundException e) {
+            throw new AccesoADatos.GlobalException("No se ha localizado el driver");
+        } catch (SQLException e) {
+            throw new AccesoADatos.NoDataException("La base de datos no se encuentra disponible");
+        }
+        CallableStatement pstmt=null;
+        
+        try {
+            pstmt = conexion.prepareCall(MODIFICARRERA); 
+            pstmt.setInt(1,xcodigo);
+            pstmt.setString(2,xnombre);
+            pstmt.setString(3,xtitulo);            
+            boolean resultado = pstmt.execute();
+            if (resultado == true) {
+                throw new AccesoADatos.NoDataException("No se realizo la actualizacion");
+            }
+            
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new AccesoADatos.GlobalException("Llave duplicada");
+        } finally {
+            try {
+                if (pstmt != null) {
+                    pstmt.close();
+                }
+                desconectar();
+            } catch (SQLException e) {
+                throw new AccesoADatos.GlobalException("Estatutos invalidos o nulos");
+            }
+        }
+    } 
 }

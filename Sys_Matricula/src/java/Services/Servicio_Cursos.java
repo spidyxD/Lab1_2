@@ -27,12 +27,18 @@ public class Servicio_Cursos {
         }
         catch(Exception e){}        
      }
-      public void modificarCurso(String xnombre, int xcreditos, int xhoras){
-       try{
-             Data.instance().getServicioCursos().modificarCurso(xnombre, xcreditos, xhoras);
-        }
-        catch(Exception e){}    
+    public void modificarCurso(int xcodigo,String xnombre, int xcreditos, int xhoras){
+     try{
+           Data.instance().getServicioCursos().modificarCurso(xcodigo,xnombre, xcreditos, xhoras);
       }
+      catch(Exception e){}    
+    }
+    public void eliminarCurso(int codigo){
+     try{
+         Data.instance().getServicioCursos().eliminarCurso(codigo);
+     }
+     catch(Exception e){}
+ } 
       public ArrayList<Curso> verCursos() throws Exception{
           ArrayList aux =  null;
        try{
@@ -41,4 +47,6 @@ public class Servicio_Cursos {
         catch(Exception e){}
          throw new Exception();
       } 
+      
+   
 }

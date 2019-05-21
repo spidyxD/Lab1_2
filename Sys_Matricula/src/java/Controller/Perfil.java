@@ -151,7 +151,25 @@ public class Perfil extends HttpServlet {
     }
 
     private void loadProfile(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-       try{
+       try
+       {           
+        int id = Integer.valueOf(request.getParameter("idUser"));
+         String type = request.getParameter("type");
+        if(id>0 && !type.equals("undefined") ){           
+            if(type.equals("Alumno")){
+            
+             Alumno a = Data.instance().getServiciobusquedas().buscarAlumnoId(id);
+             request.removeAttribute("alumn");
+             request.setAttribute("alumn", a);
+            }
+            else if(type.equals("Profesor")){
+           
+             Profesor p = Data.instance().getServiciobusquedas().buscarProfeId(id);
+             request.removeAttribute("prof");
+             request.setAttribute("prof", p);
+            }
+        }
+       
         request.getRequestDispatcher("Perfil.jsp").
                 forward( request, response);
        }

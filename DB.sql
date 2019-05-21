@@ -1,11 +1,11 @@
 -- Dispositivos mobiles
 -- Base de datos para Lab 1 
 DROP TABLE Grupo CASCADE CONSTRAINTS;
-DROP TABLE PlanEstudio;
-DROP TABLE Rendimiento_Grupo;
-DROP TABLE Inscripcion;
-DROP TABLE Matricula;
-DROP TABLE Administrador;
+DROP TABLE PlanEstudio CASCADE CONSTRAINTS;
+DROP TABLE Rendimiento_Grupo CASCADE CONSTRAINTS;
+DROP TABLE Inscripcion CASCADE CONSTRAINTS;
+DROP TABLE Matricula CASCADE CONSTRAINTS;
+DROP TABLE Administrador CASCADE CONSTRAINTS;
 DROP TABLE Carrera CASCADE CONSTRAINTS;
 DROP TABLE Alumno CASCADE CONSTRAINTS;
 DROP TABLE Curso CASCADE CONSTRAINTS;
@@ -58,11 +58,9 @@ CREATE TABLE Alumno (
     fecha_nacimiento date,
     edad number,
     email VARCHAR(50),
-    telefono number
+    telefono number,
     CONSTRAINT pkAlumno PRIMARY KEY (cedula)
 ); 
---Alter table Alumno add telefono number;
-
 
 CREATE TABLE Ciclo (
     id number NOT NULL,
@@ -127,11 +125,12 @@ CREATE TABLE PlanEstudio (
 );
 
 -- SI FUNCIONA
-CREATE OR REPLACE PROCEDURE crearAlumno (xcedula in Alumno.cedula%TYPE, xnombre in Alumno.nombre%TYPE, xedad in Alumno.edad%TYPE, xemail in Alumno.email%TYPE, xfechaN in Alumno.fecha_nacimiento%TYPE,xtelefono in Alumno.telefono%TYPE,xusername in Usuario.id%TYPE, xclave in Usuario.clave%TYPE )
+CREATE OR REPLACE PROCEDURE crearAlumno (xcedula in Alumno.cedula%TYPE, xnombre in Alumno.nombre%TYPE, xedad in Alumno.edad%TYPE, xemail in Alumno.email%TYPE, xfechaN in Alumno.fecha_nacimiento%TYPE,xtelefono in Alumno.telefono%TYPE,xusername in Usuario.id%TYPE, xclave in Usuario.clave%TYPE, xcarrera in Carrera.codigo%TYPE )
     IS 
     BEGIN
         INSERT into Alumno VALUES(xcedula, xnombre, TO_DATE(xfechaN, 'YYYY-MM-DD'), xedad,xemail,xtelefono); 
         INSERT into Usuario VALUES(xcedula, xclave, 'Alumno');
+        INSERT into Inscripcion VALUES(xcedula,xcarrera);
         COMMIT;
     END;
     /
@@ -145,6 +144,15 @@ CREATE OR REPLACE PROCEDURE modificarAlumno (xnombre in Alumno.nombre%TYPE,xedad
     END;
     /
 	
+CREATE OR REPLACE PROCEDURE modificarAlumnoAdmin (xcedula in Alumno.cedula%TYPE, xnombre in Alumno.nombre%TYPE,xedad in Alumno.edad%TYPE, xemail in Alumno.email%TYPE, xfechaN in varchar,xtelefono in Alumno.telefono%TYPE, xcarrera in Inscripcion.carrera%TYPE )
+    IS 
+    BEGIN
+        UPDATE  Alumno set nombre = xnombre, edad = xedad, email = xemail, fecha_nacimiento = TO_DATE(xfechaN, 'YYYY-MM-DD'), telefono = xtelefono where cedula = xcedula; 
+        UPDATE Inscripcion set carrera = xcarrera where alumno = xcedula;
+        COMMIT;
+    END;
+    /
+
 
 CREATE OR REPLACE PROCEDURE eliminarAlumno (xcedula in Alumno.cedula%TYPE)
     IS 
@@ -173,6 +181,14 @@ CREATE OR REPLACE PROCEDURE modificarProfesor (xnombre in Profesor.nombre%TYPE,x
     END;
     /
 
+CREATE OR REPLACE PROCEDURE modificarProfesorAdmin (xcedula in Profesor.cedula%TYPE, xnombre in Profesor.nombre%TYPE,xedad in Alumno.edad%TYPE, xemail in Profesor.email%TYPE, xtelefono in Profesor.telefono%TYPE)
+    IS
+    BEGIN
+        UPDATE  Profesor SET nombre = xnombre, edad = xedad, telefono = xtelefono, email = xemail where cedula = xcedula;       
+        COMMIT;
+    END;
+    /
+
 CREATE OR REPLACE PROCEDURE eliminarProfesor (xcedula in Alumno.cedula%TYPE)
     IS 
     BEGIN
@@ -190,10 +206,18 @@ CREATE OR REPLACE PROCEDURE crearCurso (xcodigo in Curso.codigo%TYPE, xnombre in
     END crearCurso;
     /
 
-CREATE OR REPLACE PROCEDURE modificarCurso (xnombre in Curso.nombre%TYPE, xcreditos in Curso.creditos%TYPE, xhorasS in Curso.horas_semanales%TYPE)
+CREATE OR REPLACE PROCEDURE modificarCurso (xcodigo in Curso.codigo%TYPE,xnombre in Curso.nombre%TYPE, xcreditos in Curso.creditos%TYPE, xhorasS in Curso.horas_semanales%TYPE)
     IS
     BEGIN
-        UPDATE Curso set  nombre =  xnombre, creditos = xcreditos, horas_semanales = xhorasS; 
+        UPDATE Curso set  nombre =  xnombre, creditos = xcreditos, horas_semanales = xhorasS  where codigo = xcodigo;
+        COMMIT;
+    END;
+    /
+
+CREATE OR REPLACE PROCEDURE modificarCarrera (xcodigo in Carrera.codigo%TYPE ,xnombre in Carrera.nombre%TYPE, xtitulo in Carrera.titulo%TYPE)
+    IS
+    BEGIN
+        UPDATE Carrera set  nombre =  xnombre, titulo = xtitulo where codigo = xcodigo; 
         COMMIT;
     END;
     /
@@ -469,3 +493,20 @@ CREATE OR REPLACE FUNCTION buscar_CarreraXAlumno (xid in Inscripcion.alumno%TYPE
             RETURN c; 
         END;
         /
+
+
+CREATE OR REPLACE PROCEDURE eliminarCarrera (xcodigo in Carrera.codigo%TYPE)
+    IS 
+    BEGIN
+        DELETE Carrera WHERE codigo = xcodigo;
+        COMMIT;
+    END;
+    /        
+
+CREATE OR REPLACE PROCEDURE eliminarCurso (xcodigo in Curso.codigo%TYPE)
+    IS 
+    BEGIN
+        DELETE Curso WHERE codigo = xcodigo;
+        COMMIT;
+    END;
+    /     

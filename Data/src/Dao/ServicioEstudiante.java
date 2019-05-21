@@ -8,7 +8,6 @@ package Dao;
 import Entities.Alumno;
 import Entities.Usuario;
 import java.sql.CallableStatement;
-import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -19,8 +18,9 @@ import java.util.ArrayList;
  * @author Addiel
  */
 public class ServicioEstudiante extends Service{
-    private static final String INSERTARESTUDIANTE= "{call crearAlumno(?,?,?,?,?,?,?)}";
+    private static final String INSERTARESTUDIANTE= "{call crearAlumno(?,?,?,?,?,?,?,?,?)}";
     private static final String MODIFICARESTUDIANTE= "{call modificarAlumno(?,?,?,?,?,?,?)}";
+    private static final String MODIFICARESTUDIANTEADMIN= "{call modificarAlumnoAdmin(?,?,?,?,?,?,?)}";
     private static final String MODIFICARCORREOESTUDIANTE= "{call modificarCorreoAlumno(?)}";
     private static final String ELIMINARESTUDIANTE= "{call eliminarAlumno(?)}";
     private static ServicioEstudiante uniqueInstance;
@@ -31,7 +31,7 @@ public class ServicioEstudiante extends Service{
         return uniqueInstance;
     }
     
-    public void insertarEstudiante(Alumno alumno, Usuario user) throws AccesoADatos.GlobalException, AccesoADatos.NoDataException, InstantiationException, IllegalAccessException  	{
+    public void insertarEstudiante(Alumno alumno, Usuario user, int carrera) throws AccesoADatos.GlobalException, AccesoADatos.NoDataException, InstantiationException, IllegalAccessException  	{
        try {
            conectar();
        } catch (ClassNotFoundException e) {
@@ -48,8 +48,10 @@ public class ServicioEstudiante extends Service{
            pstmt.setInt(3,alumno.getEdad());
            pstmt.setString(4, alumno.getEmail());
            pstmt.setString(5,alumno.getFecha_nacimiento());
-           pstmt.setInt(6,alumno.getCedula());
-           pstmt.setString(7,user.getClave() );
+           pstmt.setInt(6,alumno.getTelefono());
+           pstmt.setInt(7,alumno.getCedula());
+           pstmt.setString(8,user.getClave());
+           pstmt.setInt(9,carrera);
            boolean resultado = pstmt.execute();
            if (resultado == true) {
                throw new AccesoADatos.NoDataException("No se realizo la inserci�n");
@@ -120,10 +122,10 @@ public class ServicioEstudiante extends Service{
            pstmt.setInt(5,alumno.getTelefono());
            pstmt.setInt(6,user.getUsername());
            pstmt.setString(7,user.getClave());
-           pstmt.executeUpdate();
-           /*if (count < 0){
+           int count = pstmt.executeUpdate();
+           if (count < 0){
                throw new AccesoADatos.GlobalException("Error al actualizar informacion del alumno");
-           }*/
+           }
         
        } catch (SQLException e) {
            e.printStackTrace();
@@ -205,4 +207,44 @@ public class ServicioEstudiante extends Service{
             }
         }
     }  
+    
+     public void modificarEstudianteAdmin(Alumno alumno, int carrera) throws AccesoADatos.GlobalException, AccesoADatos.NoDataException, InstantiationException, IllegalAccessException, Exception  	{
+       try {
+           conectar();
+       } catch (ClassNotFoundException e) {
+           throw new AccesoADatos.GlobalException("No se ha localizado el driver");
+       } catch (SQLException e) {
+           throw new AccesoADatos.NoDataException("La base de datos no se encuentra disponible");
+       }
+       CallableStatement pstmt=null;
+       
+       try {
+           pstmt = conexion.prepareCall(MODIFICARESTUDIANTEADMIN);
+            pstmt.setInt(1,alumno.getCedula());
+           pstmt.setString(2,alumno.getNombre());
+           pstmt.setInt(3,alumno.getEdad());
+           pstmt.setString(4,alumno.getEmail());
+           pstmt.setString(5,alumno.getFecha_nacimiento());
+           pstmt.setInt(6,alumno.getTelefono());          
+           pstmt.setInt(7,carrera);
+           int count = pstmt.executeUpdate();
+           if (count < 0){
+               throw new AccesoADatos.GlobalException("Error al actualizar informacion del alumno");
+           }
+        
+       } catch (SQLException e) {
+           e.printStackTrace();
+           throw new AccesoADatos.GlobalException(e.getMessage());
+       } finally {
+           try {
+               if (pstmt != null) {
+                   pstmt.close();
+               }
+               desconectar();
+           } catch (SQLException e) {
+               throw new AccesoADatos.GlobalException(e.getMessage());
+           }
+       }
+   }      
+    
 }

@@ -20,6 +20,7 @@ import java.util.ArrayList;
 public class ServicioProfesor extends Service{
     private static final String INSERTARPROFESOR= "{call crearProfesor(?,?,?,?,?,?)}";
     private static final String MODIFICARPROFESOR= "{call modificarProfesor(?,?,?,?,?,?)}";
+     private static final String MODIFICARPROFESORADMIN= "{call modificarProfesorAdmin(?,?,?,?,?)}";
     private static final String ELMINARPROFESOR= "{call eliminarProfesor(?)}";
     private static ServicioProfesor uniqueInstance;
     public static ServicioProfesor instance(){
@@ -170,4 +171,41 @@ public class ServicioProfesor extends Service{
             }
         }
     }
+    
+      public void modificarProfesorAdmin(Profesor profesor) throws AccesoADatos.GlobalException, AccesoADatos.NoDataException, InstantiationException, IllegalAccessException  	{
+        try {
+            conectar();
+        } catch (ClassNotFoundException e) {
+            throw new AccesoADatos.GlobalException("No se ha localizado el driver");
+        } catch (SQLException e) {
+            throw new AccesoADatos.NoDataException("La base de datos no se encuentra disponible");
+        }
+        CallableStatement pstmt=null;
+        
+        try {
+            pstmt = conexion.prepareCall(MODIFICARPROFESORADMIN);
+            pstmt.setInt(1,profesor.getCedula()); 
+            pstmt.setString(2,profesor.getNombre());
+            pstmt.setInt(3,profesor.getEdad());
+            pstmt.setString(4, profesor.getEmail());
+            pstmt.setInt(5, profesor.getTelefono());
+                
+            pstmt.executeUpdate();
+           /*if (count < 0){
+               throw new AccesoADatos.GlobalException("Error al actualizar informacion del alumno");
+           }*/            
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new AccesoADatos.GlobalException("Llave duplicada");
+        } finally {
+            try {
+                if (pstmt != null) {
+                    pstmt.close();
+                }
+                desconectar();
+            } catch (SQLException e) {
+                throw new AccesoADatos.GlobalException("Estatutos invalidos o nulos");
+            }
+        }
+    }      
 }

@@ -18,7 +18,8 @@ import java.util.ArrayList;
  */
 public class ServicioCursos extends Service {
      private static final String CREARCURSO= "{call crearCurso(?,?,?,?)}";
-     private static final String MODIFICARCURSO= "{call modificarCurso(?,?,?)}";
+     private static final String MODIFICARCURSO= "{call modificarCurso(?,?,?,?)}";
+     private static final String ELIMINARCURSO= "{call eliminarCurso(?)}";
      private static ServicioCursos uniqueInstance;
      public static ServicioCursos instance(){
         if (uniqueInstance == null){
@@ -62,7 +63,7 @@ public class ServicioCursos extends Service {
             }
         }
     }          
-     public void modificarCurso(String xnombre, int xcreditos, int xhoras) throws AccesoADatos.GlobalException, AccesoADatos.NoDataException, SQLException, InstantiationException, IllegalAccessException  	{
+     public void modificarCurso(int xcodigo,String xnombre, int xcreditos, int xhoras) throws AccesoADatos.GlobalException, AccesoADatos.NoDataException, SQLException, InstantiationException, IllegalAccessException  	{
         try {
             conectar();
         } catch (ClassNotFoundException e) {
@@ -73,10 +74,11 @@ public class ServicioCursos extends Service {
         CallableStatement pstmt=null;
         
         try {
-            pstmt = conexion.prepareCall(MODIFICARCURSO);          
-            pstmt.setString(1,xnombre);
-            pstmt.setInt(2,xcreditos);  
-            pstmt.setInt(3,xhoras);  
+            pstmt = conexion.prepareCall(MODIFICARCURSO);
+            pstmt.setInt(1,xcodigo); 
+            pstmt.setString(2,xnombre);
+            pstmt.setInt(3,xcreditos);  
+            pstmt.setInt(4,xhoras);  
             boolean resultado = pstmt.execute();
             if (resultado == true) {
                 throw new AccesoADatos.NoDataException("No se realizo la actualizacion");
@@ -129,5 +131,40 @@ public class ServicioCursos extends Service {
                 throw new AccesoADatos.GlobalException("Estatutos invalidos o nulos");
             }
         }
-    }  
+    } 
+     
+     
+    public void eliminarCurso(int codigo) throws AccesoADatos.GlobalException, AccesoADatos.NoDataException, InstantiationException, IllegalAccessException  	{
+       try {
+           conectar();
+       } catch (ClassNotFoundException e) {
+           throw new AccesoADatos.GlobalException("No se ha localizado el driver");
+       } catch (SQLException e) {
+           throw new AccesoADatos.NoDataException("La base de datos no se encuentra disponible");
+       }
+       CallableStatement pstmt=null;
+
+       try {
+           pstmt = conexion.prepareCall(ELIMINARCURSO);
+           pstmt.setInt(1,codigo);
+           boolean resultado = pstmt.execute();
+           if (resultado == true) {
+               throw new AccesoADatos.NoDataException("No se realizo la inserci�n");
+           }
+
+       } catch (SQLException e) {
+           e.printStackTrace();
+           throw new AccesoADatos.GlobalException("Llave duplicada");
+       } finally {
+           try {
+               if (pstmt != null) {
+                   pstmt.close();
+               }
+               desconectar();
+           } catch (SQLException e) {
+               throw new AccesoADatos.GlobalException("Estatutos invalidos o nulos");
+           }
+       }
+   }       
 }
+
