@@ -25,6 +25,7 @@ public class ServicioGenerales extends Service {
     private static final String GENERARPLANESTUDIO= "{call generarPlanEstudio(?,?,?,?)}";
      private static final String MODIFICARRERA= "{call modificarCarrera(?,?,?)}";
      private static final String ELIMINARCARRERA= "{call eliminarCarrera(?)}";
+      private static final String CREARCARRERA= "{call crearCarrera(?,?,?)}";
     private static ServicioGenerales uniqueInstance;
     public static ServicioGenerales instance(){
         if (uniqueInstance == null){
@@ -239,4 +240,42 @@ public class ServicioGenerales extends Service {
             }
         }
     } 
+     
+     
+     
+     
+     public void crearCarrera(int xcodigo, String xnombre, String titulo) throws AccesoADatos.GlobalException, AccesoADatos.NoDataException, SQLException, InstantiationException, IllegalAccessException  	{
+        try {
+            conectar();
+        } catch (ClassNotFoundException e) {
+            throw new AccesoADatos.GlobalException("No se ha localizado el driver");
+        } catch (SQLException e) {
+            throw new AccesoADatos.NoDataException("La base de datos no se encuentra disponible");
+        }
+        CallableStatement pstmt=null;
+        
+        try {
+            pstmt = conexion.prepareCall(CREARCARRERA);          
+            pstmt.setInt(1,xcodigo);
+            pstmt.setString(2,xnombre);
+            pstmt.setString(3,titulo);             
+            boolean resultado = pstmt.execute();
+            if (resultado == true) {
+                throw new AccesoADatos.NoDataException("No se realizo la inserci�n");
+            }
+            
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new AccesoADatos.GlobalException("Llave duplicada");
+        } finally {
+            try {
+                if (pstmt != null) {
+                    pstmt.close();
+                }
+                desconectar();
+            } catch (SQLException e) {
+                throw new AccesoADatos.GlobalException("Estatutos invalidos o nulos");
+            }
+        }
+    }          
 }

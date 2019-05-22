@@ -137,6 +137,14 @@
         <servlet-name>Administrador</servlet-name>
         <url-pattern>/ModificarAlumnoAdmin</url-pattern>
     </servlet-mapping>
+     <servlet-mapping>
+        <servlet-name>Administrador</servlet-name>
+        <url-pattern>/CrearCarrera</url-pattern>
+    </servlet-mapping>
+     <servlet-mapping>
+        <servlet-name>Administrador</servlet-name>
+        <url-pattern>/CrearCurso</url-pattern>
+    </servlet-mapping>
     <session-config>
         <session-timeout>
             30

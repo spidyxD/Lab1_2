@@ -9,13 +9,19 @@ import AccesoADatos.GlobalException;
 import AccesoADatos.NoDataException;
 import Dao.Data;
 import Entities.Alumno;
+import Entities.Carrera;
+import Entities.Curso;
 import Entities.Profesor;
 import Entities.Usuario;
+import Services.Servicio_Busquedas;
+import Services.Servicio_Estudiantes;
+import Services.Servicio_Profesor;
 import com.google.gson.Gson;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
@@ -150,26 +156,39 @@ public class Perfil extends HttpServlet {
         }
     }
 
+     @SuppressWarnings("empty-statement")
     private void loadProfile(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
        try
-       {           
+       { 
+        HttpSession http =  request.getSession(true);
         int id = Integer.valueOf(request.getParameter("idUser"));
          String type = request.getParameter("type");
         if(id>0 && !type.equals("undefined") ){           
             if(type.equals("Alumno")){
             
              Alumno a = Data.instance().getServiciobusquedas().buscarAlumnoId(id);
-             request.removeAttribute("alumn");
-             request.setAttribute("alumn", a);
+             //http.removeAttribute("alumn");
+             http.setAttribute("alumn", a);
             }
             else if(type.equals("Profesor")){
            
              Profesor p = Data.instance().getServiciobusquedas().buscarProfeId(id);
-             request.removeAttribute("prof");
-             request.setAttribute("prof", p);
+             //http.removeAttribute("prof");
+             http.setAttribute("prof", p);
             }
         }
-       
+        ArrayList<Profesor> profes =  Servicio_Profesor.instance().verProfesores();
+        ArrayList<Alumno> alumnos = Servicio_Estudiantes.instance().verAlumnos();
+        ArrayList<Carrera> carreras = Servicio_Busquedas.instance().verCarreras();
+        ArrayList<Curso> cursos = Servicio_Busquedas.instance().verCursos();
+        while(alumnos.remove(null));
+        while(profes.remove(null));
+        while(cursos.remove(null));
+        while(carreras.remove(null));
+        http.setAttribute("carreras", carreras);
+        http.setAttribute("cursos", cursos);
+        http.setAttribute("alumnos", alumnos);
+        http.setAttribute("profes", profes);
         request.getRequestDispatcher("Perfil.jsp").
                 forward( request, response);
        }

@@ -71,5 +71,10 @@ public class Servicios_Generales {
      catch(Exception e){}
  } 
     
-    
+     public void crearCarrera(Carrera c){
+          try{
+             Data.instance().getServiciogenerales().crearCarrera(c.getCodigo(),c.getNombre(),c.getTitulo());
+        }
+        catch(Exception e){}        
+     }
 }

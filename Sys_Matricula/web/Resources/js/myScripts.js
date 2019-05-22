@@ -187,69 +187,7 @@ function logout(){
     
     
     
-   function addAlumno() {
-    usuario = {username: $("#usernameAl").val(), clave: $("#claveAl").val()};  
-    alumno = {nombre: $("#nombreAl").val(),telefono: $("#telAl").val(),email: $("#emailAl").val(), fechaN: $("#fechaN").val(),edad:$("#edadAl").val()};
-    carrera = {carrera: $("#carrera").val()};
-    data = new FormData();
-    data.append("Usuario", JSON.stringify(usuario));
-    data.append("Alumno", JSON.stringify(alumno));
-    data.append("Carrera", JSON.stringify(carrera));
-    $.ajax({
-        type: "POST",
-        url: "RegistroEstudiante",
-        data: data,
-        dataType: "json",
-        processData: false,
-        contentType: false,
-        //contentType: "application/json; charset=utf-8",
-        success:
-                function () {
-                     console.log("success");
-                     window.alert("Datos actualizados");
-                      location.href = "goPerfil";
-                     console.log(usuario);
-                },
-        error: function (jqXHR, textStatus, errorThrown) {
-            window.alert("Error del servidor...");
-            console.log(usuario);
-            console.log(alumno);
-            console.log(errorThrown);
-            
-        }
-    });
-} 
-
-function addProfesor() {
-    usuario = {username: $("#usernameProf").val(), clave: $("#claveProf1").val()};  
-    profesor = {nombre: $("#nombreProf").val(),telefono: $("#telProf").val(),email: $("#emailProf").val(),edad:$("#edadProf").val()};
-    data = new FormData();
-    data.append("Usuario", JSON.stringify(usuario));
-    data.append("Profesor", JSON.stringify(profesor));
-    $.ajax({
-        type: "POST",
-        url: "RegistroProfesor",
-        data: data,
-        dataType: "json",
-        processData: false,
-        contentType: false,
-        //contentType: "application/json; charset=utf-8",
-        success:
-                function () {
-                     console.log("success");
-                     window.alert("Datos actualizados");
-                     location.href = "goPerfil";
-                     console.log(usuario);
-                },
-        error: function (jqXHR, textStatus, errorThrown) {
-            window.alert("Error del servidor...");          
-            console.log(usuario);
-            console.log(profesor);
-            console.log(errorThrown);
-            
-        }
-    });
-}
+  
  function updateAlumno() {  
     usuario = {username: $("#usernameAl").val(), clave: $("#claveAl").val()}; 
     alumno = {nombre: $("#nombreAl").val(),telefono: $("#telAl").val(),email: $("#emailAl").val(), fechaN: $("#fechaN").val(),edad:$("#edadAl").val()};
@@ -576,13 +514,7 @@ function closeModalCrearProfesor(){
 
 
 
-function eliminarCarrera(){
-    var codigo;
-    var table = $('#majores').DataTable();
-    $('#majores tbody').on( 'click', 'tr', function () {
-     codigo = table.row( this ).data()[1];  
-     console.log(codigo);
-    } );
+function eliminarCarrera(id){
    
     bootbox.confirm({
     message: "¿Seguro que desea eliminar el elemento?",
@@ -598,17 +530,13 @@ function eliminarCarrera(){
     },
     callback: function (result) {
            if(result){
-                location.href = "EliminarCarrera?codigo="+codigo;   
+                location.href = "EliminarCarrera?codigo="+id;   
            };
     }
 });
 }
-function eliminarCurso(){
-    var codigo;
-     var table = $('#courses').DataTable();
-    $('#courses tbody').on( 'click', 'tr', function () {
-         codigo = table.row( this ).data()[1];       
-    } );
+function eliminarCurso(id){
+    
     bootbox.confirm({
     message: "¿Seguro que desea eliminar el elemento?",
     buttons: {
@@ -623,19 +551,15 @@ function eliminarCurso(){
     },
     callback: function (result) {
            if(result){
-                location.href = "EliminarCurso?codigo="+codigo;   
+                location.href = "EliminarCurso?codigo="+id;   
            };
     }
 });
     
 }
 
-function eliminarAlumno(){
-    var id;
-     var table = $('#students').DataTable();
-    $('#students tbody').on( 'click', 'tr', function () {
-        id =  table.row( this ).data()[1];        
-    } );
+function eliminarAlumno(id){
+    
     bootbox.confirm({
     message: "¿Seguro que desea eliminar el elemento?",
     buttons: {
@@ -657,12 +581,8 @@ function eliminarAlumno(){
    
 }
 
-function eliminarProfesor(){
-    var id;
-     var table = $('#teachers').DataTable();
-    $('#teachers tbody').on( 'click', 'tr', function () {
-      id = table.row( this ).data()[1];                   
-    } );
+function eliminarProfesor(id){
+   
    bootbox.confirm({
     message: "¿Seguro que desea eliminar el elemento?",
     buttons: {
@@ -686,7 +606,7 @@ function eliminarProfesor(){
 
 function addAlumno1() {
     alumno = {cedula: $("#cedulalumno1").val(),nombre: $("#nombreAlumno1").val(),telefono: $("#telefonoAlumno1").val(),email: $("#emailAlumno1").val(), fechaN: $("#fechaAlumno1").val(),edad:$("#edadAlumno1").val()};
-    carrera = $("#carreraAlumno").val(); 
+    carrera = document.getElementById("carreraAlumno1").value;
     data = new FormData();
     data.append("Alumno", JSON.stringify(alumno));
     data.append("Carrera", JSON.stringify(carrera));
@@ -694,14 +614,14 @@ function addAlumno1() {
         type: "POST",
         url: "RegistroEstudiante",
         data: data,
-        dataType: "json",
+        dataType: "text",
         processData: false,
         contentType: false,
         //contentType: "application/json; charset=utf-8",
         success:
                 function () {
                      console.log("success");
-                     window.alert("Datos actualizados");
+                     window.alert("Estudiante añadido!");
                        location.href = "goPerfil?idUser=116360595"+"&type=undefined";                       
                 },
         error: function (jqXHR, textStatus, errorThrown) {
@@ -721,14 +641,14 @@ function addProfesor1() {
         type: "POST",
         url: "RegistroProfesor",
         data: data,
-        dataType: "json",
+        dataType: "text",
         processData: false,
         contentType: false,
         //contentType: "application/json; charset=utf-8",
         success:
                 function () {
                      console.log("success");
-                     window.alert("Datos actualizados");
+                     window.alert("Profesor añadido");
                       location.href = "goPerfil?idUser=116360595"+"&type=undefined";                       
                 },
         error: function (jqXHR, textStatus, errorThrown) {
@@ -740,3 +660,59 @@ function addProfesor1() {
     });
 }
 
+
+
+ function addCarrera() {
+    carrera = {codigo: $("#codigoCarrera1").val(),nombre: $("#nombreCarrera1").val(),titulo: $("#nivelCarrera1").val()};
+    data = new FormData();   
+    data.append("Carrera", JSON.stringify(carrera));
+    $.ajax({
+        type: "POST",
+        url: "CrearCarrera",
+        data: data,
+        dataType: "text",
+        processData: false,
+        contentType: false,
+        //contentType: "application/json; charset=utf-8",
+        success:
+                function () {
+                     console.log("success");
+                     window.alert("Carrera añadida");
+                        location.href = "goPerfil?idUser=116360595"+"&type=undefined"; 
+                     
+                },
+        error: function (jqXHR, textStatus, errorThrown) {
+            window.alert("Error del servidor...");
+            console.log(usuario);
+            console.log(alumno);
+            console.log(errorThrown);
+            
+        }
+    });
+} 
+
+function addCurso() {
+    curso = {codigo: $("#codigoCurso1").val(),nombre: $("#nombreCurso1").val(),creditos: $("#creditosCurso1").val(),horas_semanales: $("#horasCurso1").val()};
+    data = new FormData();
+    data.append("Curso", JSON.stringify(curso));
+    $.ajax({
+        type: "POST",
+        url: "CrearCurso",
+        data: data,
+        dataType: "text",
+        processData: false,
+        contentType: false,
+        //contentType: "application/json; charset=utf-8",
+        success:
+                function () {
+                     console.log("success");
+                     window.alert("Curso añadido");
+                       location.href = "goPerfil?idUser=116360595"+"&type=undefined"; 
+                },
+        error: function (jqXHR, textStatus, errorThrown) {
+            window.alert("Error del servidor...");          
+            console.log(errorThrown);
+            
+        }
+    });
+}

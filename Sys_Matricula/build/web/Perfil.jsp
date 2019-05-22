@@ -29,7 +29,6 @@
         <script type="text/javascript" src="https://cdn.datatables.net/v/bs4/jq-3.3.1/dt-1.10.18/af-2.3.3/b-1.5.6/b-colvis-1.5.6/b-flash-1.5.6/r-2.2.2/rr-1.2.4/sc-2.0.0/sl-1.3.0/datatables.min.js"></script>      
         <!-- FIN https://datatables.net/ -->
         <%@ include file="Login.jspf" %>
-        <%@ include file="modals.jspf" %>
         <title>Perfil</title>
     </head>
          
@@ -416,7 +415,7 @@
                                     <% for(Carrera c : carreras){ %>
                                     <tr  id="majore">
                                     <th scope="row">
-                                        <a href="javascript:eliminarCarrera();"> <img id="trashCarrera" src="Resources/images/delete.png" class="mx-auto img-fluid img-circle d-block" alt="avatar"> 
+                                        <a href="javascript:eliminarCarrera(<%= c.getCodigo()%>);"> <img id="trashCarrera" src="Resources/images/delete.png" class="mx-auto img-fluid img-circle d-block" alt="avatar"> 
                                         <a href="javascript:callModalEditarCarrera();"> <img id="editCarrera" src="Resources/images/edit.png" class="mx-auto img-fluid img-circle d-block" alt="avatar"></a></th>
                                     <td><%= c.getCodigo()%></td>
                                     <td><%= c.getNombre() %></td>                                  
@@ -425,7 +424,8 @@
                                      <%count++;%>
                                     <%}%>                                   
                                 </tbody>      
-                            </table>                                          
+                            </table>   
+                                <h1 hidden id="count"><%=count+1%></h1>
                 </div>
                 <div class="tab-pane fade show" id="cursos" role="tabpanel" aria-labelledby="cursos-tab">
                      <h5 class="mt-2"><span class="fa fa-clock-o ion-clock float-right"></span> Detalle de Cursos</h5>                                      
@@ -446,7 +446,7 @@
                                     <% for(Curso c : cursos){ %>
                                     <tr  id="course">
                                        <th scope="row">
-                                        <a href="javascript:eliminarCurso();"> <img id="trashCuro" src="Resources/images/delete.png" class="mx-auto img-fluid img-circle d-block" alt="avatar"> 
+                                        <a href="javascript:eliminarCurso(<%= c.getCodigo()%>);"> <img id="trashCuro" src="Resources/images/delete.png" class="mx-auto img-fluid img-circle d-block" alt="avatar"> 
                                         <a href="javascript:callModalEditarCurso();"> <img id="editCurso" src="Resources/images/edit.png" class="mx-auto img-fluid img-circle d-block" alt="avatar"></a></th>
                                         <td><%= c.getCodigo()%></td>
                                         <td><%= c.getNombre() %></td>
@@ -456,7 +456,8 @@
                                       <%count2++;%>
                                     <%}%>                                   
                                 </tbody>      
-                            </table>                                        
+                            </table> 
+                                <h1 hidden id="count2"><%=count2+1%></h1>
                 </div>           
                 <div class="tab-pane fade show" id="alumnos" role="tabpanel" aria-labelledby="alumnos-tab">
                   <h5 class="mt-2"><span class="fa fa-clock-o ion-clock float-right"></span> Detalle de Alumnos</h5>
@@ -479,7 +480,7 @@
                                     <% for(Alumno alum : alumnos){ %>
                                     <tr  id="student">
                                     <th scope="row">
-                                        <a href="javascript:eliminarAlumno();"> <img id="trashAlumno" src="Resources/images/delete.png" class="mx-auto img-fluid img-circle d-block" alt="avatar"> 
+                                        <a href="javascript:eliminarAlumno(<%= alum.getCedula() %>);"> <img id="trashAlumno" src="Resources/images/delete.png" class="mx-auto img-fluid img-circle d-block" alt="avatar"> 
                                         <a href="javascript:callModalEditarAlumno();"> <img id="editAlumno" src="Resources/images/edit.png" class="mx-auto img-fluid img-circle d-block" alt="avatar"></a></th>
                                     <td><%= alum.getCedula() %></td>
                                     <td><%= alum.getNombre() %></td>
@@ -494,7 +495,8 @@
                                        <%count4++;%>
                                     <%}%>                                   
                                 </tbody>      
-                        </table>                            
+                        </table>   
+                                <h1 hidden id="count4"><%=count4%></h1>
                   </div>
                   <div class="tab-pane fade show" id="profesores" role="tabpanel" aria-labelledby="profesores-tab"v>
                     <h5 class="mt-2"><span class="fa fa-clock-o ion-clock float-right"></span> Detalle de Profesores</h5>
@@ -515,7 +517,7 @@
                                       <% for(Profesor p : profes){ %>
                                       <tr  id="course">
                                         <th scope="row">
-                                        <a href="javascript:eliminarProfesor();"> <img id="trashProfesor" src="Resources/images/delete.png" class="mx-auto img-fluid img-circle d-block" alt="avatar"> 
+                                        <a href="javascript:eliminarProfesor(<%= p.getCedula() %>);"> <img id="trashProfesor" src="Resources/images/delete.png" class="mx-auto img-fluid img-circle d-block" alt="avatar"> 
                                         <a href="javascript:callModalEditarProfesor();"> <img id="editProfesor" src="Resources/images/edit.png" class="mx-auto img-fluid img-circle d-block" alt="avatar"></a></th>
                                           <td><%= p.getCedula() %></td>
                                       <td><%= p.getNombre() %></td>
@@ -526,7 +528,8 @@
                                          <%count3++;%>
                                       <%}%>                                   
                                   </tbody>      
-                        </table>                                            
+                        </table>      
+                                  <h1 hidden id="count3"><%=count3%></h1>
                   </div>               
                 </div>
             </div>
