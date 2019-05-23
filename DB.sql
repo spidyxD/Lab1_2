@@ -95,8 +95,8 @@ CREATE TABLE Inscripcion (
     alumno number NOT NULL,
     carrera number NOT NULL,
     PRIMARY KEY (alumno,carrera),
-    CONSTRAINT fkInscrip1 FOREIGN KEY (alumno) REFERENCES Alumno(cedula),
-    CONSTRAINT fkInscrip2 FOREIGN KEY (carrera) REFERENCES Carrera(codigo)
+    CONSTRAINT fkInscrip1 FOREIGN KEY (alumno) REFERENCES Alumno(cedula)  ON DELETE CASCADE,
+    CONSTRAINT fkInscrip2 FOREIGN KEY (carrera) REFERENCES Carrera(codigo)  ON DELETE CASCADE
 );
 
 CREATE TABLE Matricula (
@@ -125,7 +125,7 @@ CREATE TABLE PlanEstudio (
 );
 
 -- SI FUNCIONA
-CREATE OR REPLACE PROCEDURE crearAlumno (xcedula in Alumno.cedula%TYPE, xnombre in Alumno.nombre%TYPE, xedad in Alumno.edad%TYPE, xemail in Alumno.email%TYPE, xfechaN in Alumno.fecha_nacimiento%TYPE,xtelefono in Alumno.telefono%TYPE,xusername in Usuario.id%TYPE, xclave in Usuario.clave%TYPE, xcarrera in Carrera.codigo%TYPE )
+CREATE OR REPLACE PROCEDURE crearAlumno (xcedula in Alumno.cedula%TYPE, xnombre in Alumno.nombre%TYPE, xedad in Alumno.edad%TYPE, xemail in Alumno.email%TYPE, xfechaN in varchar,xtelefono in Alumno.telefono%TYPE,xusername in Usuario.id%TYPE, xclave in Usuario.clave%TYPE, xcarrera in Carrera.codigo%TYPE )
     IS 
     BEGIN
         INSERT into Alumno VALUES(xcedula, xnombre, TO_DATE(xfechaN, 'YYYY-MM-DD'), xedad,xemail,xtelefono); 
@@ -214,6 +214,14 @@ CREATE OR REPLACE PROCEDURE modificarCurso (xcodigo in Curso.codigo%TYPE,xnombre
     END;
     /
 
+
+CREATE OR REPLACE PROCEDURE crearCarrera (xcodigo in Carrera.codigo%TYPE, xnombre in Carrera.nombre%TYPE, xtitulo in Carrera.titulo%TYPE)
+    IS
+    BEGIN
+        INSERT into Carrera VALUES(xcodigo, xnombre, xtitulo); 
+        COMMIT;
+    END;
+    /
 CREATE OR REPLACE PROCEDURE modificarCarrera (xcodigo in Carrera.codigo%TYPE ,xnombre in Carrera.nombre%TYPE, xtitulo in Carrera.titulo%TYPE)
     IS
     BEGIN

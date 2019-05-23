@@ -529,35 +529,77 @@ function eliminarCarrera(id){
         }
     },
     callback: function (result) {
-           if(result){
-                location.href = "EliminarCarrera?codigo="+id;   
-           };
-    }
-});
-}
-function eliminarCurso(id){
-    
-    bootbox.confirm({
-    message: "¿Seguro que desea eliminar el elemento?",
-    buttons: {
-        confirm: {
-            label: 'Yes',
-            className: 'btn-success'
-        },
-        cancel: {
-            label: 'No',
-            className: 'btn-danger'
+        if(result){               
+        data = new FormData();  
+        data.append("ID", JSON.stringify(id));
+        $.ajax({
+            type: "POST",
+            url: "EliminarCarrera",
+            data: data,
+            dataType: "text",
+            processData: false,
+            contentType: false,
+            //contentType: "application/json; charset=utf-8",
+            success:
+                    function () {
+                         console.log("success");
+                         window.alert("Carrera eliminada!");
+                         location.href = "goPerfil?idUser=116360595"+"&type=undefined";                    
+                    },
+            error: function (status) {
+                window.alert("Error del servidor...");                      
+                console.log(status);
+                 console.log(id);    
+                }
+            });
+
+          };
         }
-    },
+        });
+    }
+    function eliminarCurso(id){
+
+        bootbox.confirm({
+        message: "¿Seguro que desea eliminar el elemento?",
+        buttons: {
+            confirm: {
+                label: 'Yes',
+                className: 'btn-success'
+            },
+            cancel: {
+                label: 'No',
+                className: 'btn-danger'
+            }
+        },
     callback: function (result) {
            if(result){
-                location.href = "EliminarCurso?codigo="+id;   
-           };
-    }
-});
-    
-}
+               data = new FormData();  
+        data.append("ID", JSON.stringify(id));
+        $.ajax({
+            type: "POST",
+            url: "EliminarCurso",
+            data: data,
+            dataType: "text",
+            processData: false,
+            contentType: false,
+            //contentType: "application/json; charset=utf-8",
+            success:
+                    function () {
+                         console.log("success");
+                         window.alert("Curso eliminada!");
+                         location.href = "goPerfil?idUser=116360595"+"&type=undefined";                    
+                    },
+            error: function (status) {
+                window.alert("Error del servidor...");                      
+                console.log(status);
+                 console.log(id);    
+                 }
+            });
 
+          };
+        }
+        });
+    }
 function eliminarAlumno(id){
     
     bootbox.confirm({
@@ -574,8 +616,30 @@ function eliminarAlumno(id){
     },
     callback: function (result) {
            if(result){
-                location.href = "EliminarEstudiante?id="+id;   
-           };
+               data = new FormData();  
+        data.append("ID", JSON.stringify(id));
+        $.ajax({
+            type: "POST",
+            url: "EliminarEstudiante",
+            data: data,
+            dataType: "text",
+            processData: false,
+            contentType: false,
+            //contentType: "application/json; charset=utf-8",
+            success:
+                    function () {
+                         console.log("success");
+                         window.alert("Estudiante eliminado!");
+                         location.href = "goPerfil?idUser=116360595"+"&type=undefined";                    
+                    },
+            error: function (status) {
+                window.alert("Error del servidor...");                      
+                console.log(status);
+                 console.log(id);    
+                 }
+            });
+
+          };           
     }
 });
    
@@ -596,9 +660,32 @@ function eliminarProfesor(id){
         }
     },
     callback: function (result) {
-           if(result){
-                location.href = "EliminarProfesor?id="+id;   
-           };
+             if(result){
+               data = new FormData();  
+        data.append("ID", JSON.stringify(id));
+        $.ajax({
+            type: "POST",
+            url: "EliminarProfesor",
+            data: data,
+            dataType: "text",
+            processData: false,
+            contentType: false,
+            //contentType: "application/json; charset=utf-8",
+            success:
+                    function () {
+                         console.log("success");
+                         window.alert("Profesor eliminado!");
+                         location.href = "goPerfil?idUser=116360595"+"&type=undefined";                    
+                    },
+            error: function (status) {
+                window.alert("Error del servidor...");                      
+                console.log(status);
+                 console.log(id);    
+                 }
+            });
+
+          };   
+        
     }
 });
     
