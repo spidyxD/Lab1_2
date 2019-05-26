@@ -133,33 +133,14 @@ public class Perfil extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
-    private void doUpdateStudent(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException, GlobalException, NoDataException, InstantiationException, IllegalAccessException {
-            try{
-            HttpSession s = request.getSession(true);
-            BufferedReader readerOff = new BufferedReader(new InputStreamReader(request.getPart("offerer").getInputStream()));
-            BufferedReader readerLog = new BufferedReader(new InputStreamReader(request.getPart("login").getInputStream()));
-            PrintWriter out = response.getWriter();
-            Gson gson = new Gson();
-            Alumno alumn = gson.fromJson(readerOff, Alumno.class);
-            
-            System.out.println(alumn.getNombre());
-            Usuario user = gson.fromJson(readerLog, Usuario.class);
-             System.out.println(user.getUsername());
-            Data.instance().getServicioestudiante().modificarEstudiante(alumn, user);           
-            response.setContentType("application/json; charset=UTF-8");
-            out.write(gson.toJson(alumn));
-            response.setStatus(200); //update successfull
-            }  catch (Exception e) {
-            String error = e.getMessage();
-            request.setAttribute("error", error);  
-            response.setStatus(401); //si hay un error en el update
-        }
-    }
+   
 
      @SuppressWarnings("empty-statement")
     private void loadProfile(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
        try
        { 
+        Gson gson = new Gson(); 
+        PrintWriter out = response.getWriter();       
         HttpSession http =  request.getSession(true);
         int id = Integer.valueOf(request.getParameter("idUser"));
          String type = request.getParameter("type");
@@ -168,13 +149,13 @@ public class Perfil extends HttpServlet {
             
              Alumno a = Data.instance().getServiciobusquedas().buscarAlumnoId(id);
              //http.removeAttribute("alumn");
-             http.setAttribute("alumn", a);
+            out.write(gson.toJson(a));
             }
             else if(type.equals("Profesor")){
            
              Profesor p = Data.instance().getServiciobusquedas().buscarProfeId(id);
              //http.removeAttribute("prof");
-             http.setAttribute("prof", p);
+             out.write(gson.toJson(p));
             }
         }
         ArrayList<Profesor> profes =  Servicio_Profesor.instance().verProfesores();
@@ -185,12 +166,11 @@ public class Perfil extends HttpServlet {
         while(profes.remove(null));
         while(cursos.remove(null));
         while(carreras.remove(null));
-        http.setAttribute("carreras", carreras);
-        http.setAttribute("cursos", cursos);
-        http.setAttribute("alumnos", alumnos);
-        http.setAttribute("profes", profes);
-        request.getRequestDispatcher("Perfil.jsp").
-                forward( request, response);
+       out.write(gson.toJson(carreras));
+       out.write(gson.toJson(cursos));
+       out.write(gson.toJson(alumnos));
+       out.write(gson.toJson(profes));
+       
        }
        catch(Exception e){ String error = e.getMessage();
             request.setAttribute("error",error);
@@ -198,22 +178,18 @@ public class Perfil extends HttpServlet {
             
         }
     }
-
+    
+     private void doUpdateStudent(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException, GlobalException, NoDataException, InstantiationException, IllegalAccessException {
+            try{          
+            response.setStatus(200); //update successfull
+            }  catch (Exception e) {
+            String error = e.getMessage();
+            request.setAttribute("error", error);  
+            response.setStatus(401); //si hay un error en el update
+        }
+    }
     private void doUpdateProfessor(HttpServletRequest request, HttpServletResponse response) throws GlobalException, NoDataException, InstantiationException, IllegalAccessException, IOException, ServletException {
-            try {
-            HttpSession s = request.getSession(true);
-            BufferedReader readerOff = new BufferedReader(new InputStreamReader(request.getPart("offerer").getInputStream()));
-            BufferedReader readerLog = new BufferedReader(new InputStreamReader(request.getPart("login").getInputStream()));
-            PrintWriter out = response.getWriter();
-            Gson gson = new Gson();
-            Profesor prof = gson.fromJson(readerOff, Profesor.class);
-            
-            System.out.println(prof.getNombre());
-            Usuario user = gson.fromJson(readerLog, Usuario.class);
-            System.out.println(user.getUsername());
-            Data.instance().getServicioProfesor().modificarProfesor(prof, user);           
-            response.setContentType("application/json; charset=UTF-8");
-            out.write(gson.toJson(prof));
+            try {          
             response.setStatus(200); //update successfull
             }  catch (Exception e) {
             String error = e.getMessage();
