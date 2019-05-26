@@ -358,8 +358,8 @@ public class Administrador extends HttpServlet {
             Data.instance().getServicioCursos().eliminarCurso(id);
             ArrayList<Curso> cursos = Servicio_Busquedas.instance().verCursos();
             while(cursos.remove(null));
-            String majores = gson.toJson(cursos);
-            out.write(majores);
+            String courses = gson.toJson(cursos);
+            out.write(courses);
             response.setStatus(200); //update successfull
       }
       catch(Exception ex){
@@ -495,8 +495,6 @@ public class Administrador extends HttpServlet {
       @SuppressWarnings("empty-statement")
     private void createCareer(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try{
-            HttpSession s = request.getSession(true);
-            BufferedReader readerCarrera = new BufferedReader(new InputStreamReader(request.getPart("Carrera").getInputStream()));
             PrintWriter out = response.getWriter();
             Gson gson = new Gson();
             Carrera c = new Carrera();
@@ -505,10 +503,10 @@ public class Administrador extends HttpServlet {
             c.setNombre((String)(request.getParameter("nombre")));
             c.setTitulo((String)(request.getParameter("titulo")));        
             Data.instance().getServiciogenerales().crearCarrera(c.getCodigo(), c.getNombre(), c.getTitulo());   
-            ArrayList<Profesor> profes =  Servicio_Profesor.instance().verProfesores();
-            while(profes.remove(null));
-            String teachers =  gson.toJson(profes);
-            out.write(teachers);       
+             ArrayList<Carrera> carreras = Servicio_Busquedas.instance().verCarreras();
+            while(carreras.remove(null));
+            String majores = gson.toJson(carreras);
+            out.write(majores);       
             response.setStatus(200);                 
          }
           catch(Exception e){ String error = e.getMessage();                     
@@ -521,9 +519,7 @@ public class Administrador extends HttpServlet {
 
       @SuppressWarnings("empty-statement")
     private void createCourse(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-         try{
-              HttpSession s = request.getSession(true);
-            BufferedReader readerCurso = new BufferedReader(new InputStreamReader(request.getPart("Curso").getInputStream()));
+         try{         
             PrintWriter out = response.getWriter();
             Gson gson = new Gson();
             Curso c = new Curso();
