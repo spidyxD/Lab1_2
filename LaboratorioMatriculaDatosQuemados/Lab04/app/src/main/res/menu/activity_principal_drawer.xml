@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_principal_editar_perfil"
+            android:checked="false"
+            android:icon="@drawable/editar"
+            android:title="Editar Perfil"
+            android:visible="true" />
+        <item
+            android:id="@+id/nav_principal_estudiantes"
+            android:icon="@drawable/et"
+            android:title="Estudiantes"
+            android:visible="true" />
+        <item
+            android:id="@+id/nav_principal_profesore"
+            android:icon="@drawable/profesor"
+            android:title="Profesores"
+            android:visible="true" />
+        <item
+            android:id="@+id/nav_principal_carreras"
+            android:icon="@drawable/profesor"
+            android:title="Carreras"
+            android:visible="true" />
+        <item
+            android:id="@+id/nav_principal_cursos"
+            android:icon="@drawable/profesor"
+            android:title="Cursos"
+            android:visible="true" />
+        <item
+            android:id="@+id/nav_principal_grupos_impartidos"
+            android:icon="@drawable/et"
+            android:title="Grupos Impartidos"
+            android:visible="true" />
+        <item
+            android:id="@+id/nav_principal_grupos_matriculados"
+            android:icon="@drawable/profesor"
+            android:title="Cursos Matriculados"
+            android:visible="true" />
+        <item
+            android:id="@+id/nav_principal_matricula"
+            android:icon="@drawable/profesor"
+            android:title="Matricula"
+            android:visible="true" />
+        <item
+            android:id="@+id/nav_principal_logout"
+            android:icon="@drawable/logout2"
+            android:title="Logout"
+            android:visible="true" />
+    </group>
+
+
+
+</menu>
