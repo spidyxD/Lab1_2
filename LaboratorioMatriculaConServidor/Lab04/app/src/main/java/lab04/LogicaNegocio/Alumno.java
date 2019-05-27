@@ -5,19 +5,11 @@ import java.util.List;
 
 public class Alumno extends Persona{
     public  String fecha_nacimiento;
-    public List<Grupo> grupos = new ArrayList<>();
     Carrera carrera = new Carrera();
     int creditos ;
     public Alumno() {
     }
 
-    public List<Grupo> getGrupos() {
-        return grupos;
-    }
-
-    public void setGrupos(List<Grupo> grupos) {
-        this.grupos = grupos;
-    }
 
     public Alumno(String fecha_nacimiento) {
         this.fecha_nacimiento = fecha_nacimiento;

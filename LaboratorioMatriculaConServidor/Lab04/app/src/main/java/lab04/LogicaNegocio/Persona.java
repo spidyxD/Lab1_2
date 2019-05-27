@@ -5,7 +5,7 @@ public class Persona {
     public int cedula;
     public String email;
     public int telfono;
-    public int Edad;
+    public int edad;
     public Persona() {
     }
 
@@ -13,6 +13,7 @@ public class Persona {
         this.nombre = nombre;
         this.cedula = cedula;
         this.email = email;
+        this.edad=edad;
         this.telfono=telfono;
     }
 
@@ -49,11 +50,11 @@ public class Persona {
     }
 
     public int getEdad() {
-        return Edad;
+        return edad;
     }
 
     public void setEdad(int Edad) {
-        this.Edad = Edad;
+        this.edad = Edad;
     }
 
 }

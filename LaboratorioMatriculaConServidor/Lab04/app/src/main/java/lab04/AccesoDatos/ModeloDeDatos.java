@@ -11,6 +11,7 @@ import lab04.LogicaNegocio.Usuario;
 
 
 import java.security.SecureRandom;
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -394,10 +395,11 @@ public class ModeloDeDatos {
         cursos.add(new Curso(111,"Investigacion de Mercados",2,2));
     }
     public void prepararCiclos(){
+       /* Date date= new Date("2018/02/08");
         ciclos.add(new Ciclo(01,"CICLO I 2018","2018/02/08","2018/06/28"));
         ciclos.add(new Ciclo(02,"CICLO II 2018","2018/07/12","2018/11/26"));
         ciclos.add(new Ciclo(03,"CICLO I 2019","2019/02/08","2019/06/28"));
-        ciclos.add(new Ciclo(04,"CICLO II 2019","2019/07/12","2019/11/26"));
+        ciclos.add(new Ciclo(04,"CICLO II 2019","2019/07/12","2019/11/26"));*/
     }
     public Grupo getGrupoXNRC(int nrc){
         Grupo res = null;
@@ -409,9 +411,9 @@ public class ModeloDeDatos {
         return res;
     }
     public void asignarGruposAprofes(){
-        for(Grupo g : grupos){
+      /*  for(Grupo g : grupos){
             g.getPorfesor().getGrupos().add(g);
-        }
+        }*/
     }
     public void prepararGrupos(){
         grupos.add(new Grupo(100,getCursoXCodigo(1),25,"L-V 8:00AM-10:40AM",getProfesorXCed(1763589),getCicloXCod(03)));
@@ -442,7 +444,7 @@ public class ModeloDeDatos {
     void matricular(Alumno student, Grupo grupo){
         grupo.setCapacidad(grupo.getCapacidad()-1);
         matriculas.add(new Matricula(student,student.getCarrera(),grupo.getCurso(),grupo.getPorfesor(),grupo.getCiclo(),grupo));
-        student.getGrupos().add(grupo);
+        //student.getGrupos().add(grupo);
     }
 }
 
