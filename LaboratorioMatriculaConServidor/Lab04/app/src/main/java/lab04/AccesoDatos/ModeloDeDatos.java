@@ -14,8 +14,30 @@ import java.security.SecureRandom;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 public class ModeloDeDatos {
+    String loginUrl = "http://192.168.43.151:8080/Sys_Matricula_Server/doLogin?";
+    String registroAlumnoUrl= "http://192.168.43.151:8080/Sys_Matricula_Server/RegistroEstudiante?";
+    String registroProfesorUrl= "http://192.168.43.151:8080/Sys_Matricula_Server//RegistroProfesor?";
+    String registroCarreraUrl= "http://192.168.43.151:8080/Sys_Matricula_Server/CrearCarrera?";
+    String registroCursoURL= "http://192.168.43.151:8080/Sys_Matricula_Server/CrearCurso?";
+    String updateAlumnoAdminURL= "http://192.168.43.151:8080/Sys_Matricula_Server/ModificarAlumnoAdmin?";
+    String updateProfesorAdminURL= "http://192.168.43.151:8080/Sys_Matricula_Server/ModificarProfesorAdmin?";
+    String updateAlumnoURL= "http://192.168.43.151:8080/Sys_Matricula_Server/ModificarEstudiante?";
+    String updateProfesorURL= "http://192.168.43.151:8080/Sys_Matricula_Server/ModificarProfesor?";
+    String updateCarreraURL= "http://192.168.43.151:8080/Sys_Matricula_Server/ModificarCarrera?";
+    String updateCursoURL= "http://192.168.43.151:8080/Sys_Matricula_Server/ModificarCurso?";
+    String deleteAlumnoURL= "http://192.168.43.151:8080/Sys_Matricula_Server//EliminarEstudiante?";
+    String deleteProfesorURL= "http://192.168.43.151:8080/Sys_Matricula_Server/EliminarProfesor?";
+    String deleteCarreraURL= "http://192.168.43.151:8080/Sys_Matricula_Server/EliminarCarrera?";
+    String deleteCursoURL= "http://192.168.43.151:8080/Sys_Matricula_Server/EliminarCurso?";
+
     private List<Carrera> carreras;
     private List<Curso> cursos;
     private List<Alumno> alumnos;
@@ -95,16 +117,6 @@ public class ModeloDeDatos {
         currentCurso=new Curso();
         currentAlumno=new Alumno();
         currentProfesor= new Profesor();
-        prepararCursos();
-        prepararCarreras();
-        preparAdministradores();
-        prepararProfesores();
-        prepararAlumnos();
-        prepararCiclos();
-        prepararCursos();
-        prepararGrupos();
-        asignarGruposAprofes();
-        prepararMatriculas();
     }
 
     public List<Carrera> getCarreras() {
@@ -170,6 +182,63 @@ public class ModeloDeDatos {
     public void setUsuarios(List<Usuario> usuarios) {
         this.usuarios = usuarios;
     }
+
+
+    ////////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////SERVIDOR///////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
+    public void login(int username , String pasword){
+        Usuario user = new Usuario();
+        user.setUsername(username);
+        user.setClave(pasword);
+        String newUrl= loginUrl+"user="+username+"&password="+pasword;
+        String current="";
+        try {
+            URL url;
+            HttpURLConnection urlConnection = null;
+            try {
+                url = new URL(newUrl);
+
+                urlConnection = (HttpURLConnection) url
+                        .openConnection();
+
+                InputStream in = urlConnection.getInputStream();
+
+                InputStreamReader isw = new InputStreamReader(in);
+
+                int data = isw.read();
+                while (data != -1) {
+                    current += (char) data;
+                    data = isw.read();
+                }
+                System.out.print(current);
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            } finally {
+                if (urlConnection != null) {
+                    urlConnection.disconnect();
+                }
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("Exception: " + e.getMessage());
+        }
+    }
+
+
+
+
+
+
+
+
+    ////////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////DATOS QUEMADOS///////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
 
     public void preparAdministradores(){
         Administrador admin1= new Administrador(207680641,"Estefany Hernandez Arce");

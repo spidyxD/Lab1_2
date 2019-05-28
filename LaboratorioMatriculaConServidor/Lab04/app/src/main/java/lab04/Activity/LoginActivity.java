@@ -318,44 +318,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         protected void onPostExecute(final Boolean success) {
             mAuthTask = null;
             showProgress(false);
-
-            if (success) {
-                finish();
-                //putting user on shared preferences
-                switch (usuario.getRol()){
-                    case "Administrador":
-                        prefs.edit().putString((getString(R.string.preference_user_key)), usuario.getRol()).apply();
-                        Administrador administrador= DATOS.getAdministradorXCed(usuario.getUsername());
-                        Intent intent = new Intent(LoginActivity.this, Principal.class);
-                        intent.putExtra("administradorCedula",Integer.toString(administrador.getCedula()));
-                        LoginActivity.this.startActivity(intent);
-
-                        break;
-                    case "Alumno":
-                        prefs.edit().putString((getString(R.string.preference_user_key)), usuario.getRol()).apply();
-                        Alumno alumno = DATOS.getAlumnoXCed(usuario.getUsername());
-                        Intent intent1 = new Intent(LoginActivity.this, Principal.class);
-                        intent1.putExtra("perfil_cedulaAlumno",Integer.toString(alumno.getCedula()));
-                        intent1.putExtra("perfil_nombreAlumno",alumno.getNombre());
-                        intent1.putExtra("perfil_emailAlumno",alumno.getEmail());
-                        intent1.putExtra("perfil_carreraAlumno",alumno.getCarrera().getNombre());
-                        intent1.putExtra("perfil_fechaAlumno",alumno.getFecha_nacimiento());
-                        LoginActivity.this.startActivity(intent1);
-                        break;
-                    case "Profesor":
-                        prefs.edit().putString((getString(R.string.preference_user_key)), usuario.getRol()).apply();
-                        Profesor profesor = DATOS.getProfesorXCed(usuario.getUsername());
-                        Intent intent2 = new Intent(LoginActivity.this, Principal.class);
-                        intent2.putExtra("perfil_cedulaProf",Integer.toString(profesor.getCedula()));
-                        intent2.putExtra("perfil_emailProf",profesor.getEmail());
-                        intent2.putExtra("perfil_nombreProf",profesor.getNombre());
-                        LoginActivity.this.startActivity(intent2);
-                        break;
-                }
-            } else {
-                mPasswordView.setError(getString(R.string.error_incorrect_password));
-                mPasswordView.requestFocus();
-            }
+            DATOS.login(Integer.parseInt(mEmail),mPassword);
         }
 
         @Override
