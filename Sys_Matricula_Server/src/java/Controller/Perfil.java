@@ -166,13 +166,10 @@ public class Perfil extends HttpServlet {
         while(profes.remove(null));
         while(cursos.remove(null));
         while(carreras.remove(null));
-        String jsonSalida = "";
-        String majores = gson.toJson(carreras);
-        String courses = gson.toJson(cursos);
-        String students = gson.toJson(alumnos);
-        String teachers = gson.toJson(profes);
-        jsonSalida = "{carreras:" + majores + " ,cursos:" + courses + " ,alumnos:" + students + ",profesores:" + teachers+"}";
-        out.write(jsonSalida); 
+       out.write(gson.toJson(carreras));
+       out.write(gson.toJson(cursos));
+       out.write(gson.toJson(alumnos));
+       out.write(gson.toJson(profes));
        
        }
        catch(Exception e){ String error = e.getMessage();
