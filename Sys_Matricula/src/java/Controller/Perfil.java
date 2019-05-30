@@ -52,13 +52,7 @@ public class Perfil extends HttpServlet {
           switch (request.getServletPath()) {          
               case "/goPerfil":
                 this.loadProfile(request, response);
-                break;
-              case "/EditarAlumno":
-                this.doUpdateStudent(request, response);
-                break;
-              case "/EditarProfesor":
-                this.doUpdateProfessor(request, response);
-                break;  
+                break;            
               default:
                    try{
                 request.getRequestDispatcher("Home.jsp").
@@ -133,29 +127,7 @@ public class Perfil extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
-    private void doUpdateStudent(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException, GlobalException, NoDataException, InstantiationException, IllegalAccessException {
-            try{
-            HttpSession s = request.getSession(true);
-            BufferedReader readerOff = new BufferedReader(new InputStreamReader(request.getPart("offerer").getInputStream()));
-            BufferedReader readerLog = new BufferedReader(new InputStreamReader(request.getPart("login").getInputStream()));
-            PrintWriter out = response.getWriter();
-            Gson gson = new Gson();
-            Alumno alumn = gson.fromJson(readerOff, Alumno.class);
-            
-            System.out.println(alumn.getNombre());
-            Usuario user = gson.fromJson(readerLog, Usuario.class);
-             System.out.println(user.getUsername());
-            Data.instance().getServicioestudiante().modificarEstudiante(alumn, user);           
-            response.setContentType("application/json; charset=UTF-8");
-            out.write(gson.toJson(alumn));
-            response.setStatus(200); //update successfull
-            }  catch (Exception e) {
-            String error = e.getMessage();
-            request.setAttribute("error", error);  
-            response.setStatus(401); //si hay un error en el update
-        }
-    }
-
+  
      @SuppressWarnings("empty-statement")
     private void loadProfile(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
        try
@@ -199,27 +171,5 @@ public class Perfil extends HttpServlet {
         }
     }
 
-    private void doUpdateProfessor(HttpServletRequest request, HttpServletResponse response) throws GlobalException, NoDataException, InstantiationException, IllegalAccessException, IOException, ServletException {
-            try {
-            HttpSession s = request.getSession(true);
-            BufferedReader readerOff = new BufferedReader(new InputStreamReader(request.getPart("offerer").getInputStream()));
-            BufferedReader readerLog = new BufferedReader(new InputStreamReader(request.getPart("login").getInputStream()));
-            PrintWriter out = response.getWriter();
-            Gson gson = new Gson();
-            Profesor prof = gson.fromJson(readerOff, Profesor.class);
-            
-            System.out.println(prof.getNombre());
-            Usuario user = gson.fromJson(readerLog, Usuario.class);
-            System.out.println(user.getUsername());
-            Data.instance().getServicioProfesor().modificarProfesor(prof, user);           
-            response.setContentType("application/json; charset=UTF-8");
-            out.write(gson.toJson(prof));
-            response.setStatus(200); //update successfull
-            }  catch (Exception e) {
-            String error = e.getMessage();
-            request.setAttribute("error", error);  
-            response.setStatus(401); //si hay un error en el update
-        }
-    }
-
+ 
 }

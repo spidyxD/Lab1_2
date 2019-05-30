@@ -163,9 +163,7 @@ public class Administrador extends HttpServlet {
                     codigo = c.getCodigo();
                 }
             }
-            response.setContentType("application/json; charset=UTF-8");       
-            out.write(gson.toJson(u));
-            out.write(gson.toJson(al));
+            response.setContentType("application/json; charset=UTF-8");                
             Data.instance().getServicioestudiante().insertarEstudiante(al, u, codigo);             
             response.setStatus(200);                 
          }
@@ -187,8 +185,6 @@ public class Administrador extends HttpServlet {
             Profesor prof = gson.fromJson(readerAlumn, Profesor.class);
             Usuario u = new Usuario(prof.getCedula(),"1234","Profesor");          
             response.setContentType("application/json; charset=UTF-8");       
-            out.write(gson.toJson(u));
-            out.write(gson.toJson(prof));
             Data.instance().getServicioProfesor().insertarProfesor(prof, u);             
             response.setStatus(200);                 
          }
@@ -210,8 +206,6 @@ public class Administrador extends HttpServlet {
             Usuario u = gson.fromJson(readerUser, Usuario.class);
             Alumno al = gson.fromJson(readerAlumn, Alumno.class);                        
             Data.instance().getServicioestudiante().modificarEstudiante(al, u);
-            out.write(gson.toJson(u));
-            out.write(gson.toJson(al));
             response.setContentType("application/json; charset=UTF-8");     
             response.setStatus(200);                 
          }
@@ -232,8 +226,6 @@ public class Administrador extends HttpServlet {
             Usuario u = gson.fromJson(readerUser, Usuario.class);
             Profesor prof = gson.fromJson(readerAlumn, Profesor.class);
             response.setContentType("application/json; charset=UTF-8");       
-            out.write(gson.toJson(u));
-            out.write(gson.toJson(prof));
             Data.instance().getServicioProfesor().modificarProfesor(prof, u);             
             response.setStatus(200);                 
          }
@@ -247,10 +239,7 @@ public class Administrador extends HttpServlet {
 
     private void doDeleteStudent(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
            try{
-            HttpSession s = request.getSession(true);
-            Gson gson = new Gson();
-            BufferedReader readerID = new BufferedReader(new InputStreamReader(request.getPart("ID").getInputStream()));  
-            int id = gson.fromJson(readerID, Integer.class);     
+            int id = Integer.valueOf(request.getParameter("id"));
             Data.instance().getServicioestudiante().eliminarEstudiante(id);
             response.setStatus(200); //update successfull
             request.getRequestDispatcher("Perfil.jsp").forward(request, response);
@@ -262,11 +251,7 @@ public class Administrador extends HttpServlet {
 
     private void doDeleteProfessor(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
           try{
-              
-            HttpSession s = request.getSession(true);
-           Gson gson = new Gson();
-            BufferedReader readerID = new BufferedReader(new InputStreamReader(request.getPart("ID").getInputStream()));  
-            int id = gson.fromJson(readerID, Integer.class);
+            int id = Integer.valueOf(request.getParameter("id"));
             Data.instance().getServicioProfesor().eliminarProfesor(id);
             response.setStatus(200); //update successfull
             request.getRequestDispatcher("Perfil.jsp").forward(request, response);
@@ -290,11 +275,8 @@ public class Administrador extends HttpServlet {
 
     private void doDeleteCarrera(HttpServletRequest request, HttpServletResponse response) {
       try{
-            HttpSession s = request.getSession(true);
-            Gson gson = new Gson();
-            BufferedReader readerID = new BufferedReader(new InputStreamReader(request.getPart("ID").getInputStream()));  
-            int id = gson.fromJson(readerID, Integer.class);           
-            Data.instance().getServiciogenerales().eliminarCarrera(id);
+            int codigo = Integer.valueOf(request.getParameter("codigo"));
+            Data.instance().getServiciogenerales().eliminarCarrera(codigo);
             response.setStatus(200); //update successfull
             request.getRequestDispatcher("Perfil.jsp").forward(request, response);
       }
@@ -305,11 +287,8 @@ public class Administrador extends HttpServlet {
 
     private void doDeleteCurso(HttpServletRequest request, HttpServletResponse response) {
       try{
-            HttpSession s = request.getSession(true);
-            Gson gson = new Gson();
-            BufferedReader readerID = new BufferedReader(new InputStreamReader(request.getPart("ID").getInputStream()));  
-            int id = gson.fromJson(readerID, Integer.class);     
-            Data.instance().getServicioCursos().eliminarCurso(id);
+            int codigo = Integer.valueOf(request.getParameter("codigo"));
+            Data.instance().getServicioCursos().eliminarCurso(codigo);
             response.setStatus(200); //update successfull
             request.getRequestDispatcher("Perfil.jsp").forward(request, response);
       }
@@ -346,7 +325,6 @@ public class Administrador extends HttpServlet {
             Gson gson = new Gson();
             Carrera c = gson.fromJson(readerCarrera, Carrera.class);
             response.setContentType("application/json; charset=UTF-8");       
-            out.write(gson.toJson(c));
             Data.instance().getServiciogenerales().modificarCarrera(c.getCodigo(),c.getNombre(), c.getTitulo());
             response.setStatus(200);                 
          }
@@ -375,7 +353,6 @@ public class Administrador extends HttpServlet {
             }
             Alumno al = gson.fromJson(readerAlumn, Alumno.class);                        
             Data.instance().getServicioestudiante().modificarEstudianteAdmin(al, codigo);         
-            out.write(gson.toJson(al));
             response.setContentType("application/json; charset=UTF-8");     
             response.setStatus(200);                 
          }
@@ -394,7 +371,6 @@ public class Administrador extends HttpServlet {
             Gson gson = new Gson();
             Profesor prof = gson.fromJson(readerAlumn, Profesor.class);
             response.setContentType("application/json; charset=UTF-8");       
-            out.write(gson.toJson(prof));
             Data.instance().getServicioProfesor().modificarProfesorAdmin(prof);
             response.setStatus(200);                 
          }
@@ -414,7 +390,6 @@ public class Administrador extends HttpServlet {
             Gson gson = new Gson();
             Carrera c = gson.fromJson(readerCarrera, Carrera.class);                
             response.setContentType("application/json; charset=UTF-8");                 
-            out.write(gson.toJson(c));
             Data.instance().getServiciogenerales().crearCarrera(c.getCodigo(), c.getNombre(), c.getTitulo());             
             response.setStatus(200);                 
          }
@@ -434,7 +409,6 @@ public class Administrador extends HttpServlet {
             Gson gson = new Gson();
             Curso c = gson.fromJson(readerCarrera, Curso.class);                
             response.setContentType("application/json; charset=UTF-8");                 
-            out.write(gson.toJson(c));
             Data.instance().getServicioCursos().crearCurso(c.getCodigo(), c.getNombre(), c.getCreditos(), (int) c.getHoras_semanales());             
             response.setStatus(200);                 
          }

@@ -33,6 +33,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -62,14 +63,13 @@ public class Login extends HttpServlet {
                 break;
             default:
                try{
-                request.getRequestDispatcher("Home.jsp").
+                request.getRequestDispatcher("Error.jsp").
                         forward( request, response);
                 }
                catch(Exception e){ 
                     String error = e.getMessage();
                     request.setAttribute("error",e);
                     request.getRequestDispatcher("Error.jsp").forward(request, response);
-
                 }
                 break;
         }
@@ -142,80 +142,95 @@ public class Login extends HttpServlet {
     protected void doLogin(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, GlobalException, NoDataException, SQLException, InstantiationException, IllegalAccessException {
         Gson gson = new Gson(); 
         PrintWriter out = response.getWriter();   
-        try{
-            String data;
+        try{          
             Usuario aux = new Usuario();
             aux.setUsername(Integer.valueOf(request.getParameter("user")));
             aux.setClave((String) request.getParameter("password"));                                          
-            Service s = new Service();          
-            Administrador admin = new Administrador();
-            Profesor prof = new Profesor();
-            Alumno alumn = new Alumno();
-            ArrayList<Profesor> profes =  Servicio_Profesor.instance().verProfesores();
-            ArrayList<Alumno> alumnos = Servicio_Estudiantes.instance().verAlumnos();
-            ArrayList<Carrera> carreras = Servicio_Busquedas.instance().verCarreras();
-            ArrayList<Curso> cursos = Servicio_Busquedas.instance().verCursos();
-            ArrayList<Curso> cursosProf = new ArrayList();
-            ArrayList<Curso> cursosAlumn = new ArrayList();
-            while(alumnos.remove(null));
-            while(profes.remove(null));
-            while(cursos.remove(null));
-            while(carreras.remove(null));
-            Carrera cAl = new Carrera();
+            Service s = new Service();                     
              if(s.doLogin(aux.getUsername(), aux.getClave())){
              Usuario u = Servicio_Busquedas.instance().buscarUsuarioId(aux.getUsername());
-             String user = gson.toJson(u);
-             String jsonSalida = "";
+             String user = gson.toJson(u);  
+             HttpSession http =  request.getSession(true);
+             http.setAttribute(user, "user");
              switch(u.getRol()){
                  case "Administrador":
-                    admin = Data.instance().getServiciobusquedas().buscarAdministradorId(u.getUsername()); 
+                    String action = (String) request.getParameter("action"); 
+                    Administrador admin = new Administrador();
+                    admin = Data.instance().getServiciobusquedas().buscarAdministradorId(u.getUsername());  
                     String administrador = gson.toJson(admin);
-                    String majores = gson.toJson(carreras);
-                    String courses = gson.toJson(cursos);
-                    String students = gson.toJson(alumnos);
-                    String teachers = gson.toJson(profes);
-                    jsonSalida = "{usuario:[" + user + "],administardor:[" + administrador + "],carreras:" + majores + " ,cursos:" + courses + " ,alumnos:" + students + ",profesores:" + teachers+"}";
-                    out.write(jsonSalida);   
-                    //out.write(user);                   
-                    //out.println(administrador);                   
-                    //out.println(majores);                    
-                    //ut.println(courses);                   
-                    //ut.println(students);                    
-                    //out.println(teachers);                 
-                    response.setStatus(200); // successfull                   
-                 break;
+                    out.write(administrador); 
+                    switch(action){
+                        case "cursos":
+                            ArrayList<Curso> cursos = Servicio_Busquedas.instance().verCursos();
+                            while(cursos.remove(null));
+                            String courses = gson.toJson(cursos);
+                            out.write(courses); 
+                            response.setStatus(200); // successfull 
+                            break;
+                        case "carreras":
+                            ArrayList<Carrera> carreras = Servicio_Busquedas.instance().verCarreras();
+                            while(carreras.remove(null));
+                            String majores = gson.toJson(carreras);
+                            out.write(majores);
+                            response.setStatus(200); // successfull 
+                            break;
+                        case "alumnos":
+                             ArrayList<Alumno> alumnos = Servicio_Estudiantes.instance().verAlumnos();
+                             while(alumnos.remove(null));
+                             String students = gson.toJson(alumnos);
+                             out.write(students);
+                             response.setStatus(200); // successfull 
+                             break;
+                        case "profesores":
+                            ArrayList<Profesor> profes =  Servicio_Profesor.instance().verProfesores();
+                            while(profes.remove(null));
+                            String teachers = gson.toJson(profes);
+                            out.write(teachers); 
+                            response.setStatus(200); // successfull 
+                            break;
+                        default:  break;        
+                    }                                 
+                 break;                               
                  case "Profesor":
-                     prof = Data.instance().getServiciobusquedas().buscarProfeId(u.getUsername());   
-                     cursosProf = Servicio_Busquedas.instance().buscarCursoXprofesor(prof.getCedula());
-                     String teacher = gson.toJson(prof);
-                     String coursesTeach = gson.toJson(cursosProf);
-                     jsonSalida = "{usuario:[" + user + "] ,profesor:[" + teacher + "] ,cursos:" + coursesTeach+"}";
-                     out.write(jsonSalida);  
-                     //out.println(user);                    
-                     //out.println(teacher);
-                     //out.println(coursesTeach);  
-                     //out.println(user+teacher+coursesTeach);                                        
-                     response.setStatus(200); // successfull                    
+                     String data = (String) request.getParameter("data");
+                     Profesor prof = new Profesor();
+                     prof = Data.instance().getServiciobusquedas().buscarProfeId(u.getUsername());
+                     switch(data){
+                         case "perfil":                                                           
+                              String teacher = gson.toJson(prof);
+                              out.println(teacher);
+                              response.setStatus(200); // successfull 
+                               break;
+                         case "cursosProf":                             
+                              ArrayList<Curso> cursosProf = new ArrayList();                    
+                              cursosProf = Servicio_Busquedas.instance().buscarCursoXprofesor(u.getUsername());                   
+                              String coursesTeach = gson.toJson(cursosProf);  
+                              out.println(coursesTeach);    
+                              response.setStatus(200); // successfull 
+                              break;
+                     }                                                                          
                  break; 
-                 case "Alumno":
-                     alumn = Data.instance().getServiciobusquedas().buscarAlumnoId(u.getUsername());
-                     cursosAlumn = Data.instance().getServiciobusquedas().buscarCursosXAlumno(u.getUsername());
-                     cAl = Data.instance().getServiciobusquedas().buscarCarreraId(Data.instance().getServiciobusquedas().buscarCarreraXAlumno(u.getUsername()));
-                     String student = gson.toJson(alumn);
-                     String career = gson.toJson(cAl);
-                     String coursesAl = gson.toJson(cursosAlumn);
-                     jsonSalida = "{usuario:[" + user + "], alumno:[" + student + "], carrera:[" + career + "], cursos:" + coursesAl+"}"; 
-                     out.write(jsonSalida); 
-                     //out.println(user);                    
-                     //out.println(student);                    
-                     //out.println(career); 
-                     //out.println(coursesAl);
-                     //out.println(user+student+career+coursesAl);                  
-                     response.setStatus(200); // successfull                   
+                 case "Alumno":                                               
+                     String info = (String) request.getParameter("info");
+                     switch(info){
+                         case "perfil":
+                             Alumno alumn = new Alumno();
+                             alumn = Data.instance().getServiciobusquedas().buscarAlumnoId(u.getUsername()); 
+                             String student = gson.toJson(alumn);
+                             out.println(student);                                                         
+                             response.setStatus(200); // successfull   
+                             break;
+                         case "cursosAlmuno":
+                             ArrayList<Curso> cursosAlumn = new ArrayList();
+                             cursosAlumn = Data.instance().getServiciobusquedas().buscarCursosXAlumno(u.getUsername());
+                             String coursesAl = gson.toJson(cursosAlumn);
+                             out.println(coursesAl);
+                             response.setStatus(200); // successfull   
+                             break;
+                     }                                         
                  break; 
-                 default: 
-                     request.setAttribute("user", u); 
-                     response.setStatus(200); // failed                  
+                 default:                    
+                     response.setStatus(401); // no access                  
                      break;
                 }
                 response.setContentType("application/json; charset=UTF-8"); 
@@ -240,7 +255,7 @@ public class Login extends HttpServlet {
         Gson gson = new Gson();  
         try{
          request.getSession().invalidate();         
-         out.write(gson.toJson("Logout"));       
+         out.write(gson.toJson("Sesion terminada"));       
        }
        catch(Exception e){ String error = e.getMessage();
             out.println("Datos invalidos");  
