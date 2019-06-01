@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.example.lab04">
+
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.READ_PROFILE" />
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/prof"
+        android:label="Sistema de Matricula"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme"
+        tools:ignore="GoogleAppIndexingWarning">
+        <activity
+            android:name="lab04.Activity.Principal"
+            android:label="@string/title_activity_principal"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name="lab04.Activity.mantenimientoAlumnos"
+            android:label="Mantenimiento de Alumnos"
+            android:parentActivityName="lab04.Activity.Principal"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="lab04.Activity.Principal" />
+        </activity>
+        <activity
+            android:name="lab04.Activity.mantenimientoProfesores"
+            android:label="Mantenimiento de Profesores"
+            android:parentActivityName="lab04.Activity.Principal"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="lab04.Activity.Principal" />
+        </activity>
+        <activity
+            android:name="lab04.Activity.mantenimientoCarrera"
+            android:label="Mantenimiento de Carreras"
+            android:parentActivityName="lab04.Activity.Principal"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="lab04.Activity.Principal" />
+        </activity>
+        <activity
+            android:name="lab04.Activity.mantenimientoCursos"
+            android:label="Mantenimiento de Cursos"
+            android:parentActivityName="lab04.Activity.Principal"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="lab04.Activity.Principal" />
+        </activity>
+        <activity
+            android:name="lab04.Activity.LoginActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+    </application>
+
+</manifest>
