@@ -1,0 +1,230 @@
+<%-- any content can be specified here e.g.: --%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="Entities.Carrera"%>
+<%@ page pageEncoding="UTF-8" %>
+     
+
+
+<div class="modal" id="edicionCarrera" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content animate">
+      <div class="modal-header">
+        <h5 class="modal-title">Editar carrera</h5> 
+        <button type="button" onclick="closeModalEditarCarrera()" id="xCloseCarrera" class="close" data-dismiss="modal" aria-label="Close" style="right:15px;margin-top:1px;">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+          <form>
+              <label>Codigo</label>&nbsp;&nbsp;&nbsp;&nbsp; <input id="codigoCarrera" type="text" value="" style="width: 80px" readonly><br>
+             <label>Nombre</label>&nbsp;&nbsp; <input type="text" id="nombreCarrera" value="" style="width: auto"><br>                                  
+             <label>Nivel</label> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input id="nivelCarrera" type="text" value="" style="width: auto"><br>       
+          </form>
+      </div>
+      <div class="modal-footer">
+          <button type="button" onclick="closeModalEditarCarrera()"  id="closeCarrera" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+        <button type="button" onclick="updateCarrera()" class="btn btn-primary">Actualizar</button>
+      </div>
+    </div>
+  </div>
+</div> 
+
+
+<div class="modal" id='edicionCurso' tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content animate">
+      <div class="modal-header">
+        <h5 class="modal-title">Editar curso</h5>
+        <button type="button" onclick="closeModalEditarCurso()"  id="xCloseCurso" class="close" data-dismiss="modal" aria-label="Close" style="right:15px;margin-top:1px;">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+          <form>
+            <label>Codigo</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input id="codigoCurso" type="text" value="" style="width: 80px" readonly><br>
+            <label>Nombre del curso</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input id="nombreCurso" type="text" value="" style="width: auto"><br>
+            <label>Creditos</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input id="creditosCurso" type="text" value="" style="width: 80px"><br> 
+            <label>Horas semanales</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input id="horasCurso" type="text" value="" style="width: 80px"><br>
+          </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" onclick="closeModalEditarCurso()"  id="closeCurso" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+        <button type="button" onclick="updateCurso()" class="btn btn-primary">Actualizar</button>
+      </div>
+    </div>
+  </div>
+</div> 
+
+<div class="modal" id='edicionAlumno' tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content animate">
+      <div class="modal-header">
+        <h5 class="modal-title">Editar Alumno</h5>
+        <button type="button" onclick="closeModalEditarAlumno()"  id="xCloseAlumno" class="close" data-dismiss="modal" aria-label="Close" style="right:15px;margin-top:1px;">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">             
+         <form>
+                <label>Cedula</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input id="cedulalumno" type="number" value="" style="width: 200px;" readonly><br>
+                <label>Nombre</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input id="nombreAlumno" type="text" value="" style="width: 200px;"><br>
+                <label>Edad</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input id="edadAlumno" type="text" value="" style="width: 80px;"><br>
+                <label>Fecha de nacimiento</label>&nbsp;&nbsp;&nbsp;<input id="fechaAlumno" type="date" value="" style="width: 200px;"><br>
+                <label>Email</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input id="emailAlumno" type="email" value="" style="width: 200px" ><br>
+                <label>Telefono</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="number"  id="telefonoAlumno" value="" style="width: 200px" ><br>
+                <label>Carrera</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <select name="carreraAlumno" id="carreraAlumno" class="custom-select" style="width: 200px;">
+                                        <option selected disabled>Seleccione ...</option> 
+                                        <%for(Carrera c: carreras){%>
+                                            <option ><%= c.getNombre()%></option> 
+                                        <%}%>                                          
+                                        </select><br>
+         </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" onclick="closeModalEditarAlumno()"  id="closeAlumno" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+        <button type="button" onclick="updateAlumnoAdmin()" class="btn btn-primary">Actualizar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal" id='edicionProfesor' tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content animate">
+      <div class="modal-header">
+        <h5 class="modal-title">Editar profesor</h5>
+        <button type="button" onclick="closeModalEditarProfesor()"  id="xCloseProfesor" class="close" data-dismiss="modal" aria-label="Close" style="right:15px;margin-top:1px;">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form>
+            <label>Cedula</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input id="cedulaProfesor" type="number" value="" style="width: 200px;" readonly><br>
+            <label>Nombre</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input id="nombreProfesor" type="text" value="" style="width: 200px;"><br>
+            <label>Edad</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input id="edadProfesor" type="text" value="" style="width: 80px;"><br>
+            <label>Telefono</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input id="telefonoProfesor" type="number" value="" style="width: 200px;"><br>
+            <label>Email</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input id="emailProfesor" type="email" value="" style="width: 200px"><br> 
+        </form>  
+      </div>
+      <div class="modal-footer">
+        <button type="button" onclick="closeModalEditarProfesor()"  id="closeProfesor" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+        <button type="button" onclick="updateProfesorAdmin()" class="btn btn-primary">Actualizar</button>
+      </div>
+    </div>
+  </div>
+</div> 
+
+
+
+<div class="modal" id='crearAlumno' tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content animate">
+      <div class="modal-header">
+        <h5 class="modal-title">Agregar Alumno</h5>
+        <button type="button" onclick="closeModalCrearAlumno()"  id="xCloseAlumno" class="close" data-dismiss="modal" aria-label="Close" style="right:15px;margin-top:1px;">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">             
+         <form>
+                <label>Cedula</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input id="cedulalumno1" type="number" value="" style="width: 200px;" ><br>
+                <label>Nombre</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input id="nombreAlumno1" type="text" value="" style="width: 200px;"><br>
+                <label>Edad</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input id="edadAlumno1" type="text" value="" style="width: 80px;"><br>
+                <label>Fecha de nacimiento</label>&nbsp;&nbsp;&nbsp;<input id="fechaAlumno1" type="date" value="" style="width: 200px;"><br>
+                <label>Email</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input id="emailAlumno1" type="email" value="" style="width: 200px" ><br>
+                <label>Telefono</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="number"  id="telefonoAlumno1" value="" style="width: 200px" ><br>
+                <label>Carrera</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                         <select name="carreraAlumno1" id="carreraAlumno1" class="custom-select" style="width: 200px;">
+                                        <option selected disabled>Seleccione ...</option> 
+                                        <%for(Carrera c: carreras){%>
+                                            <option ><%= c.getNombre()%></option> 
+                                        <%}%>                                          
+                                        </select><br><br>
+         </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" onclick="closeModalCrearAlumno()"  id="closeAlumno" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+        <button type="button" onclick="addAlumno1()" class="btn btn-primary">Registrar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal" id='crearProfesor' tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content animate">
+      <div class="modal-header">
+        <h5 class="modal-title">Agregar profesor</h5>
+        <button type="button" onclick="closeModalCrearProfesor()"  id="xCloseProfesor" class="close" data-dismiss="modal" aria-label="Close" style="right:15px;margin-top:1px;">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form>
+            <label>Cedula</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input id="cedulaProfesor1" type="number" value="" style="width: 200px;" ><br>
+            <label>Nombre</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input id="nombreProfesor1" type="text" value="" style="width: 200px;"><br>
+            <label>Edad</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input id="edadProfesor1" type="text" value="" style="width: 80px;"><br>
+            <label>Telefono</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input id="telefonoProfesor1" type="number" value="" style="width: 200px;"><br>
+            <label>Email</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input id="emailProfesor1" type="email" value="" style="width: 200px"><br> 
+        </form>  
+      </div>
+      <div class="modal-footer">
+        <button type="button" onclick="closeModalCrearProfesor()"  id="closeProfesor" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+        <button type="button" onclick="addProfesor1()" class="btn btn-primary">Registrar</button>
+      </div>
+    </div>
+  </div>
+</div> 
+
+
+
+<div class="modal" id="crearCarrera" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content animate">
+      <div class="modal-header">
+        <h5 class="modal-title">Agregar carrera</h5> 
+        <button type="button" onclick="closeModalCrearCarrera()" id="xCloseCarrera" class="close" data-dismiss="modal" aria-label="Close" style="right:15px;margin-top:1px;">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+          <form>
+              <label>Codigo</label>&nbsp;&nbsp;&nbsp;&nbsp; <input id="codigoCarrera1" type="text" value="<%=carreras.size()+1%>" style="width: 80px" readonly><br>
+             <label>Nombre</label>&nbsp;&nbsp; <input type="text" id="nombreCarrera1" value="" style="width: auto"><br>                                  
+             <label>Nivel</label> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input id="nivelCarrera1" type="text" value="" style="width: auto"><br>       
+          </form>
+      </div>
+      <div class="modal-footer">
+          <button type="button" onclick="closeModalCrearCarrera()"  id="closeCarrera" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+        <button type="button" onclick="addCarrera()" class="btn btn-primary">Agregar</button>
+      </div>
+    </div>
+  </div>
+</div> 
+
+
+<div class="modal" id='crearCurso' tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content animate">
+      <div class="modal-header">
+        <h5 class="modal-title">Agregar curso</h5>
+        <button type="button" onclick="closeModalCrearCurso()"  id="xCloseCurso" class="close" data-dismiss="modal" aria-label="Close" style="right:15px;margin-top:1px;">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+          <form>
+            <label>Codigo</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input id="codigoCurso1" type="text" value="<%=cursos.size()+1%>" style="width: 80px" readonly ><br>
+            <label>Nombre del curso</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input id="nombreCurso1" type="text" value="" style="width: auto"><br>
+            <label>Creditos</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input id="creditosCurso1" type="text" value="" style="width: 80px"><br> 
+            <label>Horas semanales</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input id="horasCurso1" type="text" value="" style="width: 80px"><br>
+          </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" onclick="closeModalCrearCurso()"  id="closeCurso" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+        <button type="button" onclick="addCurso()" class="btn btn-primary">Agregar</button>
+      </div>
+    </div>
+  </div>
+</div> 

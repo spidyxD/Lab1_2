@@ -1,0 +1,83 @@
+<resources>
+    <string name="app_name">Lab04</string>
+    <!-- Strings related to login -->
+    <string name="preference_user_key_default">none</string>
+    <string name="prompt_email">Email</string>
+    <string name="preference_user_key">com.example.lab04.USER</string>
+    <string name="prompt_password">Password</string>
+    <string name="action_sign_in">Sign in or register</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="welcome">"Welcome !"</string>
+    <string name="invalid_username">Not a valid username</string>
+    <string name="invalid_password">Password must be >5 characters</string>
+    <string name="login_failed">"Login failed"</string>
+    <string name="title_activity_login">Sign in</string>
+
+    <string name="error_invalid_email">This email address is invalid</string>
+    <string name="error_invalid_password">This password is too short</string>
+    <string name="error_incorrect_password">This password is incorrect</string>
+    <string name="error_field_required">This field is required</string>
+    <string name="permission_rationale">"Contacts permissions are needed for providing email
+        completions."
+    </string>
+    <string name="title_activity_nav_drawer">NavDrawerActivity</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+
+    <string name="nav_header_Admin">Administrador</string>
+    <string name="nav_header_Profe">Profes342or</string>
+    <string name="nav_header_Estudiante">Alumno</string>
+
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="menu_home">Home</string>
+    <string name="menu_gallery">Gallery</string>
+    <string name="menu_slideshow">Slideshow</string>
+    <string name="menu_tools">Tools</string>
+    <string name="menu_share">Share</string>
+    <string name="menu_send">Send</string>
+    <string name="title_activity_nav_drawer_profesor">NavDrawerProfesor</string>
+    <string name="title_activity_nav_drawer_alumno">NavDrawerAlumno</string>
+    <string name="title_activity_drawer_administrador">DrawerAdministrador</string>
+    <string name="title_activity_drawer_profesor">DrawerProfesor</string>
+    <string name="title_activity_drawer_alumno">DrawerAlumno</string>
+
+    <string name="nav_addStudent">Agregar Alumno</string>
+    <string name="nav_updateDatos">Editar Perfil</string>
+    <string name="nav_addProfesor">Agregar Profesor</string>
+    <string name="nav_searchStudent">Buscar Alumno</string>
+    <string name="nav_searchProfesor">Buscar Profesor</string>
+    <string name="title_activity_administrador_activity">administrador_activity</string>
+    <string name="mantenimientos">Mantenimientos</string>
+    <string name="ppcionesSistema">Opciones de Sistema</string>
+
+    <string name="cedulaAdmin">Cedula</string>
+    <string name="NombreAdmin">Admin</string>
+
+    <string name="nom_Ad">Cedula</string>
+    <string name="clav_ad">Clave</string>
+    <string name="nav_matricular">Matricular</string>
+
+    <string name="nombreAddUpdProf">Nombre</string>
+    <string name="emailAddUpdProf">Email</string>
+    <string name="cedulaAddUpdProf">Cedula</string>
+    <string name="telefonoAddUpdProf">Telefono</string>
+
+    <string name="nombreAddUpdAlum">Nombre</string>
+    <string name="emailAddUpdAlum">Email</string>
+    <string name="cedulaAddUpdAlum">Cedula</string>
+    <string name="telefonoAddUpdAlum">Telefono</string>
+    <string name="fechaAddUpdAlum">Fecha de nacimiento</string>
+    <string name="carreraAddUpdAlum">Carrera</string>
+
+    <string name="cedulaSearch">Cedula</string>
+    <string name="NombreSearch">Nombre</string>
+    <string name="logout">Cerrar Sesión</string>
+    <string name="login">Iniciar</string>
+    <string name="title_activity_navegatio_drawer">NavegatioDrawer</string>
+    <string name="title_activity_principal">Principal</string>
+
+</resources>
