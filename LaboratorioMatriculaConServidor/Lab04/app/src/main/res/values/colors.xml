@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <color name="colorPrimary">#1A9E80</color>
-    <color name="colorPrimaryDark">#0F0F0F</color>
-    <color name="colorAccent">#1A9E80</color>
-    <color name="bg_row_background">#25BDAA</color>
-    <color name="bg_row_background_delete">#25BDAA</color>
-    <color name="bg_row_background_edit">#25BDAA</color>
-</resources>
