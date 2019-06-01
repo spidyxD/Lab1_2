@@ -63,10 +63,10 @@ public class busquedaGrupos extends Fragment implements SearchView.OnQueryTextLi
         List<Grupo> grupos = new ArrayList<>();
         if(usuario.getRol()=="Alumno") {
             Alumno al = DATOS.getAlumnoXCed(usuario.getUsername());
-            grupos = al.getGrupos();
+           // grupos = al.getGrupos();
         }else if(usuario.getRol()=="Profesor"){
             Profesor profesor= DATOS.getProfesorXCed(usuario.getUsername());
-            grupos= profesor.getGrupos();
+           // grupos= profesor.getGrupos();
         }
         adapter = new ListViewAdapterGrupos(grupos);
     }

@@ -408,11 +408,11 @@ public class ModeloDeDatos {
         }
         return res;
     }
-    public void asignarGruposAprofes(){
+   public void asignarGruposAprofes(){
         for(Grupo g : grupos){
-            g.getPorfesor().getGrupos().add(g);
+   //         g.getPorfesor().getGrupos().add(g);
         }
-    }
+   }
     public void prepararGrupos(){
         grupos.add(new Grupo(100,getCursoXCodigo(1),25,"L-V 8:00AM-10:40AM",getProfesorXCed(1763589),getCicloXCod(03)));
         grupos.add(new Grupo(101,getCursoXCodigo(2),25,"L-V 8:00AM-10:40AM",getProfesorXCed(1763589),getCicloXCod(03)));
@@ -442,7 +442,7 @@ public class ModeloDeDatos {
     void matricular(Alumno student, Grupo grupo){
         grupo.setCapacidad(grupo.getCapacidad()-1);
         matriculas.add(new Matricula(student,student.getCarrera(),grupo.getCurso(),grupo.getPorfesor(),grupo.getCiclo(),grupo));
-        student.getGrupos().add(grupo);
+        //student.getGrupos().add(grupo);
     }
 }
 

@@ -4,8 +4,8 @@ public class Persona {
     public String nombre;
     public int cedula;
     public String email;
-    public int telfono;
-    public int Edad;
+    public int edad;
+    public int telefono;
     public Persona() {
     }
 
@@ -13,15 +13,16 @@ public class Persona {
         this.nombre = nombre;
         this.cedula = cedula;
         this.email = email;
-        this.telfono=telfono;
+        this.telefono=telfono;
+        this.edad=edad;
     }
 
-    public int getTelfono() {
-        return telfono;
+    public int getTelefono() {
+        return telefono;
     }
 
-    public void setTelfono(int telfono) {
-        this.telfono = telfono;
+    public void setTelefono(int telfono) {
+        this.telefono = telfono;
     }
 
     public String getNombre() {
@@ -49,11 +50,11 @@ public class Persona {
     }
 
     public int getEdad() {
-        return Edad;
+        return edad;
     }
 
     public void setEdad(int Edad) {
-        this.Edad = Edad;
+        this.edad = Edad;
     }
 
 }

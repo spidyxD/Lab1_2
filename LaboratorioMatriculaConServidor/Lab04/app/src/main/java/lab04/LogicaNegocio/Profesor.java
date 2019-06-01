@@ -10,19 +10,10 @@ import java.util.List;
 */
 public class Profesor extends Persona
 {
-    private List<Grupo> grupos ;
     public Profesor(int cedula, String nombre , int edad , int telefono , String email) {
         super(nombre, cedula, email, edad,telefono);
-        grupos= new ArrayList<>();
     }
 
-    public List<Grupo> getGrupos() {
-        return grupos;
-    }
-
-    public void setGrupos(List<Grupo> grupos) {
-        this.grupos = grupos;
-    }
 
     public Profesor(){}
 
@@ -51,11 +42,11 @@ public class Profesor extends Persona
     }
 
     public int getEdad() {
-        return Edad;
+        return edad;
     }
 
     public void setEdad(int Edad) {
-        this.Edad = Edad;
+        this.edad = Edad;
     }
 
 }
