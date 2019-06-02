@@ -23,8 +23,8 @@ public class Login_controller {
  public void doLogin(){
      JSONObject data = new JSONObject();
      try {
-         data.put("url","http://152.231.236.1:30503/Sys_Matricula_Server/doLogin?user=116360595&password=admin&action=carreras");
-         data.put("tipo",2);
+         data.put("url","http://http://192.168.50.23:30503/Sys_Matricula_Server/doLogin?user=116360595&password=admin&action=carreras:30503/Sys_Matricula_Server/doLogin?user=116360595&password=admin&action=carreras");
+         data.put("tipoLlamado",2);
          httpRequester http = new httpRequester();
          try {
              Object example = http.execute(data).get();
