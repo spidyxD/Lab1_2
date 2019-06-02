@@ -34,6 +34,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import org.json.JSONArray;
 
 /**
  *
@@ -157,8 +158,8 @@ public class Login extends HttpServlet {
                     String action = (String) request.getParameter("action"); 
                     Administrador admin = new Administrador();
                     admin = Data.instance().getServiciobusquedas().buscarAdministradorId(u.getUsername());  
-                    String administrador = gson.toJson(admin);
-                    out.write(administrador); 
+                    //String administrador = gson.toJson(admin);
+                    //out.write(administrador); 
                     switch(action){
                         case "cursos":
                             ArrayList<Curso> cursos = Servicio_Busquedas.instance().verCursos();
@@ -170,21 +171,33 @@ public class Login extends HttpServlet {
                         case "carreras":
                             ArrayList<Carrera> carreras = Servicio_Busquedas.instance().verCarreras();
                             while(carreras.remove(null));
-                            String majores = gson.toJson(carreras);
+                            JSONArray jsArray = new JSONArray();
+                            for(Carrera c: carreras){
+                               jsArray.put(c);
+                            }
+                            String majores = gson.toJson(jsArray);
                             out.write(majores);
                             response.setStatus(200); // successfull 
                             break;
                         case "alumnos":
                              ArrayList<Alumno> alumnos = Servicio_Estudiantes.instance().verAlumnos();
                              while(alumnos.remove(null));
-                             String students = gson.toJson(alumnos);
+                             JSONArray jsArray2 = new JSONArray();
+                                for(Alumno a: alumnos){
+                                   jsArray2.put(a);
+                                }
+                             String students = gson.toJson(jsArray2);
                              out.write(students);
                              response.setStatus(200); // successfull 
                              break;
                         case "profesores":
                             ArrayList<Profesor> profes =  Servicio_Profesor.instance().verProfesores();
                             while(profes.remove(null));
-                            String teachers = gson.toJson(profes);
+                             JSONArray jsArray3 = new JSONArray();
+                                for(Profesor p: profes){
+                                   jsArray3.put(p);
+                                }
+                            String teachers = gson.toJson(jsArray3);
                             out.write(teachers); 
                             response.setStatus(200); // successfull 
                             break;
@@ -203,8 +216,12 @@ public class Login extends HttpServlet {
                                break;
                          case "cursosProf":                             
                               ArrayList<Curso> cursosProf = new ArrayList();                    
-                              cursosProf = Servicio_Busquedas.instance().buscarCursoXprofesor(u.getUsername());                   
-                              String coursesTeach = gson.toJson(cursosProf);  
+                              cursosProf = Servicio_Busquedas.instance().buscarCursoXprofesor(u.getUsername());  
+                              JSONArray jsArray4 = new JSONArray();
+                                for(Curso c: cursosProf){
+                                   jsArray4.put(c);
+                                }
+                              String coursesTeach = gson.toJson(jsArray4);  
                               out.println(coursesTeach);    
                               response.setStatus(200); // successfull 
                               break;
@@ -223,7 +240,11 @@ public class Login extends HttpServlet {
                          case "cursosAlmuno":
                              ArrayList<Curso> cursosAlumn = new ArrayList();
                              cursosAlumn = Data.instance().getServiciobusquedas().buscarCursosXAlumno(u.getUsername());
-                             String coursesAl = gson.toJson(cursosAlumn);
+                              JSONArray jsArray4 = new JSONArray();
+                                for(Curso c: cursosAlumn){
+                                   jsArray4.put(c);
+                                }
+                             String coursesAl = gson.toJson(jsArray4);
                              out.println(coursesAl);
                              response.setStatus(200); // successfull   
                              break;
