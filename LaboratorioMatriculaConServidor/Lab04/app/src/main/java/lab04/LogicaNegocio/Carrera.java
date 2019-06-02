@@ -8,16 +8,12 @@ public class Carrera {
     public Carrera() {
     }
 
-    public Carrera(int codigo, String nombre, String titulo, List<Curso> cursos) {
-        this.codigo = codigo;
-        this.nombre = nombre;
-        this.titulo = titulo;
-    }
     public Carrera(int codigo, String nombre, String titulo) {
         this.codigo = codigo;
         this.nombre = nombre;
         this.titulo = titulo;
     }
+
 
     public int getCodigo() {
         return codigo;

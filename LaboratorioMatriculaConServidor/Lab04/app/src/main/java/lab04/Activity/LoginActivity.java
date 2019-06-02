@@ -303,14 +303,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                     return pieces[1].equals(mPassword);
                 }
             }*/
-            for (Usuario user : DATOS.getUsuarios()) {
-                if (user.getUsername() == Integer.parseInt(mEmail)) {
-                    // Account exists, return true if the password matches.
-                    usuario = user;
+
                     login_controller.doLogin();
-                    return usuario.getClave().equals(mPassword);
-                }
-            }
+                //    return usuario.getClave().equals(mPassword);
 
             // TODO: register the new account here.
             return false;
@@ -321,7 +316,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             mAuthTask = null;
             showProgress(false);
 
-            if (success) {
+            /*if (success) {
                 finish();
                 //putting user on shared preferences
                 switch (usuario.getRol()){
@@ -357,7 +352,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             } else {
                 mPasswordView.setError(getString(R.string.error_incorrect_password));
                 mPasswordView.requestFocus();
-            }
+            }*/
         }
 
         @Override
