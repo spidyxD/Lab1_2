@@ -26,6 +26,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import org.json.JSONArray;
 
 /**
  *
@@ -161,7 +162,11 @@ public class Administrador extends HttpServlet {
             }             
             Data.instance().getServicioestudiante().insertarEstudiante(al, u, codigo); 
             ArrayList<Alumno> alumnos =  Data.instance().getServicioestudiante().verAlumnos();
-            String students = gson.toJson(alumnos);
+            JSONArray jsArray = new JSONArray();
+                for(Alumno a: alumnos){
+                   jsArray.put(a);
+                }
+            String students = gson.toJson(jsArray);
             out.write(students);
             response.setStatus(200);                 
          }
@@ -184,6 +189,10 @@ public class Administrador extends HttpServlet {
             Usuario u = new Usuario(prof.getCedula(),"1234","Profesor");           
             Data.instance().getServicioProfesor().insertarProfesor(prof, u);
             ArrayList<Profesor> profesores =  Data.instance().getServicioProfesor().verProfesores();
+            JSONArray jsArray = new JSONArray();
+                for(Profesor p: profesores){
+                   jsArray.put(p);
+                }
             String teachers = gson.toJson(profesores);
             out.write(teachers);
             response.setStatus(200);                 
@@ -249,7 +258,11 @@ public class Administrador extends HttpServlet {
             int id = gson.fromJson(readerID, Integer.class);     
             Data.instance().getServicioestudiante().eliminarEstudiante(id);
             ArrayList<Alumno> alumnos =  Data.instance().getServicioestudiante().verAlumnos();
-            String students = gson.toJson(alumnos);
+             JSONArray jsArray = new JSONArray();
+                for(Alumno a: alumnos){
+                   jsArray.put(a);
+                }
+            String students = gson.toJson(jsArray);
             out.write(students);
             response.setStatus(200); //update successfull
       }
@@ -268,6 +281,10 @@ public class Administrador extends HttpServlet {
             int id = gson.fromJson(readerID, Integer.class);
             Data.instance().getServicioProfesor().eliminarProfesor(id);
             ArrayList<Profesor> profesores =  Data.instance().getServicioProfesor().verProfesores();
+            JSONArray jsArray = new JSONArray();
+                for(Profesor p: profesores){
+                   jsArray.put(p);
+                }
             String teachers = gson.toJson(profesores);
             out.write(teachers);
             response.setStatus(200); //update successfull     
@@ -286,7 +303,11 @@ public class Administrador extends HttpServlet {
             int id = gson.fromJson(readerID, Integer.class);           
             Data.instance().getServiciogenerales().eliminarCarrera(id);
             ArrayList<Carrera> carreras =  Data.instance().getServiciobusquedas().verCarreras();
-            String majores = gson.toJson(carreras);
+            JSONArray jsArray = new JSONArray();
+                for(Carrera car: carreras){
+                   jsArray.put(car);
+                }         
+            String majores = gson.toJson(jsArray);
             out.write(majores);
             response.setStatus(200); //update successfull        
       }
@@ -322,7 +343,11 @@ public class Administrador extends HttpServlet {
             Curso c = gson.fromJson(readerCurso, Curso.class);                
             Data.instance().getServicioCursos().modificarCurso(c.getCodigo(),c.getNombre(), c.getCreditos(), (int) c.getHoras_semanales());
             ArrayList<Curso> cursos =  Data.instance().getServicioCursos().verCursos();
-            String courses = gson.toJson(cursos);
+              JSONArray jsArray = new JSONArray();
+                for(Curso cur: cursos){
+                   jsArray.put(cur);
+                }         
+            String courses = gson.toJson(jsArray);          
             out.write(courses);
             response.setStatus(200);                 
          }
@@ -343,7 +368,11 @@ public class Administrador extends HttpServlet {
             Carrera c = gson.fromJson(readerCarrera, Carrera.class);                 
             Data.instance().getServiciogenerales().modificarCarrera(c.getCodigo(),c.getNombre(), c.getTitulo());
             ArrayList<Carrera> carreras =  Data.instance().getServiciobusquedas().verCarreras();
-            String majores = gson.toJson(carreras);
+            JSONArray jsArray = new JSONArray();
+                for(Carrera car: carreras){
+                   jsArray.put(car);
+                }         
+            String majores = gson.toJson(jsArray);      
             out.write(majores);
             response.setStatus(200);                 
          }
@@ -373,7 +402,11 @@ public class Administrador extends HttpServlet {
             Alumno al = gson.fromJson(readerAlumn, Alumno.class);                        
             Data.instance().getServicioestudiante().modificarEstudianteAdmin(al, codigo);
             ArrayList<Alumno> alumnos =  Data.instance().getServicioestudiante().verAlumnos();
-            String students = gson.toJson(alumnos);
+             JSONArray jsArray = new JSONArray();
+                for(Alumno a: alumnos){
+                   jsArray.put(a);
+                }
+            String students = gson.toJson(jsArray);
             out.write(students);
             response.setStatus(200);                 
          }
@@ -393,7 +426,11 @@ public class Administrador extends HttpServlet {
             Profesor prof = gson.fromJson(readerAlumn, Profesor.class);
             Data.instance().getServicioProfesor().modificarProfesorAdmin(prof);
             ArrayList<Profesor> profesores =  Data.instance().getServicioProfesor().verProfesores();
-            String teachers = gson.toJson(profesores);
+            JSONArray jsArray = new JSONArray();
+                for(Profesor p: profesores){
+                   jsArray.put(p);
+                }
+            String teachers = gson.toJson(jsArray);
             out.write(teachers);
             response.setStatus(200);                 
          }
@@ -414,7 +451,11 @@ public class Administrador extends HttpServlet {
             Carrera c = gson.fromJson(readerCarrera, Carrera.class);                                        
             Data.instance().getServiciogenerales().crearCarrera(c.getCodigo(), c.getNombre(), c.getTitulo());
             ArrayList<Carrera> carreras =  Data.instance().getServiciobusquedas().verCarreras();
-            String majores = gson.toJson(carreras);
+             JSONArray jsArray = new JSONArray();
+                for(Carrera car: carreras){
+                   jsArray.put(car);
+                }         
+            String majores = gson.toJson(jsArray);
             out.write(majores);
             response.setStatus(200);                 
          }
@@ -435,7 +476,11 @@ public class Administrador extends HttpServlet {
             Curso c = gson.fromJson(readerCarrera, Curso.class);                
             Data.instance().getServicioCursos().crearCurso(c.getCodigo(), c.getNombre(), c.getCreditos(), (int) c.getHoras_semanales());             
             ArrayList<Curso> cursos =  Data.instance().getServicioCursos().verCursos();
-            String courses = gson.toJson(cursos);
+             JSONArray jsArray = new JSONArray();
+                for(Curso cur: cursos){
+                   jsArray.put(cur);
+                }         
+            String courses = gson.toJson(jsArray);
             out.write(courses);
             response.setStatus(200);                 
          }
