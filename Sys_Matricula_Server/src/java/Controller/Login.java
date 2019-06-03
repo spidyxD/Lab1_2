@@ -11,12 +11,16 @@ import AccesoADatos.GlobalException;
 import AccesoADatos.NoDataException;
 import Dao.Data;
 import Dao.Service;
+import Dao.ServicioGenerales;
 import Entities.Administrador;
 import Entities.Alumno;
 import Entities.Carrera;
+import Entities.Ciclo;
 import Entities.Curso;
+import Entities.Grupo;
 import Entities.Profesor;
 import Entities.Usuario;
+import Entities.Matricula;
 import Services.Servicio_Busquedas;
 import Services.Servicio_Estudiantes;
 import Services.Servicio_Profesor;
@@ -40,7 +44,7 @@ import org.json.JSONArray;
  *
  * @author Addiel
  */
-@WebServlet(name = "Login", urlPatterns = {"/doLogin", "/doLogout"})
+@WebServlet(name = "Login", urlPatterns = {"/doLogin", "/doLogout","/cargarDatos"})
 @MultipartConfig
 public class Login extends HttpServlet {
 
@@ -62,6 +66,9 @@ public class Login extends HttpServlet {
             case "/doLogout":
                 this.doLogout(request,response);
                 break;
+             case "/cargarDatos"://al inicio de la busqueda
+                this.doCargarDatos(request, response);
+                break; 
             default:
                try{
                 request.getRequestDispatcher("Error.jsp").
@@ -138,33 +145,22 @@ public class Login extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
-
-     @SuppressWarnings("empty-statement")
-    protected void doLogin(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, GlobalException, NoDataException, SQLException, InstantiationException, IllegalAccessException {
+private void doCargarDatos(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         Gson gson = new Gson(); 
         PrintWriter out = response.getWriter();   
-        try{          
-            Usuario aux = new Usuario();
-            aux.setUsername(Integer.valueOf(request.getParameter("user")));
-            aux.setClave((String) request.getParameter("password"));                                          
-            Service s = new Service();                     
-             if(s.doLogin(aux.getUsername(), aux.getClave())){
-             Usuario u = Servicio_Busquedas.instance().buscarUsuarioId(aux.getUsername());
-             String user = gson.toJson(u);  
+        try{                                                  
+            Service s = new Service();    
              HttpSession http =  request.getSession(true);
-             http.setAttribute(user, "user");
-             switch(u.getRol()){
-                 case "Administrador":
-                    String action = (String) request.getParameter("action"); 
-                    Administrador admin = new Administrador();
-                    admin = Data.instance().getServiciobusquedas().buscarAdministradorId(u.getUsername());  
-                    //String administrador = gson.toJson(admin);
-                    //out.write(administrador); 
+             String action = (String) request.getParameter("action"); 
                     switch(action){
                         case "cursos":
                             ArrayList<Curso> cursos = Servicio_Busquedas.instance().verCursos();
                             while(cursos.remove(null));
-                            String courses = gson.toJson(cursos);
+                            JSONArray jsArray0 = new JSONArray();
+                            for(Curso c: cursos){
+                               jsArray0.put(c);
+                            }
+                            String courses = gson.toJson(jsArray0);
                             out.write(courses); 
                             response.setStatus(200); // successfull 
                             break;
@@ -201,11 +197,74 @@ public class Login extends HttpServlet {
                             out.write(teachers); 
                             response.setStatus(200); // successfull 
                             break;
+                          case "ciclos":
+                            ArrayList<Ciclo> ciclos =  ServicioGenerales.instance().verCiclos();
+                            while(ciclos.remove(null));
+                             JSONArray jsArray5 = new JSONArray();
+                                for(Ciclo c: ciclos){
+                                   jsArray5.put(c);
+                                }
+                            String cicloss = gson.toJson(jsArray5);
+                            out.write(cicloss); 
+                            response.setStatus(200); // successfull 
+                            break;
+                          case "grupos":
+                            ArrayList<Grupo> grupos =  ServicioGenerales.instance().verGrupos();
+                            while(grupos.remove(null));
+                             JSONArray jsArray6 = new JSONArray();
+                                for(Grupo p: grupos){
+                                   jsArray6.put(p);
+                                }
+                            String gruposs = gson.toJson(jsArray6);
+                            out.write(gruposs); 
+                            response.setStatus(200); // successfull 
+                            break;    
+                        default:  break;        
+                    }       
+                response.setContentType("application/json; charset=UTF-8"); 
+            
+       }
+       catch(Exception e){ String error = e.getMessage();
+            out.println("Usuario o contaseña invalidos");  
+            response.setStatus(400); // faild
+            request.getRequestDispatcher("Error.jsp").forward(request, response);           
+        }
+        finally {
+            out.close();
+        }
+    }
+     @SuppressWarnings("empty-statement")
+    protected void doLogin(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, GlobalException, NoDataException, SQLException, InstantiationException, IllegalAccessException {
+        Gson gson = new Gson(); 
+        PrintWriter out = response.getWriter();   
+        try{          
+            Usuario aux = new Usuario();
+            aux.setUsername(Integer.valueOf(request.getParameter("user")));
+            aux.setClave((String) request.getParameter("password"));   
+            Service s = new Service();                     
+             if(s.doLogin(aux.getUsername(), aux.getClave())){
+             Usuario u = Servicio_Busquedas.instance().buscarUsuarioId(aux.getUsername());
+             String user = gson.toJson(u);
+            
+             HttpSession http =  request.getSession(true);
+             if((String) request.getParameter("action")==""){
+             http.setAttribute(user, "user");
+             out.write(user);}
+             switch(u.getRol()){
+                 case "Administrador":
+                    String action = (String) request.getParameter("action"); 
+                    Administrador admin = new Administrador();
+                    switch(action){
+                        case "perfilAdmin":
+                            admin = Data.instance().getServiciobusquedas().buscarAdministradorId(u.getUsername());  
+                            String administrador = gson.toJson(admin);
+                            out.write(administrador); 
+                            break;
                         default:  break;        
                     }                                 
                  break;                               
                  case "Profesor":
-                     String data = (String) request.getParameter("data");
+                     String data = (String) request.getParameter("action");
                      Profesor prof = new Profesor();
                      prof = Data.instance().getServiciobusquedas().buscarProfeId(u.getUsername());
                      switch(data){
@@ -215,10 +274,10 @@ public class Login extends HttpServlet {
                               response.setStatus(200); // successfull 
                                break;
                          case "cursosProf":                             
-                              ArrayList<Curso> cursosProf = new ArrayList();                    
-                              cursosProf = Servicio_Busquedas.instance().buscarCursoXprofesor(u.getUsername());  
+                              ArrayList<Grupo> grupos = new ArrayList();                    
+                              grupos = Servicio_Busquedas.instance().buscarCursoXprofesor(u.getUsername());  
                               JSONArray jsArray4 = new JSONArray();
-                                for(Curso c: cursosProf){
+                                for(Grupo c: grupos){
                                    jsArray4.put(c);
                                 }
                               String coursesTeach = gson.toJson(jsArray4);  
@@ -228,7 +287,7 @@ public class Login extends HttpServlet {
                      }                                                                          
                  break; 
                  case "Alumno":                                               
-                     String info = (String) request.getParameter("info");
+                     String info = (String) request.getParameter("action");
                      switch(info){
                          case "perfil":
                              Alumno alumn = new Alumno();
@@ -237,12 +296,12 @@ public class Login extends HttpServlet {
                              out.println(student);                                                         
                              response.setStatus(200); // successfull   
                              break;
-                         case "cursosAlmuno":
-                             ArrayList<Curso> cursosAlumn = new ArrayList();
-                             cursosAlumn = Data.instance().getServiciobusquedas().buscarCursosXAlumno(u.getUsername());
+                         case "gruposAlumno":
+                             ArrayList<Matricula> grupossAlumn = new ArrayList();
+                             grupossAlumn = Data.instance().getServiciobusquedas().buscarMatriculaXAlumno(u.getUsername());
                               JSONArray jsArray4 = new JSONArray();
-                                for(Curso c: cursosAlumn){
-                                   jsArray4.put(c);
+                                for(Matricula m : grupossAlumn){
+                                   jsArray4.put(m);
                                 }
                              String coursesAl = gson.toJson(jsArray4);
                              out.println(coursesAl);

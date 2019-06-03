@@ -60,15 +60,26 @@ public class ServicioBusquedas extends Service{
             int idProf = rs.getInt("profesor");
             int Ciclo = rs.getInt("ciclo");
             int Curso = rs.getInt("curso");
-            g.setCiclo(this.buscarCicloId(Ciclo));
-            g.setPorfesor(this.buscarProfeId(idProf));
-            g.setCurso(this.buscarCursoId(Curso));
+            g.setCiclo(Ciclo);
+            g.setPorfesor(idProf);
+            g.setCurso(Curso);
             return g;
         }
         catch (SQLException ex) {
             return null;
         }
     }    
+    public Administrador tipoAdmin(ResultSet rs){
+        try{
+            Administrador admin= new Administrador();
+            admin.setCedula(rs.getInt("id"));
+            admin.setNombre(rs.getString("nombre"));
+            return admin;
+        }
+        catch (SQLException ex) {
+            return null;
+        }
+    }
     public Ciclo tipoCiclo(ResultSet rs){
         try{
             Ciclo c = new Ciclo();
@@ -90,11 +101,11 @@ public class ServicioBusquedas extends Service{
             int cursoId= rs.getInt("curso");
             int grupoId= rs.getInt("grupo");
             int cicloId= rs.getInt("ciclo");
-            m.setStudent(this.buscarAlumnoId(idAlumno));
-            m.setMajor(this.buscarCarreraId(idCarrera));
-            m.setCourse(this.buscarCursoId(cursoId));
-            m.setCycle(this.buscarCicloId(cicloId));
-            m.setGrupo(this.buscarGrupoId(grupoId));
+            m.setStudent(idAlumno);
+            m.setMajor(idCarrera);
+            m.setCourse(cursoId);
+            m.setCycle(cicloId);
+            m.setGrupo(grupoId);
             return m;
         }
         catch (SQLException ex) {
@@ -106,7 +117,7 @@ public class ServicioBusquedas extends Service{
             Alumno a = new Alumno();
             a.setCedula(rs.getInt("cedula"));
             a.setEdad(rs.getInt("edad"));
-            a.setTelefono(rs.getInt("telefono"));
+            a.setTelefono(898738373);
             a.setEmail(rs.getString("email"));
             a.setFecha_nacimiento(rs.getDate("fecha_nacimiento").toString());
             a.setNombre(rs.getString("nombre"));
@@ -563,6 +574,41 @@ public class ServicioBusquedas extends Service{
        }
        return alumnos.get(0);      
    }         
+    public Administrador buscarAdminId(int id) throws AccesoADatos.GlobalException, AccesoADatos.NoDataException, SQLException, InstantiationException, IllegalAccessException  	{
+       ArrayList<Administrador> admins = new ArrayList();
+       try {
+           conectar();
+       } catch (ClassNotFoundException e) {
+           throw new AccesoADatos.GlobalException("No se ha localizado el driver");
+       } catch (SQLException e) {
+           throw new AccesoADatos.NoDataException("La base de datos no se encuentra disponible");
+       }
+       CallableStatement pstmt=null;
+
+       try {
+           pstmt = conexion.prepareCall("{? = call buscar_Admin_ced(?)}");
+           pstmt.registerOutParameter(1, OracleTypes.CURSOR);
+           pstmt.setInt(2,id);
+            pstmt.execute();              
+
+            ResultSet rs = (ResultSet) pstmt.getObject(1);    
+               while(rs.next()){
+                   admins.add(tipoAdministrador(rs));}
+
+       } catch (SQLException e) {
+           throw new AccesoADatos.GlobalException(e.getMessage());
+       } finally {
+           try {
+               if (pstmt != null) {
+                   pstmt.close();
+               }
+               desconectar();
+           } catch (SQLException e) {
+               throw new AccesoADatos.GlobalException("Estatutos invalidos o nulos");
+           }
+       }
+       return admins.get(0);      
+   }         
     public Alumno buscarAlumnoNombre(String nombre) throws AccesoADatos.GlobalException, AccesoADatos.NoDataException, SQLException, InstantiationException, IllegalAccessException  	{
          ArrayList<Alumno> alumnos = new ArrayList();
         try {
@@ -664,7 +710,44 @@ public class ServicioBusquedas extends Service{
            }
        }
          return cursos;  
-   }                 
+   }      
+     public ArrayList<Matricula> buscarMatriculaXAlumno(int id) throws AccesoADatos.GlobalException, AccesoADatos.NoDataException, SQLException, InstantiationException, IllegalAccessException  	{
+        ArrayList<Matricula> matriculas = new ArrayList();
+        try {
+           conectar();
+       } catch (ClassNotFoundException e) {
+           throw new AccesoADatos.GlobalException("No se ha localizado el driver");
+       } catch (SQLException e) {
+           throw new AccesoADatos.NoDataException("La base de datos no se encuentra disponible");
+       }
+       CallableStatement pstmt=null;
+
+       try {
+           pstmt = conexion.prepareCall("{? = call buscar_Matriculados(?)}");
+           pstmt.registerOutParameter(1, OracleTypes.CURSOR);
+           pstmt.setInt(2,id);
+            pstmt.execute();             
+            ResultSet rs = (ResultSet) pstmt.getObject(1);
+            int i=0;
+               while(rs.next()){
+                   matriculas.add(tipoMatricula(rs));
+                   System.out.print("Insertado :"+ i);
+                   i++;
+               }                        
+       } catch (SQLException e) {
+           throw new AccesoADatos.GlobalException(e.getMessage());
+       } finally {
+           try {
+               if (pstmt != null) {
+                   pstmt.close();
+               }
+               desconectar();
+           } catch (SQLException e) {
+               throw new AccesoADatos.GlobalException("Estatutos invalidos o nulos");
+           }
+       }
+         return matriculas;  
+   }         
     public ArrayList<Alumno> buscarAlumnoXCurso(int codigo) throws AccesoADatos.GlobalException, AccesoADatos.NoDataException, SQLException, InstantiationException, IllegalAccessException  	{
          ArrayList<Alumno> alumnos = new ArrayList();
        try {
@@ -731,8 +814,8 @@ public class ServicioBusquedas extends Service{
        }
         return alumnos;
    }     
-    public ArrayList<Curso> buscarCursoXprofesor(int codigo) throws AccesoADatos.GlobalException, AccesoADatos.NoDataException, SQLException, InstantiationException, IllegalAccessException  	{
-       ArrayList<Curso> cursos = new ArrayList();
+    public ArrayList<Grupo> buscarCursoXprofesor(int codigo) throws AccesoADatos.GlobalException, AccesoADatos.NoDataException, SQLException, InstantiationException, IllegalAccessException  	{
+       ArrayList<Grupo> grupos = new ArrayList();
        try {
            conectar();
        } catch (ClassNotFoundException e) {
@@ -749,7 +832,7 @@ public class ServicioBusquedas extends Service{
             pstmt.execute();               
             ResultSet rs = (ResultSet) pstmt.getObject(1); 
                while(rs.next()){
-                   cursos.add(tipoCurso(rs));
+                   grupos.add(tipoGrupo(rs));
                }               
        } catch (SQLException e) {
            throw new AccesoADatos.GlobalException(e.getMessage());
@@ -763,7 +846,7 @@ public class ServicioBusquedas extends Service{
                throw new AccesoADatos.GlobalException("Estatutos invalidos o nulos");
            }
        }
-        return cursos;
+        return grupos;
    } 
     public ArrayList<Grupo> buscarGrupoXprofesor(int codigo) throws AccesoADatos.GlobalException, AccesoADatos.NoDataException, SQLException, InstantiationException, IllegalAccessException  	{
        ArrayList<Grupo> grupos = new ArrayList();

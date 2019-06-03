@@ -10,75 +10,67 @@ package Entities;
  * @author Addiel
  */
 public class Matricula {
-    public Alumno student = new Alumno();
-    public Carrera major = new Carrera();
-    public Curso course = new Curso();
-    public Profesor teacher = new Profesor();
-    public Ciclo cycle = new Ciclo();
-    public Grupo grupo = new Grupo();
+    public int student;
+    public int major;
+    public int course;
+    public int cycle;
+    public int grupo;
 
     public Matricula() {
     }
 
-    public Grupo getGrupo() {
-        return this.grupo;
+    public int getStudent() {
+        return student;
     }
 
-    public void setGrupo(Grupo grupo) {
+    public void setStudent(int student) {
+        this.student = student;
+    }
+
+    public int getMajor() {
+        return major;
+    }
+
+    public void setMajor(int major) {
+        this.major = major;
+    }
+
+    public int getCourse() {
+        return course;
+    }
+
+    public void setCourse(int course) {
+        this.course = course;
+    }
+
+    public int getCycle() {
+        return cycle;
+    }
+
+    public void setCycle(int cycle) {
+        this.cycle = cycle;
+    }
+
+    public int getGrupo() {
+        return grupo;
+    }
+
+    public void setGrupo(int grupo) {
         this.grupo = grupo;
     }
 
-    public Matricula(Alumno student, Carrera major, Curso course, Profesor teacher, Ciclo cycle) {
+    public Matricula(int student, int major, int course, int cycle, int grupo) {
         this.student = student;
         this.major = major;
         this.course = course;
-        this.teacher = teacher;
         this.cycle = cycle;
+        this.grupo = grupo;
     }
 
-    public Alumno getStudent() {
-        return this.student;
-    }
-
-    public void setStudent(Alumno student) {
-        this.student = student;
-    }
-
-    public Carrera getMajor() {
-        return this.major;
-    }
-
-    public void setMajor(Carrera major) {
-        this.major = major;
-    }
-
-    public Curso getCourse() {
-        return this.course;
-    }
-
-    public void setCourse(Curso course) {
-        this.course = course;
-    }
-
-    public Profesor getTeacher() {
-        return this.teacher;
-    }
-
-    public void setTeacher(Profesor teacher) {
-        this.teacher = teacher;
-    }
-
-    public Ciclo getCycle() {
-        return this.cycle;
-    }
-
-    public void setCycle(Ciclo cycle) {
-        this.cycle = cycle;
-    }
-
+  
     @Override
     public String toString() {
-        return this.course.getNombre() + " "  + " " + this.course.getCreditos() + " " + this.grupo.getHorario() + " "+ this.grupo.getNrc() ;
+        return this.course + " " + this.grupo ;
     }
     
     

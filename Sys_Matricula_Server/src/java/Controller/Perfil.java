@@ -11,6 +11,7 @@ import Dao.Data;
 import Entities.Alumno;
 import Entities.Carrera;
 import Entities.Curso;
+import Entities.Grupo;
 import Entities.Profesor;
 import Entities.Usuario;
 import Services.Servicio_Busquedas;
@@ -169,7 +170,7 @@ public class Perfil extends HttpServlet {
                               response.setStatus(200); // successfull 
                                break;
                          case "cursosProf":                             
-                              ArrayList<Curso> cursosProf = new ArrayList();                    
+                              ArrayList<Grupo> cursosProf = new ArrayList();                    
                               cursosProf = Servicio_Busquedas.instance().buscarCursoXprofesor(id);                   
                               String coursesTeach = gson.toJson(cursosProf);  
                               out.println(coursesTeach);    

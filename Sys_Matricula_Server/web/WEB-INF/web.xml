@@ -80,6 +80,10 @@
         <servlet-name>Busqueda</servlet-name>
         <url-pattern>/BusquedaGrupos</url-pattern>
     </servlet-mapping>
+     <servlet-mapping>
+        <servlet-name>Busqueda</servlet-name>
+        <url-pattern>/BusquedaDatos</url-pattern>
+    </servlet-mapping>
     <servlet-mapping>
         <servlet-name>Busqueda</servlet-name>
         <url-pattern>/BusquedaCursoXcarrera</url-pattern>

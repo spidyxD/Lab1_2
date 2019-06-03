@@ -320,6 +320,27 @@ CREATE OR REPLACE FUNCTION buscar_cursoXAlumno(xcedula in Alumno.cedula%TYPE )
          CLOSE c;  
     END;
     / 
+	CREATE OR REPLACE FUNCTION buscar_grupoXAlumno(xcedula in Alumno.cedula%TYPE ) 
+     RETURN SYS_REFCURSOR
+     AS 
+    c SYS_REFCURSOR;
+    BEGIN
+        OPEN c FOR SELECT DISTINCT * FROM Grupo, Matricula WHERE Matricula.grupo =  Grupo.nrc  AND Matricula.alumno = xcedula;
+         RETURN c; 
+         CLOSE c;  
+    END;
+    / 
+	
+
+	CREATE OR REPLACE FUNCTION buscar_Matriculados(xAlumno in Alumno.cedula%TYPE) 
+     RETURN SYS_REFCURSOR
+     AS 
+    c SYS_REFCURSOR;
+    BEGIN
+        OPEN c FOR SELECT * FROM Matricula WHERE alumno=xAlumno;
+         RETURN c; 
+    END;
+    / 
 
 CREATE OR REPLACE FUNCTION buscar_AlumnoXCurso(xcodigo in Curso.codigo%TYPE ) 
      RETURN SYS_REFCURSOR
@@ -412,7 +433,18 @@ CREATE OR REPLACE FUNCTION buscar_inscritoCarrera(xcodigo in Carrera.codigo%TYPE
                     RETURN c1;   
                 END;
             /
-
+ CREATE OR REPLACE FUNCTION buscar_Admin_ced (xid in Administrador.id%TYPE) 
+         RETURN SYS_REFCURSOR
+                AS 
+                    c1 SYS_REFCURSOR;
+                BEGIN
+                    OPEN c1 FOR 
+                    SELECT  *
+                    FROM   Administrador
+                    WHERE id =  xid;  
+                    RETURN c1;   
+                END;
+            /
 CREATE OR REPLACE FUNCTION buscar_Profesor_cedula (xcedula in Profesor.cedula%TYPE) 
     RETURN SYS_REFCURSOR
         AS 
