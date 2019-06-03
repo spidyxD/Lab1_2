@@ -4,23 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Alumno extends Persona{
-    public  String fecha_nacimiento;
-    public List<Grupo> grupos = new ArrayList<>();
+    public  String fechaN;
     Carrera carrera = new Carrera();
     int creditos ;
     public Alumno() {
     }
 
-    public List<Grupo> getGrupos() {
-        return grupos;
-    }
-
-    public void setGrupos(List<Grupo> grupos) {
-        this.grupos = grupos;
-    }
-
     public Alumno(String fecha_nacimiento) {
-        this.fecha_nacimiento = fecha_nacimiento;
+        this.fechaN = fecha_nacimiento;
     }
 
     public int getCreditos() {
@@ -33,16 +24,16 @@ public class Alumno extends Persona{
 
     public Alumno(int cedula, String nombre , String fecha , int edad , String email, Carrera carrera ,int telefono) {
         super(nombre, cedula, email,edad,telefono);
-        this.fecha_nacimiento = fecha;
+        this.fechaN = fecha;
         this.carrera= carrera;
     }
 
     public String getFecha_nacimiento() {
-        return fecha_nacimiento;
+        return fechaN;
     }
 
     public void setFecha_nacimiento(String fecha_nacimiento) {
-        this.fecha_nacimiento = fecha_nacimiento;
+        this.fechaN= fecha_nacimiento;
     }
 
     public Carrera getCarrera() {

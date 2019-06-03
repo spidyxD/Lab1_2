@@ -153,6 +153,7 @@ public class Login extends HttpServlet {
              String user = gson.toJson(u);  
              HttpSession http =  request.getSession(true);
              http.setAttribute(user, "user");
+             out.write(user); 
              switch(u.getRol()){
                  case "Administrador":
                     String action = (String) request.getParameter("action"); 

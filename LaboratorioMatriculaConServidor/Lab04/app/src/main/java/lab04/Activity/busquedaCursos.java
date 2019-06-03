@@ -66,7 +66,7 @@ public class busquedaCursos extends Fragment implements SearchView.OnQueryTextLi
         RecyclerView recyclerView = root.findViewById(R.id.listaDatos);
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(swipeController);
         itemTouchHelper.attachToRecyclerView(recyclerView);
-        final FloatingActionButton add= ((FloatingActionButton)root.findViewById(R.id.addActionButton));
+        final FloatingActionButton add= root.findViewById(R.id.addActionButton);
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

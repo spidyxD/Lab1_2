@@ -31,16 +31,16 @@ public class AddCursoFragment extends Fragment {
         final View root =inflater.inflate(R.layout.fragment_curso, container, false);
         if(DATOS.getModo()=="Editar"){
             Curso curso= DATOS.getCurrentCurso();
-            EditText nombre= (EditText)root.findViewById(R.id.cursoNombre);
-            EditText codigo= (EditText)root.findViewById(R.id.cursoCodigo);
-            EditText creditos= (EditText)root.findViewById(R.id.cursoCreditos);
-            EditText horasSemanales= (EditText)root.findViewById(R.id.cursoHoras);
+            EditText nombre= root.findViewById(R.id.cursoNombre);
+            EditText codigo= root.findViewById(R.id.cursoCodigo);
+            EditText creditos= root.findViewById(R.id.cursoCreditos);
+            EditText horasSemanales= root.findViewById(R.id.cursoHoras);
             nombre.setText(curso.getNombre());
             codigo.setText(Integer.toString(curso.getCodigo()));
             codigo.setEnabled(false);
             creditos.setText(Integer.toString(curso.getCreditos()));
             horasSemanales.setText(Float.toString(curso.getHoras_semanales()));
-            FloatingActionButton editar =(FloatingActionButton)root.findViewById(R.id.saveCurso);
+            FloatingActionButton editar = root.findViewById(R.id.saveCurso);
             editar.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -68,10 +68,10 @@ public class AddCursoFragment extends Fragment {
         getActivity().finish();
     }
     public void editar(View root){
-        EditText nombre= (EditText)root.findViewById(R.id.cursoNombre);
-        EditText codigo= (EditText)root.findViewById(R.id.cursoCodigo);
-        EditText creditos= (EditText)root.findViewById(R.id.cursoCreditos);
-        EditText horasSemanales= (EditText)root.findViewById(R.id.cursoHoras);
+        EditText nombre= root.findViewById(R.id.cursoNombre);
+        EditText codigo= root.findViewById(R.id.cursoCodigo);
+        EditText creditos= root.findViewById(R.id.cursoCreditos);
+        EditText horasSemanales= root.findViewById(R.id.cursoHoras);
         Curso al= new Curso(Integer.parseInt(codigo.getText().toString()),nombre.getText().toString(),Integer.parseInt(creditos.getText().toString()),Float.parseFloat(horasSemanales.getText().toString()));
         DATOS.actualizarCurso(Integer.parseInt(codigo.getText().toString()),al);
         Toast.makeText(root.getContext(), "Curso Actualizado!!", Toast.LENGTH_SHORT).show();}

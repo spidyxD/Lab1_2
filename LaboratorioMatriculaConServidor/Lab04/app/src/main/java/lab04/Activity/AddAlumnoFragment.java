@@ -62,7 +62,7 @@ public class AddAlumnoFragment extends Fragment {
             nombre.setText(alumno.getNombre());
             cedula.setText(Integer.toString(alumno.getCedula()));
             cedula.setEnabled(false);
-            telefono.setText(Integer.toString(alumno.getTelfono()));
+            telefono.setText(Integer.toString(alumno.getTelefono()));
             email.setText(alumno.getEmail());
             fecha.setText(alumno.getFecha_nacimiento());
             carrera.setText(alumno.getCarrera().getNombre());

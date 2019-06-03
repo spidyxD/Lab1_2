@@ -1,4 +1,7 @@
 package lab04.AccesoDatos;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import lab04.LogicaNegocio.Administrador;
 import lab04.LogicaNegocio.Alumno;
 import lab04.LogicaNegocio.Carrera;
@@ -8,11 +11,13 @@ import lab04.LogicaNegocio.Grupo;
 import lab04.LogicaNegocio.Matricula;
 import lab04.LogicaNegocio.Profesor;
 import lab04.LogicaNegocio.Usuario;
+import lab04.Utils.httpRequester;
 
 
 import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 public class ModeloDeDatos {
     private List<Carrera> carreras;
@@ -94,18 +99,27 @@ public class ModeloDeDatos {
         currentCurso=new Curso();
         currentAlumno=new Alumno();
         currentProfesor= new Profesor();
-        prepararCursos();
-        prepararCarreras();
-        preparAdministradores();
-        prepararProfesores();
-        prepararAlumnos();
-        prepararCiclos();
-        prepararCursos();
-        prepararGrupos();
-        asignarGruposAprofes();
-        prepararMatriculas();
-    }
 
+    }
+    public void doLogin(int username , String password){
+        JSONObject data = new JSONObject();
+        try {
+            data.put("url","http://152.231.236.1:30503/Sys_Matricula_Server/doLogin?user="+username+"&password="+password+"&action=carreras");
+            data.put("tipo",2);
+            httpRequester http = new httpRequester();
+            try {
+                Object example = http.execute(data).get();
+                example.toString();
+            } catch (ExecutionException e) {
+                e.printStackTrace();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+    }
     public List<Carrera> getCarreras() {
         return carreras;
     }
@@ -247,9 +261,9 @@ public class ModeloDeDatos {
         administracion.add(getCursoXcOD(109));
         administracion.add(getCursoXcOD(110));
         administracion.add(getCursoXcOD(111));
-        carreras.add(new Carrera(1,"Medicina Veterinaria","Licenciatura",veterinaria));
-        carreras.add(new Carrera(2,"Ingenieria en Sistemas","Bachillerato",sistemas));
-        carreras.add(new Carrera(3,"Administracion","Bachillerato",administracion));
+        carreras.add(new Carrera(1,"Medicina Veterinaria","Licenciatura"));
+        carreras.add(new Carrera(2,"Ingenieria en Sistemas","Bachillerato"));
+        carreras.add(new Carrera(3,"Administracion","Bachillerato"));
     }
     public Curso getCursoXCodigo(int codigo){
         Curso resultado = new Curso();
@@ -408,11 +422,11 @@ public class ModeloDeDatos {
         }
         return res;
     }
-    public void asignarGruposAprofes(){
+   public void asignarGruposAprofes(){
         for(Grupo g : grupos){
-            g.getPorfesor().getGrupos().add(g);
+   //         g.getPorfesor().getGrupos().add(g);
         }
-    }
+   }
     public void prepararGrupos(){
         grupos.add(new Grupo(100,getCursoXCodigo(1),25,"L-V 8:00AM-10:40AM",getProfesorXCed(1763589),getCicloXCod(03)));
         grupos.add(new Grupo(101,getCursoXCodigo(2),25,"L-V 8:00AM-10:40AM",getProfesorXCed(1763589),getCicloXCod(03)));
@@ -442,7 +456,7 @@ public class ModeloDeDatos {
     void matricular(Alumno student, Grupo grupo){
         grupo.setCapacidad(grupo.getCapacidad()-1);
         matriculas.add(new Matricula(student,student.getCarrera(),grupo.getCurso(),grupo.getPorfesor(),grupo.getCiclo(),grupo));
-        student.getGrupos().add(grupo);
+        //student.getGrupos().add(grupo);
     }
 }
 

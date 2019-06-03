@@ -45,7 +45,7 @@ public class AddProfesorFragment extends Fragment {
            nombre.setText(p.getNombre());
            cedula.setText(Integer.toString(p.getCedula()));
            cedula.setEnabled(false);
-           telefono.setText(Integer.toString(p.getTelfono()));
+           telefono.setText(Integer.toString(p.getTelefono()));
            email.setText(p.getEmail());
            FloatingActionButton editar = rot.findViewById(R.id.saveProf);
            editar.setOnClickListener(new View.OnClickListener() {
