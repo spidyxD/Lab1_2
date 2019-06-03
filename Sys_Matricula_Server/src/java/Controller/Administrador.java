@@ -145,14 +145,27 @@ public class Administrador extends HttpServlet {
 
    private void doRegisterStudent(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
            try{
-            HttpSession s = request.getSession(true);       
-            BufferedReader readerAlumn = new BufferedReader(new InputStreamReader(request.getPart("Alumno").getInputStream()));
-            BufferedReader readerCarrera = new BufferedReader(new InputStreamReader(request.getPart("Carrera").getInputStream()));
+            HttpSession s = request.getSession(true);                 
             PrintWriter out = response.getWriter();
-            Gson gson = new Gson();
-            Alumno al = gson.fromJson(readerAlumn, Alumno.class);
+            String nombre = (String)request.getParameter("nombre");
+            String fechaN = (String)request.getParameter("fechaN");
+            int cedula = Integer.valueOf((request.getParameter("cedula")));
+            String email = (String)request.getParameter("email");
+            int edad = Integer.valueOf((request.getParameter("edad")));
+            int telefono = Integer.valueOf((request.getParameter("telefono")));
+            Alumno al = new Alumno();            
+            al.setCedula(cedula);
+            al.setCreditos(cedula);
+            al.setEdad(edad);
+            al.setEmail(email);
+            al.setFecha_nacimiento(fechaN);
+            al.setNombre(nombre);
+            al.setTelefono(telefono);
+            al.setCreditos(14);
+            String carrera = (String)request.getParameter("carrera");
+            Gson gson = new Gson();        
             Usuario u = new Usuario(al.getCedula(),"1234","Alumno");            
-            String carrera = gson.fromJson(readerCarrera, String.class);
+           
             ArrayList<Carrera> carreras = Servicio_Busquedas.instance().verCarreras();
             int codigo = 0;
             for(Carrera c: carreras){
@@ -182,10 +195,19 @@ public class Administrador extends HttpServlet {
     private void doRegisterProfessor(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
          try{
             HttpSession s = request.getSession(true);      
-            BufferedReader readerAlumn = new BufferedReader(new InputStreamReader(request.getPart("Profesor").getInputStream()));
             PrintWriter out = response.getWriter();
             Gson gson = new Gson();
-            Profesor prof = gson.fromJson(readerAlumn, Profesor.class);
+            String nombre = (String)request.getParameter("nombre");          
+            int cedula = Integer.valueOf((request.getParameter("cedula")));
+            String email = (String)request.getParameter("email");
+            int edad = Integer.valueOf((request.getParameter("edad")));
+            int telefono = Integer.valueOf((request.getParameter("telefono")));
+            Profesor prof = new Profesor();
+            prof.setCedula(cedula);
+            prof.setEdad(edad);
+            prof.setEmail(email);
+            prof.setNombre(nombre);
+            prof.setTelefono(telefono);
             Usuario u = new Usuario(prof.getCedula(),"1234","Profesor");           
             Data.instance().getServicioProfesor().insertarProfesor(prof, u);
             ArrayList<Profesor> profesores =  Data.instance().getServicioProfesor().verProfesores();
@@ -207,12 +229,25 @@ public class Administrador extends HttpServlet {
     private void doUpdateStudent(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {         
          try{
             HttpSession s = request.getSession(true);
-            BufferedReader readerUser = new BufferedReader(new InputStreamReader(request.getPart("Usuario").getInputStream()));
-            BufferedReader readerAlumn = new BufferedReader(new InputStreamReader(request.getPart("Alumno").getInputStream()));
             PrintWriter out = response.getWriter();
-            Gson gson = new Gson();
-            Usuario u = gson.fromJson(readerUser, Usuario.class);
-            Alumno al = gson.fromJson(readerAlumn, Alumno.class);                        
+             String nombre = (String)request.getParameter("nombre");
+            String fechaN = (String)request.getParameter("fechaN");
+            int cedula = Integer.valueOf((request.getParameter("cedula")));
+            String email = (String)request.getParameter("email");
+            int edad = Integer.valueOf((request.getParameter("edad")));
+            int telefono = Integer.valueOf((request.getParameter("telefono")));
+            Alumno al = new Alumno();            
+            al.setCedula(cedula);
+            al.setCreditos(cedula);
+            al.setEdad(edad);
+            al.setEmail(email);
+            al.setFecha_nacimiento(fechaN);
+            al.setNombre(nombre);
+            al.setTelefono(telefono);
+            al.setCreditos(14);
+            String carrera = (String)request.getParameter("carrera");
+            Gson gson = new Gson();        
+            Usuario u = new Usuario(al.getCedula(),"1234","Alumno");                             
             Data.instance().getServicioestudiante().modificarEstudiante(al, u);
             out.write(gson.toJson(u));
             out.write(gson.toJson(al));
@@ -228,13 +263,21 @@ public class Administrador extends HttpServlet {
 
     private void doUpdateProfessor(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
          try{
-            HttpSession s = request.getSession(true);
-            BufferedReader readerUser = new BufferedReader(new InputStreamReader(request.getPart("Usuario").getInputStream()));
-            BufferedReader readerAlumn = new BufferedReader(new InputStreamReader(request.getPart("Profesor").getInputStream()));
+            HttpSession s = request.getSession(true);      
             PrintWriter out = response.getWriter();
             Gson gson = new Gson();
-            Usuario u = gson.fromJson(readerUser, Usuario.class);
-            Profesor prof = gson.fromJson(readerAlumn, Profesor.class);                            
+            String nombre = (String)request.getParameter("nombre");          
+            int cedula = Integer.valueOf((request.getParameter("cedula")));
+            String email = (String)request.getParameter("email");
+            int edad = Integer.valueOf((request.getParameter("edad")));
+            int telefono = Integer.valueOf((request.getParameter("telefono")));
+            Profesor prof = new Profesor();
+            prof.setCedula(cedula);
+            prof.setEdad(edad);
+            prof.setEmail(email);
+            prof.setNombre(nombre);
+            prof.setTelefono(telefono);
+            Usuario u = new Usuario(prof.getCedula(),"1234","Profesor");  
             Data.instance().getServicioProfesor().modificarProfesor(prof, u);
             out.write(gson.toJson(u));
             out.write(gson.toJson(prof));
@@ -336,11 +379,18 @@ public class Administrador extends HttpServlet {
 
     private void doUpdateCourse(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try{
-            HttpSession s = request.getSession(true);
-            BufferedReader readerCurso = new BufferedReader(new InputStreamReader(request.getPart("Curso").getInputStream()));
+            HttpSession s = request.getSession(true);                 
             PrintWriter out = response.getWriter();
             Gson gson = new Gson();
-            Curso c = gson.fromJson(readerCurso, Curso.class);                
+            Curso c = new Curso(); 
+            int codigo = Integer.valueOf((request.getParameter("codigo")));
+            String nombre = (String)request.getParameter("nombre");
+            int creditos=Integer.valueOf((request.getParameter("codigo")));
+            float horas_semanales=Integer.valueOf((request.getParameter("codigo")));
+            c.setCodigo(codigo);
+            c.setCreditos(creditos);
+            c.setHoras_semanales(horas_semanales);
+            c.setNombre(nombre);            
             Data.instance().getServicioCursos().modificarCurso(c.getCodigo(),c.getNombre(), c.getCreditos(), (int) c.getHoras_semanales());
             ArrayList<Curso> cursos =  Data.instance().getServicioCursos().verCursos();
               JSONArray jsArray = new JSONArray();
@@ -361,11 +411,18 @@ public class Administrador extends HttpServlet {
 
     private void doUpdateCareer(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
        try{
-            HttpSession s = request.getSession(true);
-            BufferedReader readerCarrera = new BufferedReader(new InputStreamReader(request.getPart("Carrera").getInputStream()));
+            HttpSession s = request.getSession(true); 
+            Gson gson = new Gson();                    
             PrintWriter out = response.getWriter();
-            Gson gson = new Gson();
-            Carrera c = gson.fromJson(readerCarrera, Carrera.class);                 
+            int codigo = Integer.valueOf((request.getParameter("codigo")));
+            String creditos = (String)request.getParameter("creditos");
+            String nombre = (String)request.getParameter("nombre");
+            String titulo = (String)request.getParameter("titulo");
+            Carrera c = new Carrera();  
+            c.setCodigo(codigo);
+            c.setCreditos(creditos);
+            c.setNombre(nombre);
+            c.setTitulo(titulo);              
             Data.instance().getServiciogenerales().modificarCarrera(c.getCodigo(),c.getNombre(), c.getTitulo());
             ArrayList<Carrera> carreras =  Data.instance().getServiciobusquedas().verCarreras();
             JSONArray jsArray = new JSONArray();
@@ -387,19 +444,31 @@ public class Administrador extends HttpServlet {
     private void doUpdateStudentAdmin(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
        try{
             HttpSession s = request.getSession(true);
-            BufferedReader readerUser = new BufferedReader(new InputStreamReader(request.getPart("Carrera").getInputStream()));
-            BufferedReader readerAlumn = new BufferedReader(new InputStreamReader(request.getPart("Alumno").getInputStream()));
+            String nombre = (String)request.getParameter("nombre");
+            String fechaN = (String)request.getParameter("fechaN");
+            int cedula = Integer.valueOf((request.getParameter("cedula")));
+            String email = (String)request.getParameter("email");
+            int edad = Integer.valueOf((request.getParameter("edad")));
+            int telefono = Integer.valueOf((request.getParameter("telefono")));
+            Alumno al = new Alumno();            
+            al.setCedula(cedula);
+            al.setCreditos(cedula);
+            al.setEdad(edad);
+            al.setEmail(email);
+            al.setFecha_nacimiento(fechaN);
+            al.setNombre(nombre);
+            al.setTelefono(telefono);
+            al.setCreditos(14);
+            String carrera = (String)request.getParameter("carrera");
+            Gson gson = new Gson();                    
             PrintWriter out = response.getWriter();
-            Gson gson = new Gson();
-            String carrera = gson.fromJson(readerUser, String.class);
             ArrayList<Carrera> carreras = Servicio_Busquedas.instance().verCarreras();
             int codigo = 0;
             for(Carrera c: carreras){
                 if(c.getNombre().equals(carrera)){
                     codigo = c.getCodigo();
                 }
-            }
-            Alumno al = gson.fromJson(readerAlumn, Alumno.class);                        
+            }                              
             Data.instance().getServicioestudiante().modificarEstudianteAdmin(al, codigo);
             ArrayList<Alumno> alumnos =  Data.instance().getServicioestudiante().verAlumnos();
              JSONArray jsArray = new JSONArray();
@@ -419,11 +488,20 @@ public class Administrador extends HttpServlet {
 
     private void doUpdateProfessorAdmin(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
       try{
-            HttpSession s = request.getSession(true);
-            BufferedReader readerAlumn = new BufferedReader(new InputStreamReader(request.getPart("Profesor").getInputStream()));
+           HttpSession s = request.getSession(true);      
             PrintWriter out = response.getWriter();
             Gson gson = new Gson();
-            Profesor prof = gson.fromJson(readerAlumn, Profesor.class);
+            String nombre = (String)request.getParameter("nombre");          
+            int cedula = Integer.valueOf((request.getParameter("cedula")));
+            String email = (String)request.getParameter("email");
+            int edad = Integer.valueOf((request.getParameter("edad")));
+            int telefono = Integer.valueOf((request.getParameter("telefono")));
+            Profesor prof = new Profesor();
+            prof.setCedula(cedula);
+            prof.setEdad(edad);
+            prof.setEmail(email);
+            prof.setNombre(nombre);
+            prof.setTelefono(telefono);           
             Data.instance().getServicioProfesor().modificarProfesorAdmin(prof);
             ArrayList<Profesor> profesores =  Data.instance().getServicioProfesor().verProfesores();
             JSONArray jsArray = new JSONArray();
@@ -444,11 +522,19 @@ public class Administrador extends HttpServlet {
 
     private void createCareer(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try{
-            HttpSession s = request.getSession(true);      
-            BufferedReader readerCarrera = new BufferedReader(new InputStreamReader(request.getPart("Carrera").getInputStream()));
+            HttpSession s = request.getSession(true);                
+            int codigo = Integer.valueOf((request.getParameter("codigo")));
+            String creditos = (String)request.getParameter("creditos");
+            String nombre = (String)request.getParameter("nombre");
+            String titulo = (String)request.getParameter("titulo");
+            Carrera c = new Carrera();  
+            c.setCodigo(codigo);
+            c.setCreditos(creditos);
+            c.setNombre(nombre);
+            c.setTitulo(titulo);
             PrintWriter out = response.getWriter();
             Gson gson = new Gson();
-            Carrera c = gson.fromJson(readerCarrera, Carrera.class);                                        
+                                                
             Data.instance().getServiciogenerales().crearCarrera(c.getCodigo(), c.getNombre(), c.getTitulo());
             ArrayList<Carrera> carreras =  Data.instance().getServiciobusquedas().verCarreras();
              JSONArray jsArray = new JSONArray();
@@ -469,11 +555,18 @@ public class Administrador extends HttpServlet {
 
     private void createCourse(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
          try{
-            HttpSession s = request.getSession(true);      
-            BufferedReader readerCarrera = new BufferedReader(new InputStreamReader(request.getPart("Curso").getInputStream()));
+            HttpSession s = request.getSession(true);                 
             PrintWriter out = response.getWriter();
             Gson gson = new Gson();
-            Curso c = gson.fromJson(readerCarrera, Curso.class);                
+            Curso c = new Curso(); 
+            int codigo = Integer.valueOf((request.getParameter("codigo")));
+            String nombre = (String)request.getParameter("nombre");
+            int creditos=Integer.valueOf((request.getParameter("codigo")));
+            float horas_semanales=Integer.valueOf((request.getParameter("codigo")));
+            c.setCodigo(codigo);
+            c.setCreditos(creditos);
+            c.setHoras_semanales(horas_semanales);
+            c.setNombre(nombre);
             Data.instance().getServicioCursos().crearCurso(c.getCodigo(), c.getNombre(), c.getCreditos(), (int) c.getHoras_semanales());             
             ArrayList<Curso> cursos =  Data.instance().getServicioCursos().verCursos();
              JSONArray jsArray = new JSONArray();
@@ -491,8 +584,4 @@ public class Administrador extends HttpServlet {
 
                  }
     }
-
-   
-    
-
 }
