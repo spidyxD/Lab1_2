@@ -11,7 +11,10 @@ import java.sql.CallableStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  *
@@ -31,7 +34,7 @@ public class ServicioEstudiante extends Service{
         return uniqueInstance;
     }
     
-    public void insertarEstudiante(Alumno alumno, Usuario user, int carrera) throws AccesoADatos.GlobalException, AccesoADatos.NoDataException, InstantiationException, IllegalAccessException  	{
+    public void insertarEstudiante(Alumno alumno, Usuario user, int carrera) throws AccesoADatos.GlobalException, AccesoADatos.NoDataException, InstantiationException, IllegalAccessException, ParseException  	{
        try {
            conectar();
        } catch (ClassNotFoundException e) {
@@ -42,6 +45,7 @@ public class ServicioEstudiante extends Service{
        CallableStatement pstmt=null;
 
        try {
+           
            pstmt = conexion.prepareCall(INSERTARESTUDIANTE);
            pstmt.setInt(1,alumno.getCedula());
            pstmt.setString(2,alumno.getNombre());

@@ -75,10 +75,10 @@ CREATE TABLE Grupo (
     curso number NOT NULL,
     capacidad number,
     horario VARCHAR(50),
-    profesor number,
+    profesor number default 0000,
 	ciclo int , 
     CONSTRAINT pkGrupo PRIMARY KEY(nrc,curso),
-    CONSTRAINT fkGrupo FOREIGN KEY (curso) REFERENCES Curso(codigo)
+    CONSTRAINT fkGrupo FOREIGN KEY (curso) REFERENCES Curso(codigo) ON DELETE CASCADE
 );
 
 CREATE TABLE Rendimiento_Grupo (
@@ -86,9 +86,9 @@ CREATE TABLE Rendimiento_Grupo (
     alumno number,
     profesor number,
     calificacion number,
-    CONSTRAINT fkDesc1 FOREIGN KEY (curso) REFERENCES Curso(codigo),
-    CONSTRAINT fkDesc2 FOREIGN KEY (alumno) REFERENCES Alumno(cedula),
-    CONSTRAINT fkDesc3 FOREIGN KEY (profesor) REFERENCES Profesor(cedula) 
+    CONSTRAINT fkDesc1 FOREIGN KEY (curso) REFERENCES Curso(codigo) ON DELETE CASCADE,
+    CONSTRAINT fkDesc2 FOREIGN KEY (alumno) REFERENCES Alumno(cedula) ON DELETE CASCADE,
+    CONSTRAINT fkDesc3 FOREIGN KEY (profesor) REFERENCES Profesor(cedula) ON DELETE CASCADE
 );
 
 CREATE TABLE Inscripcion (
@@ -106,11 +106,11 @@ CREATE TABLE Matricula (
     grupo number,
     ciclo number,
     CONSTRAINT pkMatricula PRIMARY KEY (carrera, alumno, curso, ciclo),
-    CONSTRAINT fkMat1 FOREIGN KEY (alumno) REFERENCES Alumno(cedula),
-    CONSTRAINT fkMat2 FOREIGN KEY (carrera) REFERENCES Carrera(codigo),
-    CONSTRAINT fkMat3 FOREIGN KEY (grupo,curso) REFERENCES Grupo(nrc,curso),
-    CONSTRAINT fkMat4 FOREIGN KEY (curso) REFERENCES Curso(codigo),
-    CONSTRAINT fkMat5 FOREIGN KEY (ciclo) REFERENCES Ciclo(id)
+    CONSTRAINT fkMat1 FOREIGN KEY (alumno) REFERENCES Alumno(cedula) ON DELETE CASCADE,
+    CONSTRAINT fkMat2 FOREIGN KEY (carrera) REFERENCES Carrera(codigo) ON DELETE CASCADE,
+    CONSTRAINT fkMat3 FOREIGN KEY (grupo,curso) REFERENCES Grupo(nrc,curso) ON DELETE CASCADE,
+    CONSTRAINT fkMat4 FOREIGN KEY (curso) REFERENCES Curso(codigo) ON DELETE CASCADE,
+    CONSTRAINT fkMat5 FOREIGN KEY (ciclo) REFERENCES Ciclo(id) ON DELETE CASCADE
 );
 
 CREATE TABLE PlanEstudio (
@@ -119,16 +119,16 @@ CREATE TABLE PlanEstudio (
     anno number,
     ciclo number,
     CONSTRAINT pkPlanEst PRIMARY KEY (curso, carrera),
-    CONSTRAINT fkPlanEst1 FOREIGN KEY (curso) REFERENCES Curso(codigo),
-    CONSTRAINT fkPlanEst2 FOREIGN KEY (carrera) REFERENCES Carrera(codigo),
-    CONSTRAINT fkPlanEst3 FOREIGN KEY (ciclo) REFERENCES Ciclo(id)
+    CONSTRAINT fkPlanEst1 FOREIGN KEY (curso) REFERENCES Curso(codigo) ON DELETE CASCADE,
+    CONSTRAINT fkPlanEst2 FOREIGN KEY (carrera) REFERENCES Carrera(codigo) ON DELETE CASCADE,
+    CONSTRAINT fkPlanEst3 FOREIGN KEY (ciclo) REFERENCES Ciclo(id) ON DELETE CASCADE
 );
 
 -- SI FUNCIONA
 CREATE OR REPLACE PROCEDURE crearAlumno (xcedula in Alumno.cedula%TYPE, xnombre in Alumno.nombre%TYPE, xedad in Alumno.edad%TYPE, xemail in Alumno.email%TYPE, xfechaN in varchar,xtelefono in Alumno.telefono%TYPE,xusername in Usuario.id%TYPE, xclave in Usuario.clave%TYPE, xcarrera in Carrera.codigo%TYPE )
     IS 
     BEGIN
-        INSERT into Alumno VALUES(xcedula, xnombre, TO_DATE(xfechaN, 'YYYY-MM-DD'), xedad,xemail,xtelefono); 
+        INSERT into Alumno VALUES(xcedula, xnombre, TO_DATE(xfechaN, 'DD/MM/YYYY'), xedad,xemail,xtelefono); 
         INSERT into Usuario VALUES(xcedula, xclave, 'Alumno');
         INSERT into Inscripcion VALUES(xcedula,xcarrera);
         COMMIT;
@@ -157,6 +157,9 @@ CREATE OR REPLACE PROCEDURE modificarAlumnoAdmin (xcedula in Alumno.cedula%TYPE,
 CREATE OR REPLACE PROCEDURE eliminarAlumno (xcedula in Alumno.cedula%TYPE)
     IS 
     BEGIN
+	    DELETE Inscripcion WHERE alumno=xcedula;
+		DELETE Matricula WHERE alumno=xcedula;
+		DELETE Rendimiento_Grupo WHERE alumno=xcedula;
         DELETE Alumno WHERE cedula = xcedula;
         DELETE Usuario WHERE id = xcedula;
         COMMIT;
@@ -192,6 +195,8 @@ CREATE OR REPLACE PROCEDURE modificarProfesorAdmin (xcedula in Profesor.cedula%T
 CREATE OR REPLACE PROCEDURE eliminarProfesor (xcedula in Alumno.cedula%TYPE)
     IS 
     BEGIN
+	    Update Grupo set profesor = 0000 WHERE profesor = xcedula;
+	    DELETE Rendimiento_Grupo WHERE profesor=xcedula;
         DELETE Profesor WHERE cedula = xcedula;
         DELETE Usuario WHERE id = xcedula;
         COMMIT;
