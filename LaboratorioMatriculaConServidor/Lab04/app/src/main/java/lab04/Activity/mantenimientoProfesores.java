@@ -12,7 +12,8 @@ import android.widget.TextView;
 
 import com.example.lab04.R;
 
-import static lab04.Activity.LoginActivity.DATOS;
+import lab04.Controller.Datos_Controller;
+
 
 public class mantenimientoProfesores extends FragmentActivity {
     private static final String TAG = "mantenimientoProfesores";
@@ -27,7 +28,7 @@ public class mantenimientoProfesores extends FragmentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.generic_tabs);
-        DATOS.setModo("Agregar");
+        Datos_Controller.getInstance().getModel().setModo("Agregar");
         Log.d(TAG, "onCreate: Starting");
         ((TextView) findViewById(R.id.textTittletab)).setText("Mantenimmiento de Profesores");
         findViewById(R.id.textTittletab).setBackgroundColor(Color.parseColor("#33BBA2"));

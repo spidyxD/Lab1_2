@@ -8,7 +8,6 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.support.v7.widget.helper.ItemTouchHelper.Callback;
 import android.view.MotionEvent;
-import static lab04.Activity.LoginActivity.DATOS;
 import android.view.View;
 import android.widget.Toast;
 

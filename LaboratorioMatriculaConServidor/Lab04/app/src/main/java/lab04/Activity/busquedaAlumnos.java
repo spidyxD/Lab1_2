@@ -21,11 +21,11 @@ import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import lab04.Controller.Datos_Controller;
 import lab04.LogicaNegocio.Alumno;
 import lab04.LogicaNegocio.Profesor;
 
 import com.example.lab04.R;
-import static lab04.Activity.LoginActivity.DATOS;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,7 +42,7 @@ public class busquedaAlumnos extends Fragment implements SearchView.OnQueryTextL
         @Override
         public void onRightClicked(int position){
             Alumno p= adapter.getAlumnoAt(position);
-            DATOS.getAlumnos().remove(p);
+            Datos_Controller.getInstance().getModel().getAlumnos().remove(p);
             adapter.delete(p);
             adapter.notifyItemRemoved(position);
             adapter.notifyItemRangeChanged(position,adapter.getItemCount());
@@ -50,8 +50,8 @@ public class busquedaAlumnos extends Fragment implements SearchView.OnQueryTextL
         @Override
         public void onLeftClicked(int position){
             Alumno p= adapter.getAlumnoAt(position);
-            DATOS.setModo("Editar");
-            DATOS.setCurrentAlumno(p);
+            Datos_Controller.getInstance().getModel().setModo("Editar");
+            Datos_Controller.getInstance().getModel().setCurrentAlumno(p);
             ((Principal)getContext()).setFragment(9);
         }
     });
@@ -75,7 +75,7 @@ public class busquedaAlumnos extends Fragment implements SearchView.OnQueryTextL
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DATOS.setModo("Agregar");
+                Datos_Controller.getInstance().getModel().setModo("Agregar");
                 ((Principal)getContext()).setFragment(9);
             }
         });
@@ -95,7 +95,7 @@ public class busquedaAlumnos extends Fragment implements SearchView.OnQueryTextL
 
     private void setAlumnosAdapter() {
         List<Alumno> alumnos = new ArrayList<>();
-        alumnos=DATOS.getAlumnos();
+        alumnos=Datos_Controller.getInstance().getModel().getAlumnos();
         adapter = new ListViewAdapterAlumnos(alumnos,getContext());
     }
     private void setupRecyclerView(View root) {

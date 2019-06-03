@@ -20,7 +20,6 @@ import java.util.Locale;
 import lab04.LogicaNegocio.Alumno;
 import lab04.LogicaNegocio.Profesor;
 
-import static lab04.Activity.LoginActivity.DATOS;
 
 public class ListViewAdapterPofesores extends RecyclerView.Adapter<ListViewAdapterPofesores.ProfesorHolder>{
     Context mContext;

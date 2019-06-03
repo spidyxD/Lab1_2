@@ -13,7 +13,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import lab04.Controller.Datos_Controller;
+import lab04.LogicaNegocio.Curso;
 import lab04.LogicaNegocio.Grupo;
+import lab04.LogicaNegocio.Profesor;
 
 public class ListViewAdapterMatricula extends BaseAdapter {
     Context mContext;
@@ -71,8 +74,10 @@ public class ListViewAdapterMatricula extends BaseAdapter {
             resultado=view;
         }
         // Establecer resultados en el TextView
-        holder.curso.setText(grupos.get(position).getCurso().getNombre());
-        holder.profesor.setText(grupos.get(position).getPorfesor().getNombre());
+        Curso curso= Datos_Controller.getInstance().buscarCursoXId(grupos.get(position).getCurso());
+        Profesor profe= Datos_Controller.getInstance().buscarProfesorXCedula(grupos.get(position).getPorfesor());
+        holder.curso.setText(curso.getNombre());
+        holder.profesor.setText(profe.getNombre());
         holder.nrc.setText(Integer.toString(grupos.get(position).getNrc()));
         holder.horario.setText(grupos.get(position).getHorario());
 
@@ -88,7 +93,8 @@ public class ListViewAdapterMatricula extends BaseAdapter {
         } else {
             for (Grupo wp : arrayList) {
                 String ced= Integer.toString(wp.getNrc());
-                if ((wp.getCurso().getNombre().toLowerCase(Locale.getDefault()).contains(charText))||(ced.toLowerCase(Locale.getDefault()).contains(charText))) {
+                String curso = Datos_Controller.getInstance().buscarCursoXId(wp.getCurso()).getNombre();
+                if ((curso.toLowerCase(Locale.getDefault()).contains(charText))||(ced.toLowerCase(Locale.getDefault()).contains(charText))) {
                     grupos.add(wp);
                 }
             }

@@ -1,6 +1,7 @@
 package lab04.Activity;
 
 import android.graphics.Color;
+import android.graphics.DashPathEffect;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.TabLayout;
@@ -12,7 +13,8 @@ import android.widget.TextView;
 
 import com.example.lab04.R;
 
-import static lab04.Activity.LoginActivity.DATOS;
+import lab04.Controller.Datos_Controller;
+
 
 public class mantenimientoCursos extends FragmentActivity {
     private static final String TAG="mantenimientoAlumnos";
@@ -24,7 +26,7 @@ public class mantenimientoCursos extends FragmentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.generic_tabs);
-        DATOS.setModo("Agregar");
+        Datos_Controller.getInstance().getModel().setModo("Agregar");
         Log.d(TAG,"onCreate: Starting");
         ((TextView)findViewById(R.id.textTittletab)).setText("Mantenimmiento de Cursos");
         findViewById(R.id.textTittletab).setBackgroundColor(Color.parseColor("#33BBA2"));

@@ -11,11 +11,11 @@ import android.widget.Toast;
 
 import com.example.lab04.R;
 
+import lab04.Controller.Datos_Controller;
 import lab04.LogicaNegocio.Alumno;
 import lab04.LogicaNegocio.Carrera;
 import lab04.LogicaNegocio.Curso;
 
-import static lab04.Activity.LoginActivity.DATOS;
 import static lab04.Activity.LoginActivity.usuario;
 
 public class AddCursoFragment extends Fragment {
@@ -29,8 +29,8 @@ public class AddCursoFragment extends Fragment {
 
                              Bundle savedInstanceState) {
         final View root =inflater.inflate(R.layout.fragment_curso, container, false);
-        if(DATOS.getModo()=="Editar"){
-            Curso curso= DATOS.getCurrentCurso();
+        if(Datos_Controller.getInstance().getModel().getModo()=="Editar"){
+            Curso curso= Datos_Controller.getInstance().getModel().getCurrentCurso();
             EditText nombre= root.findViewById(R.id.cursoNombre);
             EditText codigo= root.findViewById(R.id.cursoCodigo);
             EditText creditos= root.findViewById(R.id.cursoCreditos);
@@ -63,7 +63,7 @@ public class AddCursoFragment extends Fragment {
         EditText horas= root.findViewById(R.id.cursoHoras);
         EditText codigo= root.findViewById(R.id.cursoCodigo);
         Curso curso=new Curso(Integer.parseInt(codigo.getText().toString()),nombre.getText().toString(),Integer.parseInt(creditos.getText().toString()),Float.parseFloat(horas.getText().toString()));
-        DATOS.getCursos().add(curso);
+        Datos_Controller.getInstance().getModel().getCursos().add(curso);
         Toast.makeText(root.getContext(), "Curso Agregado!!", Toast.LENGTH_SHORT).show();
         getActivity().finish();
     }
@@ -73,6 +73,6 @@ public class AddCursoFragment extends Fragment {
         EditText creditos= root.findViewById(R.id.cursoCreditos);
         EditText horasSemanales= root.findViewById(R.id.cursoHoras);
         Curso al= new Curso(Integer.parseInt(codigo.getText().toString()),nombre.getText().toString(),Integer.parseInt(creditos.getText().toString()),Float.parseFloat(horasSemanales.getText().toString()));
-        DATOS.actualizarCurso(Integer.parseInt(codigo.getText().toString()),al);
+        Datos_Controller.getInstance().actualizarCurso(Integer.parseInt(codigo.getText().toString()),al);
         Toast.makeText(root.getContext(), "Curso Actualizado!!", Toast.LENGTH_SHORT).show();}
     }

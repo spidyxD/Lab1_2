@@ -19,11 +19,10 @@ import com.example.lab04.R;
 import java.util.ArrayList;
 import java.util.List;
 
+import lab04.Controller.Datos_Controller;
 import lab04.LogicaNegocio.Alumno;
 import lab04.LogicaNegocio.Curso;
 import lab04.LogicaNegocio.Profesor;
-
-import static lab04.Activity.LoginActivity.DATOS;
 
 public class busquedaCursos extends Fragment implements SearchView.OnQueryTextListener {
 
@@ -37,7 +36,7 @@ public class busquedaCursos extends Fragment implements SearchView.OnQueryTextLi
         @Override
         public void onRightClicked(int position){
             Curso p= adapter.getCursorAt(position);
-            DATOS.getCursos().remove(p);
+            Datos_Controller.getInstance().getModel().getCursos().remove(p);
             adapter.delete(p);
             adapter.notifyItemRemoved(position);
             adapter.notifyItemRangeChanged(position,adapter.getItemCount());
@@ -45,8 +44,8 @@ public class busquedaCursos extends Fragment implements SearchView.OnQueryTextLi
         @Override
         public void onLeftClicked(int position){
             Curso p= adapter.getCursorAt(position);
-            DATOS.setModo("Editar");
-            DATOS.setCurrentCurso(p);
+            Datos_Controller.getInstance().getModel().setModo("Editar");
+            Datos_Controller.getInstance().getModel().setCurrentCurso(p);
             ((Principal)getContext()).setFragment(10);
         }
     });
@@ -70,7 +69,7 @@ public class busquedaCursos extends Fragment implements SearchView.OnQueryTextLi
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DATOS.setModo("Agregar");
+                Datos_Controller.getInstance().getModel().setModo("Agregar");
                 ((Principal)getContext()).setFragment(10);
             }
         });
@@ -91,7 +90,7 @@ public class busquedaCursos extends Fragment implements SearchView.OnQueryTextLi
 
     private void setCursosAdapter() {
         List<Curso> crs = new ArrayList<>();
-        crs = DATOS.getCursos();
+        crs = Datos_Controller.getInstance().getModel().getCursos();
         adapter = new ListViewAdapterCursos(crs, getContext());
     }
 

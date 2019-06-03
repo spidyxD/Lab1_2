@@ -14,11 +14,11 @@ import com.example.lab04.R;
 import java.util.ArrayList;
 import java.util.List;
 
+import lab04.Controller.Datos_Controller;
 import lab04.LogicaNegocio.Alumno;
 import lab04.LogicaNegocio.Grupo;
 import lab04.LogicaNegocio.Profesor;
 
-import static lab04.Activity.LoginActivity.DATOS;
 import static lab04.Activity.LoginActivity.usuario;
 
 public class busquedaMatricula extends Fragment implements SearchView.OnQueryTextListener {
@@ -36,7 +36,7 @@ public class busquedaMatricula extends Fragment implements SearchView.OnQueryTex
 
         super.onCreate(savedInstanceState);
         // Generar datos de muestra
-        grupos= DATOS.getGrupos();
+        grupos= Datos_Controller.getInstance().getModel().getGrupos();
         // Buscar los datos y presentarlos en el list_view_item.xml
         list = root.findViewById(R.id.listaDatosGrupos);
 
@@ -53,10 +53,10 @@ public class busquedaMatricula extends Fragment implements SearchView.OnQueryTex
 
         // Buscar los datos y presentarlos en el listview_main.xml
         editsearch = root.findViewById(R.id.busquedaGrupos);
-        if(DATOS.getModo()=="matricular"){
+        if(Datos_Controller.getInstance().getModel().getModo()=="matricular"){
             TextView matricula= root.findViewById(R.id.alumnoAmatricular);
             matricula.setVisibility(View.VISIBLE);
-            matricula.setText("Estudiante :"+DATOS.getCurrentAlumno().getNombre());
+            matricula.setText("Estudiante :"+Datos_Controller.getInstance().getModel().getCurrentAlumno().getNombre());
         }
         editsearch.setOnQueryTextListener(this);
         editsearch.setOnQueryTextListener(this);

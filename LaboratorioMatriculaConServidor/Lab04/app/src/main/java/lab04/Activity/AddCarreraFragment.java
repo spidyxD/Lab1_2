@@ -11,11 +11,10 @@ import android.widget.Toast;
 
 import com.example.lab04.R;
 
+import lab04.Controller.Datos_Controller;
 import lab04.LogicaNegocio.Alumno;
 import lab04.LogicaNegocio.Carrera;
 import lab04.LogicaNegocio.Curso;
-
-import static lab04.Activity.LoginActivity.DATOS;
 import static lab04.Activity.LoginActivity.usuario;
 
 public class AddCarreraFragment extends Fragment {
@@ -29,8 +28,8 @@ public class AddCarreraFragment extends Fragment {
 
                              Bundle savedInstanceState) {
         final View root = inflater.inflate(R.layout.fragment_carrera, container, false);
-        if(DATOS.getModo()=="Editar"){
-            Carrera car =DATOS.getCurrentCarrera();
+        if(Datos_Controller.getInstance().getModel().getModo() =="Editar"){
+            Carrera car =Datos_Controller.getInstance().getModel().getCurrentCarrera();
             EditText nombre= root.findViewById(R.id.nombreCarrera);
             EditText codigo= root.findViewById(R.id.codigoCarrera);
             EditText titulo= root.findViewById(R.id.tituloCarrera);
@@ -61,7 +60,7 @@ public class AddCarreraFragment extends Fragment {
         EditText codigo = root.findViewById(R.id.codigoCarrera);
         EditText tituilo = root.findViewById(R.id.tituloCarrera);
         Carrera carrera = new Carrera(Integer.parseInt(codigo.getText().toString()),nombre.getText().toString(),tituilo.getText().toString());
-        DATOS.getCarreras().add(carrera);
+        Datos_Controller.getInstance().getModel().getCarreras().add(carrera);
         Toast.makeText(root.getContext(), "Carrera Agregada!!", Toast.LENGTH_SHORT).show();
         getActivity().finish();
     }
@@ -70,7 +69,7 @@ public class AddCarreraFragment extends Fragment {
        EditText codigo= root.findViewById(R.id.codigoCarrera);
        EditText titulo= root.findViewById(R.id.tituloCarrera);
        Carrera carrera = new Carrera(Integer.parseInt(codigo.getText().toString()),nombre.getText().toString(),titulo.getText().toString());
-        DATOS.actualizarCarrera(Integer.parseInt(codigo.getText().toString()),carrera);
+       Datos_Controller.getInstance().actualizarCarrera(Integer.parseInt(codigo.getText().toString()),carrera);
         Toast.makeText(root.getContext(), "Carrera Actualizada!!", Toast.LENGTH_SHORT).show();
     }
 }

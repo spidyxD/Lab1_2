@@ -16,11 +16,16 @@ import com.example.lab04.R;
 import java.util.ArrayList;
 import java.util.List;
 
+import lab04.Controller.Administrador_Controller;
+import lab04.Controller.Alumno_Controller;
+import lab04.Controller.Datos_Controller;
+import lab04.Controller.Login_controller;
+import lab04.Controller.Profesor_Controller;
 import lab04.LogicaNegocio.Alumno;
 import lab04.LogicaNegocio.Grupo;
 import lab04.LogicaNegocio.Profesor;
+import lab04.LogicaNegocio.Usuario;
 
-import static lab04.Activity.LoginActivity.DATOS;
 import static lab04.Activity.LoginActivity.usuario;
 
 public class busquedaGrupos extends Fragment implements SearchView.OnQueryTextListener {
@@ -50,7 +55,7 @@ public class busquedaGrupos extends Fragment implements SearchView.OnQueryTextLi
         super.onCreate(savedInstanceState);
         setGruposAdapter();
         setupRecyclerView(root);
-        // Buscar los datos y presentarlos en el listview_main.xml
+
         editsearch = root.findViewById(R.id.busqueda);
         editsearch.setOnQueryTextListener(this);
         editsearch.setOnQueryTextListener(this);
@@ -61,12 +66,14 @@ public class busquedaGrupos extends Fragment implements SearchView.OnQueryTextLi
     }
     private void setGruposAdapter() {
         List<Grupo> grupos = new ArrayList<>();
-        if(usuario.getRol()=="Alumno") {
-            Alumno al = DATOS.getAlumnoXCed(usuario.getUsername());
-           // grupos = al.getGrupos();
-        }else if(usuario.getRol()=="Profesor"){
-            Profesor profesor= DATOS.getProfesorXCed(usuario.getUsername());
-           // grupos= profesor.getGrupos();
+        Usuario user = Login_controller.getInstance().getModel().getUser();
+        if(user.getRol().equals("Alumno")) {
+            Alumno al = Datos_Controller.getInstance().buscarAlumnoXCedula(user.getUsername());
+            grupos = Alumno_Controller.instance().getModel().getGrruposMatriculados();
+        }
+        if(user.getRol().equals("Profesor")){
+            Profesor profesor= Datos_Controller.getInstance().buscarProfesorXCedula(user.getUsername());
+             grupos= Profesor_Controller.getInstance().getModel().getGruposImpartidos();
         }
         adapter = new ListViewAdapterGrupos(grupos);
     }
