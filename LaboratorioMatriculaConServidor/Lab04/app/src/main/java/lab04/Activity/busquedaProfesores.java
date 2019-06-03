@@ -1,37 +1,26 @@
 package lab04.Activity;
 
-import android.arch.lifecycle.ViewModelProvider;
-import android.arch.lifecycle.ViewModelProviders;
 import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
-import android.graphics.RectF;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.SearchView;
-import android.widget.Toast;
 
 import com.example.lab04.R;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import lab04.AccesoDatos.ModeloDeDatos;
-import lab04.LogicaNegocio.Alumno;
+import lab04.Controller.Datos_Controller;
 import lab04.LogicaNegocio.Profesor;
-
-import static lab04.Activity.LoginActivity.DATOS;
 
 public class busquedaProfesores extends Fragment implements SearchView.OnQueryTextListener {
 
@@ -45,7 +34,7 @@ public class busquedaProfesores extends Fragment implements SearchView.OnQueryTe
         @Override
         public void onRightClicked(int position){
             Profesor p= adapter.getProfesorAt(position);
-            DATOS.getProfesores().remove(p);
+            Datos_Controller.getInstance().getModel().getProfesores().remove(p);
             adapter.delete(p);
             adapter.notifyItemRemoved(position);
             adapter.notifyItemRangeChanged(position,adapter.getItemCount());
@@ -53,8 +42,8 @@ public class busquedaProfesores extends Fragment implements SearchView.OnQueryTe
         @Override
         public void onLeftClicked(int position){
             Profesor p= adapter.getProfesorAt(position);
-            DATOS.setModo("Editar");
-            DATOS.setCurrentProfesor(p);
+            Datos_Controller.getInstance().getModel().setModo("Editar");
+            Datos_Controller.getInstance().getModel().setCurrentProfesor(p);
             ((Principal)getContext()).setFragment(8);
         }
     });
@@ -86,7 +75,7 @@ public class busquedaProfesores extends Fragment implements SearchView.OnQueryTe
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DATOS.setModo("Agregar");
+                Datos_Controller.getInstance().getModel().setModo("Agregar");
                 ((Principal)getContext()).setFragment(8);
             }
         });
@@ -107,7 +96,7 @@ public class busquedaProfesores extends Fragment implements SearchView.OnQueryTe
     private void setProfesoresAdapter() {
 
         List<Profesor> profesores = new ArrayList<>();
-        profesores=DATOS.getProfesores();
+        profesores=Datos_Controller.getInstance().getModel().getProfesores();
         adapter = new ListViewAdapterPofesores(profesores);
     }
     private void setupRecyclerView(View root) {

@@ -20,11 +20,15 @@ import android.view.Menu;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import lab04.Controller.Administrador_Controller;
+import lab04.Controller.Alumno_Controller;
+import lab04.Controller.Datos_Controller;
+import lab04.Controller.Login_controller;
+import lab04.Controller.Profesor_Controller;
 import lab04.LogicaNegocio.Administrador;
 import lab04.LogicaNegocio.Alumno;
 import lab04.LogicaNegocio.Profesor;
 
-import static lab04.Activity.LoginActivity.DATOS;
 import static lab04.Activity.LoginActivity.usuario;
 
 public class Principal extends AppCompatActivity
@@ -46,21 +50,18 @@ public class Principal extends AppCompatActivity
         View header = navigationView.getHeaderView(0);
         TextView nombre = header.findViewById(R.id.perfilNombre);
         TextView nombre2 = header.findViewById(R.id.perfilSubNombre);
-        switch (usuario.getRol()){
+        switch (Login_controller.getInstance().getModel().getUser().getRol()){
             case "Administrador":
-                Administrador admin= DATOS.getAdministradorXCed(usuario.getUsername());
-                nombre.setText(Integer.toString(admin.getCedula()));
+                nombre.setText(Administrador_Controller.instance().getModel().getAdministrador().getNombre());
                 nombre2.setText("Administrador");
                 break;
             case "Alumno":
-                Alumno alumno= DATOS.getAlumnoXCed(usuario.getUsername());
-                nombre.setText(alumno.getNombre());
-                nombre2.setText(Integer.toString(alumno.getCedula()));
+                nombre.setText(Alumno_Controller.instance().getModel().getAlumno().getNombre());
+                nombre2.setText(Integer.toString(Alumno_Controller.instance().getModel().getAlumno().getCedula()));
                 break;
              case "Profesor":
-                Profesor profe= DATOS.getProfesorXCed(usuario.getUsername());
-                nombre.setText(profe.getNombre());
-                nombre2.setText(Integer.toString(profe.getCedula()));
+                nombre.setText(Profesor_Controller.getInstance().getModel().getProfesor().getNombre());
+                nombre2.setText(Integer.toString(Profesor_Controller.getInstance().getModel().getProfesor().getCedula()));
                 break;
         }
         setFragment(1);
@@ -68,8 +69,8 @@ public class Principal extends AppCompatActivity
     public void setFragment(int position){
         switch(position){
             case 1:
-                DATOS.setModo("Editar");
-                switch (usuario.getRol()){
+                Datos_Controller.getInstance().getModel().setModo("Editar");
+                switch (Login_controller.getInstance().getModel().getUser().getRol()){
                     case "Administrador":
                         FragmentManager fm1;
                         FragmentTransaction ft1;
@@ -272,7 +273,7 @@ public class Principal extends AppCompatActivity
         }
         else if (id == R.id.nav_principal_matricula) {
             Toast.makeText(getApplicationContext(), "Seleccione un Alumno", Toast.LENGTH_LONG).show();
-            DATOS.setModo("matricular");
+            Datos_Controller.getInstance().getModel().setModo("matricular");
             setFragment(3);
         }
         DrawerLayout drawer = findViewById(R.id.drawer_layout);

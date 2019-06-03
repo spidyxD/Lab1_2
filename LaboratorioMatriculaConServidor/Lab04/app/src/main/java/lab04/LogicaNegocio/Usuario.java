@@ -6,6 +6,9 @@ public class Usuario {
     public String rol;
 
     public Usuario() {
+        username=0;
+        clave="";
+        rol="";
     }
 
     public Usuario(int username, String clave, String rol) {

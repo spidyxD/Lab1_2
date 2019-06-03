@@ -1,76 +1,67 @@
 package lab04.LogicaNegocio;
 
 public class Matricula {
-    public Alumno student = new Alumno();
-    public Carrera major = new Carrera();
-    public Curso course = new Curso();
-    public Profesor teacher = new Profesor();
-    public Ciclo cycle = new Ciclo();
-    public Grupo grupo = new Grupo();
+    public int student ;
+    public int major ;
+    public int course;
+    public int cycle ;
+    public int grupo ;
 
     public Matricula() {
     }
 
-    public Grupo getGrupo() {
+    public int getGrupo() {
         return grupo;
     }
 
-    public void setGrupo(Grupo grupo) {
+    public void setGrupo(int grupo) {
         this.grupo = grupo;
     }
 
-    public Matricula(Alumno student, Carrera major, Curso course, Profesor teacher, Ciclo cycle, Grupo grupo) {
+    public Matricula(int student, int major, int course, int cycle, int grupo) {
         this.student = student;
         this.major = major;
         this.course = course;
-        this.teacher = teacher;
         this.grupo=grupo;
         this.cycle = cycle;
     }
 
-    public Alumno getStudent() {
+    public int getStudent() {
         return student;
     }
 
-    public void setStudent(Alumno student) {
+    public void setStudent(int student) {
         this.student = student;
     }
 
-    public Carrera getMajor() {
+    public int getMajor() {
         return major;
     }
 
-    public void setMajor(Carrera major) {
+    public void setMajor(int major) {
         this.major = major;
     }
 
-    public Curso getCourse() {
+    public int getCourse() {
         return course;
     }
 
-    public void setCourse(Curso course) {
+    public void setCourse(int course) {
         this.course = course;
     }
 
-    public Profesor getTeacher() {
-        return teacher;
-    }
 
-    public void setTeacher(Profesor teacher) {
-        this.teacher = teacher;
-    }
-
-    public Ciclo getCycle() {
+    public int getCycle() {
         return cycle;
     }
 
-    public void setCycle(Ciclo cycle) {
+    public void setCycle(int cycle) {
         this.cycle = cycle;
     }
 
     @Override
     public String toString() {
-        return course.getNombre() + " "  + " " + course.getCreditos() + " " + grupo.getHorario() + " "+grupo.getNrc() ;
+        return course+ " " + grupo;
     }
 
 

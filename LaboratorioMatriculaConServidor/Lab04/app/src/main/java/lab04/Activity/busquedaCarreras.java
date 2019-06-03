@@ -19,11 +19,11 @@ import com.example.lab04.R;
 import java.util.ArrayList;
 import java.util.List;
 
+import lab04.Controller.Datos_Controller;
 import lab04.LogicaNegocio.Alumno;
 import lab04.LogicaNegocio.Carrera;
 import lab04.LogicaNegocio.Profesor;
 
-import static lab04.Activity.LoginActivity.DATOS;
 
 public class busquedaCarreras extends Fragment implements SearchView.OnQueryTextListener {
 
@@ -37,7 +37,7 @@ public class busquedaCarreras extends Fragment implements SearchView.OnQueryText
         @Override
         public void onRightClicked(int position){
             Carrera p= adapter.getCarreraAt(position);
-            DATOS.getCarreras().remove(p);
+            Datos_Controller.getInstance().getModel().getCarreras().remove(p);
             adapter.delete(p);
             adapter.notifyItemRemoved(position);
             adapter.notifyItemRangeChanged(position,adapter.getItemCount());
@@ -45,8 +45,8 @@ public class busquedaCarreras extends Fragment implements SearchView.OnQueryText
         @Override
         public void onLeftClicked(int position){
             Carrera p= adapter.getCarreraAt(position);
-            DATOS.setModo("Editar");
-            DATOS.setCurrentCarrera(p);
+            Datos_Controller.getInstance().getModel().setModo("Editar");
+            Datos_Controller.getInstance().getModel().setCurrentCarrera(p);
             ((Principal)getContext()).setFragment(11);
         }
     });
@@ -70,7 +70,7 @@ public class busquedaCarreras extends Fragment implements SearchView.OnQueryText
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DATOS.setModo("Agregar");
+                Datos_Controller.getInstance().getModel().setModo("Agregar");
                 ((Principal)getContext()).setFragment(11);
             }
         });
@@ -91,7 +91,7 @@ public class busquedaCarreras extends Fragment implements SearchView.OnQueryText
 
     private void setCarrerasAdapter() {
         List<Carrera> carreras = new ArrayList<>();
-        carreras=DATOS.getCarreras();
+        carreras=Datos_Controller.getInstance().getModel().getCarreras();
         adapter = new ListViewAdapterCarreras(carreras,getContext());
     }
     private void setupRecyclerView(View root) {

@@ -29,8 +29,6 @@ import java.util.Locale;
 import lab04.LogicaNegocio.Alumno;
 import lab04.LogicaNegocio.Profesor;
 
-import static lab04.Activity.LoginActivity.DATOS;
-
 public class ListViewAdapterAlumnos extends RecyclerView.Adapter<ListViewAdapterAlumnos.AlumnosHolder> {
     Context mContext;
     LayoutInflater inflater;

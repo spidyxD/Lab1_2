@@ -15,10 +15,11 @@ import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import static lab04.Activity.LoginActivity.DATOS;
-
 import com.example.lab04.R;
 
+import java.util.zip.DataFormatException;
+
+import lab04.Controller.Datos_Controller;
 import lab04.LogicaNegocio.Alumno;
 import lab04.LogicaNegocio.Carrera;
 import lab04.LogicaNegocio.Profesor;
@@ -33,7 +34,7 @@ public class mantenimientoAlumnos extends FragmentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.generic_tabs);
-        DATOS.setModo("Agregar");
+        Datos_Controller.getInstance().getModel().setModo("Agregar");
         Log.d(TAG,"onCreate: Starting");
         ((TextView)findViewById(R.id.textTittletab)).setText("Mantenimmiento de Alumnos");
         findViewById(R.id.textTittletab).setBackgroundColor(Color.parseColor("#33BBA2"));
