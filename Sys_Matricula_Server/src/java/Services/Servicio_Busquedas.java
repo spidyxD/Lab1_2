@@ -148,7 +148,7 @@ public class Servicio_Busquedas {
         catch(Exception e){}
           throw new Exception();
     }
-    public ArrayList<Curso> buscarCursoXprofesor(int codigo) throws Exception{
+    public ArrayList<Grupo> buscarCursoXprofesor(int codigo) throws Exception{
       ArrayList aux = null;
         try{
            return Data.instance().getServiciobusquedas().buscarCursoXprofesor(codigo);

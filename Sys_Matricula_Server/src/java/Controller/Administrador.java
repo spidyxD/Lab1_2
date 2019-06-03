@@ -254,8 +254,8 @@ public class Administrador extends HttpServlet {
             HttpSession s = request.getSession(true);
             PrintWriter out = response.getWriter();
             Gson gson = new Gson();
-            BufferedReader readerID = new BufferedReader(new InputStreamReader(request.getPart("ID").getInputStream()));  
-            int id = gson.fromJson(readerID, Integer.class);     
+            String cedula=(String) request.getParameter("cedula") ;  
+            int id = Integer.parseInt(cedula);     
             Data.instance().getServicioestudiante().eliminarEstudiante(id);
             ArrayList<Alumno> alumnos =  Data.instance().getServicioestudiante().verAlumnos();
              JSONArray jsArray = new JSONArray();
@@ -277,8 +277,8 @@ public class Administrador extends HttpServlet {
             HttpSession s = request.getSession(true);
             PrintWriter out = response.getWriter();
             Gson gson = new Gson();
-            BufferedReader readerID = new BufferedReader(new InputStreamReader(request.getPart("ID").getInputStream()));  
-            int id = gson.fromJson(readerID, Integer.class);
+            String cedula=(String) request.getParameter("cedula") ;  
+            int id = Integer.parseInt(cedula);  
             Data.instance().getServicioProfesor().eliminarProfesor(id);
             ArrayList<Profesor> profesores =  Data.instance().getServicioProfesor().verProfesores();
             JSONArray jsArray = new JSONArray();
@@ -299,8 +299,8 @@ public class Administrador extends HttpServlet {
             HttpSession s = request.getSession(true);
             PrintWriter out = response.getWriter();
             Gson gson = new Gson();
-            BufferedReader readerID = new BufferedReader(new InputStreamReader(request.getPart("ID").getInputStream()));  
-            int id = gson.fromJson(readerID, Integer.class);           
+             String cedula=(String) request.getParameter("id") ;  
+            int id = Integer.parseInt(cedula);     
             Data.instance().getServiciogenerales().eliminarCarrera(id);
             ArrayList<Carrera> carreras =  Data.instance().getServiciobusquedas().verCarreras();
             JSONArray jsArray = new JSONArray();
@@ -321,8 +321,8 @@ public class Administrador extends HttpServlet {
             HttpSession s = request.getSession(true);
             PrintWriter out = response.getWriter();
             Gson gson = new Gson();
-            BufferedReader readerID = new BufferedReader(new InputStreamReader(request.getPart("ID").getInputStream()));  
-            int id = gson.fromJson(readerID, Integer.class);     
+             String cedula=(String) request.getParameter("id") ;  
+            int id = Integer.parseInt(cedula);    
             Data.instance().getServicioCursos().eliminarCurso(id);
             ArrayList<Curso> cursos =  Data.instance().getServicioCursos().verCursos();
             String courses = gson.toJson(cursos);

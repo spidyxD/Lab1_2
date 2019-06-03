@@ -11,11 +11,11 @@ package Entities;
  */
 public class Grupo {
     public int capacidad;
-    public Ciclo ciclo = new Ciclo();
-    public Curso curso = new Curso();
+    public int ciclo ;
+    public int curso ;
     public int nrc ;
     public String horario;
-    public Profesor porfesor = new Profesor();
+    public int porfesor;
 
     public Grupo() {
     }
@@ -45,34 +45,34 @@ public class Grupo {
         this.capacidad = capacidad;
     }
 
-    public Ciclo getCiclo() {
+    public int getCiclo() {
         return this.ciclo;
     }
 
-    public void setCiclo(Ciclo ciclo) {
+    public void setCiclo(int ciclo) {
         this.ciclo = ciclo;
     }
 
-    public Curso getCurso() {
+    public int getCurso() {
         return this.curso;
     }
 
-    public void setCurso(Curso curso) {
+    public void setCurso(int curso) {
         this.curso = curso;
     }
 
-    public Profesor getPorfesor() {
+    public int getPorfesor() {
         return this.porfesor;
     }
 
-    public void setPorfesor(Profesor porfesor) {
+    public void setPorfesor(int porfesor) {
         this.porfesor = porfesor;
     }
     
     
  @Override
     public String toString() {
-        return curso.getNombre() + " " + " " + curso.getCreditos() + " " + horario +" "+nrc;
+        return curso+ " " +  horario +" "+nrc;
     }
    
     

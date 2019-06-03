@@ -8,14 +8,25 @@ package Controller;
 import AccesoADatos.GlobalException;
 import AccesoADatos.NoDataException;
 import Dao.Data;
+import Dao.Service;
+import Dao.ServicioGenerales;
+import Entities.Alumno;
 import Entities.Carrera;
+import Entities.Ciclo;
 import Entities.Curso;
+import Entities.Grupo;
+import Entities.Profesor;
+import Entities.Usuario;
+import Services.Servicio_Busquedas;
+import Services.Servicio_Estudiantes;
+import Services.Servicio_Profesor;
 import com.google.gson.Gson;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -25,12 +36,13 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import org.json.JSONArray;
 
 /**
  *
  * @author Addiel
  */
-@WebServlet(name = "Busqueda", urlPatterns = {"/BusquedaCurso","/BusquedaProfesor","/BusquedaAlumnos","/BusquedaCarrera","/BusquedaCiclos","/BusquedaGrupos","/BusquedaAlumnoXcurso","/BusquedaCursoXcarrera"})
+@WebServlet(name = "Busqueda", urlPatterns = {"/BusquedaCurso","/BusquedaProfesor","/BusquedaAlumnos","/BusquedaCarrera","/BusquedaCiclos","/BusquedaGrupos","/BusquedaAlumnoXcurso","/BusquedaCursoXcarrera","/BusquedaDatos"})
 public class Busqueda extends HttpServlet {
 
     /**
@@ -60,6 +72,9 @@ public class Busqueda extends HttpServlet {
             case "/BusquedaCarrera"://al inicio de la busqueda
                 this.doSearchCarrers(request, response);
                 break;
+           case "/BusquedaAdminXId"://al inicio de la busqueda
+                this.doSearchStudentsXcourse(request, response);
+                break;
             case "/BusquedaAlumnoXcurso"://al inicio de la busqueda
                 this.doSearchStudentsXcourse(request, response);
                 break;
@@ -71,6 +86,9 @@ public class Busqueda extends HttpServlet {
                 break;    
             case "/BusquedaGrupos"://al inicio de la busqueda
                 this.doSearchGrupos(request, response);
+                break; 
+            case "/BusquedaDatos"://al inicio de la busqueda
+                this.doCargarDatos(request, response);
                 break; 
             default:
                       try{
@@ -158,6 +176,94 @@ public class Busqueda extends HttpServlet {
        }
        catch(Exception e){}
     }
+     private void doCargarDatos(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        Gson gson = new Gson(); 
+        PrintWriter out = response.getWriter();   
+        try{                                                  
+            Service s = new Service();    
+             HttpSession http =  request.getSession(true);
+             String action = (String) request.getParameter("action"); 
+                    switch(action){
+                        case "cursos":
+                            ArrayList<Curso> cursos = Servicio_Busquedas.instance().verCursos();
+                            while(cursos.remove(null));
+                            JSONArray jsArray0 = new JSONArray();
+                            for(Curso c: cursos){
+                               jsArray0.put(c);
+                            }
+                            String courses = gson.toJson(jsArray0);
+                            out.write(courses); 
+                            response.setStatus(200); // successfull 
+                            break;
+                        case "carreras":
+                            ArrayList<Carrera> carreras = Servicio_Busquedas.instance().verCarreras();
+                            while(carreras.remove(null));
+                            JSONArray jsArray = new JSONArray();
+                            for(Carrera c: carreras){
+                               jsArray.put(c);
+                            }
+                            String majores = gson.toJson(jsArray);
+                            out.write(majores);
+                            response.setStatus(200); // successfull 
+                            break;
+                        case "alumnos":
+                             ArrayList<Alumno> alumnos = Servicio_Estudiantes.instance().verAlumnos();
+                             while(alumnos.remove(null));
+                             JSONArray jsArray2 = new JSONArray();
+                                for(Alumno a: alumnos){
+                                   jsArray2.put(a);
+                                }
+                             String students = gson.toJson(jsArray2);
+                             out.write(students);
+                             response.setStatus(200); // successfull 
+                             break;
+                        case "profesores":
+                            ArrayList<Profesor> profes =  Servicio_Profesor.instance().verProfesores();
+                            while(profes.remove(null));
+                             JSONArray jsArray3 = new JSONArray();
+                                for(Profesor p: profes){
+                                   jsArray3.put(p);
+                                }
+                            String teachers = gson.toJson(jsArray3);
+                            out.write(teachers); 
+                            response.setStatus(200); // successfull 
+                            break;
+                          case "ciclos":
+                            ArrayList<Ciclo> ciclos =  Servicio_Busquedas.instance().verCiclos();
+                            while(ciclos.remove(null));
+                             JSONArray jsArray5 = new JSONArray();
+                                for(Ciclo c: ciclos){
+                                   jsArray5.put(c);
+                                }
+                            String cicloss = gson.toJson(jsArray5);
+                            out.write(cicloss); 
+                            response.setStatus(200); // successfull 
+                            break;
+                          case "grupos":
+                            ArrayList<Grupo> grupos =  Servicio_Busquedas.instance().verGrupos();
+                            while(grupos.remove(null));
+                             JSONArray jsArray6 = new JSONArray();
+                                for(Grupo p: grupos){
+                                   jsArray6.put(p);
+                                }
+                            String gruposs = gson.toJson(jsArray6);
+                            out.write(gruposs); 
+                            response.setStatus(200); // successfull 
+                            break;    
+                        default:  break;        
+                    }       
+                response.setContentType("application/json; charset=UTF-8"); 
+            
+       }
+       catch(Exception e){ String error = e.getMessage();
+            out.println("Usuario o contaseña invalidos");  
+            response.setStatus(400); // faild
+            request.getRequestDispatcher("Error.jsp").forward(request, response);           
+        }
+        finally {
+            out.close();
+        }
+    }
 
     private void doSearchProfesors(HttpServletRequest request, HttpServletResponse response) {
         try{
@@ -210,6 +316,7 @@ public class Busqueda extends HttpServlet {
         String carrera = (String) request.getAttribute("carrera");
         
     }
+    
 
     private void doSearchCiclos(HttpServletRequest request, HttpServletResponse response) {
          try{

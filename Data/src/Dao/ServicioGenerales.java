@@ -10,9 +10,13 @@ import Entities.Carrera;
 import Entities.Ciclo;
 import Entities.Curso;
 import Entities.Grupo;
+import Entities.Profesor;
 import Entities.Rendimiento_grupo;
 import java.sql.CallableStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
 
 /**
  *
@@ -277,5 +281,73 @@ public class ServicioGenerales extends Service {
                 throw new AccesoADatos.GlobalException("Estatutos invalidos o nulos");
             }
         }
-    }          
+    } 
+     public ArrayList<Grupo> verGrupos() throws AccesoADatos.GlobalException, AccesoADatos.NoDataException, InstantiationException, IllegalAccessException  	{
+        try {
+            conectar();
+        } catch (ClassNotFoundException e) {
+            throw new AccesoADatos.GlobalException("No se ha localizado el driver");
+        } catch (SQLException e) {
+            throw new AccesoADatos.NoDataException("La base de datos no se encuentra disponible");
+        }
+        CallableStatement pstmt=null;
+        
+        try {
+            ArrayList<Grupo> grupos = new ArrayList<>();     
+            Statement stmt = conexion.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT * FROM Grupo");
+             ServicioBusquedas sb = new ServicioBusquedas();
+          //  pstmt.setInt(2,codigo);      
+                while(rs.next()){
+                    grupos.add(sb.tipoGrupo(rs));
+                }
+            return grupos;
+            
+        } catch (SQLException e) {
+            throw new AccesoADatos.GlobalException("Llave duplicada");
+        } finally {
+            try {
+                if (pstmt != null) {
+                    pstmt.close();
+                }
+                desconectar();
+            } catch (SQLException e) {
+                throw new AccesoADatos.GlobalException("Estatutos invalidos o nulos");
+            }
+        }
+    }
+     public ArrayList<Ciclo> verCiclos() throws AccesoADatos.GlobalException, AccesoADatos.NoDataException, InstantiationException, IllegalAccessException  	{
+        try {
+            conectar();
+        } catch (ClassNotFoundException e) {
+            throw new AccesoADatos.GlobalException("No se ha localizado el driver");
+        } catch (SQLException e) {
+            throw new AccesoADatos.NoDataException("La base de datos no se encuentra disponible");
+        }
+        CallableStatement pstmt=null;
+        
+        try {
+            ArrayList<Ciclo> ciclos = new ArrayList<>();     
+            Statement stmt = conexion.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT * FROM Ciclo");
+             ServicioBusquedas sb = new ServicioBusquedas();
+          //  pstmt.setInt(2,codigo);      
+                while(rs.next()){
+                    ciclos.add(sb.tipoCiclo(rs));
+                }
+            return ciclos;
+            
+        } catch (SQLException e) {
+            throw new AccesoADatos.GlobalException("Llave duplicada");
+        } finally {
+            try {
+                if (pstmt != null) {
+                    pstmt.close();
+                }
+                desconectar();
+            } catch (SQLException e) {
+                throw new AccesoADatos.GlobalException("Estatutos invalidos o nulos");
+            }
+        }
+    }
 }
