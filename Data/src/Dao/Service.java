@@ -39,7 +39,7 @@ public class Service {
     protected void conectar() throws SQLException,ClassNotFoundException, InstantiationException, IllegalAccessException 
     {
         Class.forName("oracle.jdbc.OracleDriver").newInstance();
-        conexion = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:ORCL","system","hr");    
+        conexion = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:ORCL","system","pchost");    
     }  
     protected void desconectar() throws SQLException{
         if(!conexion.isClosed())

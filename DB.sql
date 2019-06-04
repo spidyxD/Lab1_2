@@ -128,7 +128,7 @@ CREATE TABLE PlanEstudio (
 CREATE OR REPLACE PROCEDURE crearAlumno (xcedula in Alumno.cedula%TYPE, xnombre in Alumno.nombre%TYPE, xedad in Alumno.edad%TYPE, xemail in Alumno.email%TYPE, xfechaN in varchar,xtelefono in Alumno.telefono%TYPE,xusername in Usuario.id%TYPE, xclave in Usuario.clave%TYPE, xcarrera in Carrera.codigo%TYPE )
     IS 
     BEGIN
-        INSERT into Alumno VALUES(xcedula, xnombre, TO_DATE(xfechaN, 'DD/MM/YYYY'), xedad,xemail,xtelefono); 
+        INSERT into Alumno VALUES(xcedula, xnombre, TO_DATE(xfechaN, 'dd/MM/yyyy'), xedad,xemail,xtelefono); 
         INSERT into Usuario VALUES(xcedula, xclave, 'Alumno');
         INSERT into Inscripcion VALUES(xcedula,xcarrera);
         COMMIT;
@@ -138,7 +138,7 @@ CREATE OR REPLACE PROCEDURE crearAlumno (xcedula in Alumno.cedula%TYPE, xnombre 
 CREATE OR REPLACE PROCEDURE modificarAlumno (xnombre in Alumno.nombre%TYPE,xedad in Alumno.edad%TYPE, xemail in Alumno.email%TYPE, xfechaN in varchar,xtelefono in Alumno.telefono%TYPE,xusername in Usuario.id%TYPE, xclave in Usuario.clave%TYPE )
     IS 
     BEGIN
-        UPDATE  Alumno set nombre = xnombre, edad = xedad, email = xemail, fecha_nacimiento = TO_DATE(xfechaN, 'DD/MM/YYYY'), telefono = xtelefono where cedula = xusername; 
+        UPDATE  Alumno set nombre = xnombre, edad = xedad, email = xemail, fecha_nacimiento = TO_DATE(xfechaN, 'dd/MM/yyyy'), telefono = xtelefono where cedula = xusername; 
         COMMIT;
     END;
     /

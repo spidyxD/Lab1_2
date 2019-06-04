@@ -22,7 +22,7 @@ import lab04.Model.LoginModel;
 import lab04.Utils.httpRequester;
 
 public class Login_controller {
-    String host="192.168.1.7";
+    String host="192.168.0.113";
     String puerto="8080";
     private LoginModel model = new LoginModel();
     private static final Login_controller ourInstance = new Login_controller();

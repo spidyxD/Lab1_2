@@ -9,6 +9,7 @@ import org.json.JSONObject;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
@@ -328,34 +329,56 @@ public class Datos_Controller {
         }
         return res;
     }
-    public boolean updateAlumno(Alumno al){
+    public boolean updateAlumno(Alumno al) throws UnsupportedEncodingException {
         StrictMode.ThreadPolicy policy= new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
         String apiUrl = "http://"+Login_controller.getInstance().host+":"+Login_controller.getInstance().puerto+"/Sys_Matricula_Server/ModificarEstudiante?ced="+al.getCedula()+"&nombre="
                 +al.getNombre()+"&fechaN="+al.getFecha_nacimiento()+"&edad="+al.getEdad()+"&email="+al.getEmail()+"&cel="+
                 al.getTelefono()+"&carrera="+al.getCarrera().getCodigo();
-        String current = "";
+        String mitad1="";
+        String mitad2;
+        for(int i=0; i< apiUrl.length();i++){
+            if(apiUrl.charAt(i)==' '){
+                mitad1=mitad1+"%20";
+
+            }else{
+                mitad1=mitad1+apiUrl.charAt(i);
+            }
+        }
         boolean res= false;
         try {
             URL url;
             HttpURLConnection urlConnection = null;
             try {
-                url = new URL(apiUrl);
+                url = new URL(mitad1);
 
                 urlConnection = (HttpURLConnection) url
                         .openConnection();
+                int status= urlConnection.getResponseCode();
+                InputStream in=null;
+                if(status >= 200 && status <400){
+                    in = urlConnection.getInputStream();
+                    BufferedReader streamReader= new BufferedReader(new InputStreamReader(in,"UTF-8"));
+                    StringBuilder responseStrBuilder= new StringBuilder();
 
-                InputStream in = urlConnection.getInputStream();
-                BufferedReader streamReader= new BufferedReader(new InputStreamReader(in,"UTF-8"));
-                StringBuilder responseStrBuilder= new StringBuilder();
+                    String inputStr;
+                    while((inputStr = streamReader.readLine())!=null){
+                        responseStrBuilder.append(inputStr);
+                    }
+                    boolean respuesta=Boolean.parseBoolean(responseStrBuilder.toString());
+                    cargarAlumnos();
+                    res= respuesta;
+                }else{
+                    in=urlConnection.getErrorStream();
+                    BufferedReader streamReader= new BufferedReader(new InputStreamReader(in,"UTF-8"));
+                    StringBuilder responseStrBuilder= new StringBuilder();
 
-                String inputStr;
-                while((inputStr = streamReader.readLine())!=null){
-                    responseStrBuilder.append(inputStr);
+                    String inputStr;
+                    while((inputStr = streamReader.readLine())!=null){
+                        responseStrBuilder.append(inputStr);
+                    }
                 }
-                boolean respuesta=Boolean.parseBoolean(responseStrBuilder.toString());
-                cargarAlumnos();
-                res= respuesta;
+
 
             } catch (Exception e) {
                 e.printStackTrace();

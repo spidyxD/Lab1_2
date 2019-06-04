@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 
 import com.example.lab04.R;
@@ -21,7 +22,13 @@ public class ChangeClave extends Fragment {
         final View root = inflater.inflate(R.layout.change_password, container, false);
         super.onCreate(savedInstanceState);
 
+        Button change=(Button)root.findViewById(R.id.savePassword);
+        change.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
+            }
+        });
         return root;
     }
 }

@@ -21,6 +21,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -68,7 +69,11 @@ public class AddAlumnoFragment extends Fragment {
             editar.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    editar(root,carreras);
+                    try {
+                        editar(root,carreras);
+                    } catch (UnsupportedEncodingException e) {
+                        e.printStackTrace();
+                    }
                 }
             });
         }else {
@@ -102,7 +107,7 @@ public class AddAlumnoFragment extends Fragment {
             Toast.makeText(root.getContext(), "Ocurrió un error!!", Toast.LENGTH_SHORT).show();
         }
     }
-    public void editar(View root,Spinner carreras){
+    public void editar(View root,Spinner carreras) throws UnsupportedEncodingException {
         Alumno alumno= Datos_Controller.getInstance().buscarAlumnoXCedula(Datos_Controller.getInstance().getModel().getCurrentAlumno().getCedula());
         EditText nombre= root.findViewById(R.id.nombreAddUpdAlum);
         EditText cedula= root.findViewById(R.id.cedulaAddUpdAlum);
