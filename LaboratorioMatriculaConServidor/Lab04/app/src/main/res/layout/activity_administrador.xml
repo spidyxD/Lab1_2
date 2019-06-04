@@ -42,22 +42,6 @@
         app:layout_constraintTop_toBottomOf="@+id/nombreAddUpdAdmin" />
 
 
-    <EditText
-        android:id="@+id/claveAddUpdAdmin"
-        android:layout_width="226dp"
-        android:layout_height="48dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="32dp"
-        android:ems="10"
-        android:hint="@string/clav_ad"
-        android:inputType="textPersonName"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.593"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cedulaAddUpdAdmin" />
-
-
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/addUpdAdminBtn"
         android:layout_width="wrap_content"
@@ -65,15 +49,14 @@
         android:layout_gravity="end|bottom"
         android:layout_margin="16dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:src="@drawable/check"
         android:tint="@android:color/background_light"
         app:backgroundTint="@color/bg_row_background"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.814"
+        app:layout_constraintHorizontal_bias="0.87"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/claveAddUpdAdmin" />
+        app:layout_constraintTop_toBottomOf="@+id/cedulaAddUpdAdmin" />
 </android.support.constraint.ConstraintLayout>
 
 

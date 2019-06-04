@@ -83,8 +83,11 @@ public class AddProfesorFragment extends Fragment {
         EditText telefono= root.findViewById(R.id.telefonoAddUpdProf);
         EditText email= root.findViewById(R.id.emailAddUpdProf);
         Profesor p= new Profesor(Integer.parseInt(cedula.getText().toString()),nombre.getText().toString(),34,Integer.parseInt(telefono.getText().toString()),email.getText().toString());
-        Datos_Controller.getInstance().actualizarProfesor(Integer.parseInt(cedula.getText().toString()),p);
+        if(Datos_Controller.getInstance().updateProfesor(p)){
         Toast.makeText(root.getContext(), "Profesor Actualizado!!", Toast.LENGTH_SHORT).show();
+        }else {
+            Toast.makeText(root.getContext(), "Ocurrió un error!!", Toast.LENGTH_SHORT).show();
+        }
     }
 
 }

@@ -328,12 +328,98 @@ public class Datos_Controller {
         }
         return res;
     }
+    public boolean updateAlumno(Alumno al){
+        StrictMode.ThreadPolicy policy= new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
+        String apiUrl = "http://"+Login_controller.getInstance().host+":"+Login_controller.getInstance().puerto+"/Sys_Matricula_Server/ModificarEstudiante?ced="+al.getCedula()+"&nombre="
+                +al.getNombre()+"&fechaN="+al.getFecha_nacimiento()+"&edad="+al.getEdad()+"&email="+al.getEmail()+"&cel="+
+                al.getTelefono()+"&carrera="+al.getCarrera().getCodigo();
+        String current = "";
+        boolean res= false;
+        try {
+            URL url;
+            HttpURLConnection urlConnection = null;
+            try {
+                url = new URL(apiUrl);
+
+                urlConnection = (HttpURLConnection) url
+                        .openConnection();
+
+                InputStream in = urlConnection.getInputStream();
+                BufferedReader streamReader= new BufferedReader(new InputStreamReader(in,"UTF-8"));
+                StringBuilder responseStrBuilder= new StringBuilder();
+
+                String inputStr;
+                while((inputStr = streamReader.readLine())!=null){
+                    responseStrBuilder.append(inputStr);
+                }
+                boolean respuesta=Boolean.parseBoolean(responseStrBuilder.toString());
+                cargarAlumnos();
+                res= respuesta;
+
+            } catch (Exception e) {
+                e.printStackTrace();
+                res=false;
+            } finally {
+                if (urlConnection != null) {
+                    urlConnection.disconnect();
+                }
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return res;
+    }
     public boolean addProfesor(Profesor p , String pass){
         StrictMode.ThreadPolicy policy= new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
         String apiUrl = "http://"+Login_controller.getInstance().host+":"+Login_controller.getInstance().puerto+"/Sys_Matricula_Server/RegistroProfesor?ced="+p.getCedula()+"&nombre="
                 +p.getNombre()+"&edad="+p.getEdad()+"&email="+p.getEmail()+"&cel="+
                 p.getTelefono()+"&password="+pass;
+        String current = "";
+        boolean res= false;
+        try {
+            URL url;
+            HttpURLConnection urlConnection = null;
+            try {
+                url = new URL(apiUrl);
+
+                urlConnection = (HttpURLConnection) url
+                        .openConnection();
+
+                InputStream in = urlConnection.getInputStream();
+                BufferedReader streamReader= new BufferedReader(new InputStreamReader(in,"UTF-8"));
+                StringBuilder responseStrBuilder= new StringBuilder();
+
+                String inputStr;
+                while((inputStr = streamReader.readLine())!=null){
+                    responseStrBuilder.append(inputStr);
+                }
+                boolean respuesta=Boolean.parseBoolean(responseStrBuilder.toString());
+                cargarProfesores();
+                res= respuesta;
+
+            } catch (Exception e) {
+                e.printStackTrace();
+                res=false;
+            } finally {
+                if (urlConnection != null) {
+                    urlConnection.disconnect();
+                }
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return res;
+    }
+    public boolean updateProfesor(Profesor p){
+        StrictMode.ThreadPolicy policy= new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
+        String apiUrl = "http://"+Login_controller.getInstance().host+":"+Login_controller.getInstance().puerto+"/Sys_Matricula_Server/ModificarProfesor?ced="+p.getCedula()+"&nombre="
+                +p.getNombre()+"&edad="+p.getEdad()+"&email="+p.getEmail()+"&cel="+
+                p.getTelefono();
         String current = "";
         boolean res= false;
         try {
@@ -413,10 +499,94 @@ public class Datos_Controller {
         }
         return res;
     }
+    public boolean updateCurso(Curso c){
+        StrictMode.ThreadPolicy policy= new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
+        String apiUrl = "http://"+Login_controller.getInstance().host+":"+Login_controller.getInstance().puerto+"/Sys_Matricula_Server/ModificarCurso?codigo="+c.getCodigo()+
+                "&nombre="+c.getNombre()+"&cred="+c.getCreditos()+"&horas="+(int)c.getHoras_semanales();
+        String current = "";
+        boolean res= false;
+        try {
+            URL url;
+            HttpURLConnection urlConnection = null;
+            try {
+                url = new URL(apiUrl);
+
+                urlConnection = (HttpURLConnection) url
+                        .openConnection();
+
+                InputStream in = urlConnection.getInputStream();
+                BufferedReader streamReader= new BufferedReader(new InputStreamReader(in,"UTF-8"));
+                StringBuilder responseStrBuilder= new StringBuilder();
+
+                String inputStr;
+                while((inputStr = streamReader.readLine())!=null){
+                    responseStrBuilder.append(inputStr);
+                }
+                boolean respuesta=Boolean.parseBoolean(responseStrBuilder.toString());
+                cargarCursos();
+                res= respuesta;
+
+            } catch (Exception e) {
+                e.printStackTrace();
+                res=false;
+            } finally {
+                if (urlConnection != null) {
+                    urlConnection.disconnect();
+                }
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return res;
+    }
     public boolean addCarrera(Carrera c){
         StrictMode.ThreadPolicy policy= new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
         String apiUrl = "http://"+Login_controller.getInstance().host+":"+Login_controller.getInstance().puerto+"/Sys_Matricula_Server/CrearCarrera?codigo="
+                +c.getCodigo()+"&nombre="+c.getNombre()+"&titulo="+c.getTitulo();
+        String current = "";
+        boolean res= false;
+        try {
+            URL url;
+            HttpURLConnection urlConnection = null;
+            try {
+                url = new URL(apiUrl);
+
+                urlConnection = (HttpURLConnection) url
+                        .openConnection();
+
+                InputStream in = urlConnection.getInputStream();
+                BufferedReader streamReader= new BufferedReader(new InputStreamReader(in,"UTF-8"));
+                StringBuilder responseStrBuilder= new StringBuilder();
+
+                String inputStr;
+                while((inputStr = streamReader.readLine())!=null){
+                    responseStrBuilder.append(inputStr);
+                }
+                boolean respuesta=Boolean.parseBoolean(responseStrBuilder.toString());
+                cargarCarreras();
+                res= respuesta;
+
+            } catch (Exception e) {
+                e.printStackTrace();
+                res=false;
+            } finally {
+                if (urlConnection != null) {
+                    urlConnection.disconnect();
+                }
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return res;
+    }
+    public boolean updateCarrera(Carrera c){
+        StrictMode.ThreadPolicy policy= new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
+        String apiUrl = "http://"+Login_controller.getInstance().host+":"+Login_controller.getInstance().puerto+"/Sys_Matricula_Server/ModificarCarrera?codigo="
                 +c.getCodigo()+"&nombre="+c.getNombre()+"&titulo="+c.getTitulo();
         String current = "";
         boolean res= false;

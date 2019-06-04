@@ -28,7 +28,6 @@ public class AdministradorActivity extends Fragment {
             Administrador admin= Administrador_Controller.instance().getModel().getAdministrador();
             EditText nombre = root.findViewById(R.id.nombreAddUpdAdmin);
             EditText cedula= root.findViewById(R.id.cedulaAddUpdAdmin);
-            EditText clave = root.findViewById(R.id.claveAddUpdAdmin);
             nombre.setText(admin.getNombre());
             cedula.setText(Integer.toString(admin.getCedula()));
             final FloatingActionButton editar = root.findViewById(R.id.addUpdAdminBtn);

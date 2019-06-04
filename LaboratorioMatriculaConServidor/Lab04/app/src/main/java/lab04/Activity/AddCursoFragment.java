@@ -76,6 +76,10 @@ public class AddCursoFragment extends Fragment {
         EditText creditos= root.findViewById(R.id.cursoCreditos);
         EditText horasSemanales= root.findViewById(R.id.cursoHoras);
         Curso al= new Curso(Integer.parseInt(codigo.getText().toString()),nombre.getText().toString(),Integer.parseInt(creditos.getText().toString()),Float.parseFloat(horasSemanales.getText().toString()));
-        Datos_Controller.getInstance().actualizarCurso(Integer.parseInt(codigo.getText().toString()),al);
-        Toast.makeText(root.getContext(), "Curso Actualizado!!", Toast.LENGTH_SHORT).show();}
+        if(Datos_Controller.getInstance().updateCurso(al)){
+            Toast.makeText(root.getContext(), "Curso Actualizado!!", Toast.LENGTH_SHORT).show();
+        }else{
+            Toast.makeText(root.getContext(), "Ocurrio un error!!", Toast.LENGTH_SHORT).show();
+        }
+        }
     }

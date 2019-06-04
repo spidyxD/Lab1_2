@@ -72,7 +72,10 @@ public class AddCarreraFragment extends Fragment {
        EditText codigo= root.findViewById(R.id.codigoCarrera);
        EditText titulo= root.findViewById(R.id.tituloCarrera);
        Carrera carrera = new Carrera(Integer.parseInt(codigo.getText().toString()),nombre.getText().toString(),titulo.getText().toString());
-       Datos_Controller.getInstance().actualizarCarrera(Integer.parseInt(codigo.getText().toString()),carrera);
-        Toast.makeText(root.getContext(), "Carrera Actualizada!!", Toast.LENGTH_SHORT).show();
+       if(Datos_Controller.getInstance().updateCarrera(carrera)){
+           Toast.makeText(root.getContext(), "Carrera Actualizada!!", Toast.LENGTH_SHORT).show();
+       }else{
+           Toast.makeText(root.getContext(), "Ocurrió un error!!", Toast.LENGTH_SHORT).show();
+       }
     }
 }

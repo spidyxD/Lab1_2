@@ -68,7 +68,7 @@ public class AddAlumnoFragment extends Fragment {
             editar.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    editar(root);
+                    editar(root,carreras);
                 }
             });
         }else {
@@ -102,19 +102,21 @@ public class AddAlumnoFragment extends Fragment {
             Toast.makeText(root.getContext(), "Ocurrió un error!!", Toast.LENGTH_SHORT).show();
         }
     }
-    public void editar(View root){
-        Alumno alumno= Datos_Controller.getInstance().buscarAlumnoXCedula(usuario.getUsername());
+    public void editar(View root,Spinner carreras){
+        Alumno alumno= Datos_Controller.getInstance().buscarAlumnoXCedula(Datos_Controller.getInstance().getModel().getCurrentAlumno().getCedula());
         EditText nombre= root.findViewById(R.id.nombreAddUpdAlum);
         EditText cedula= root.findViewById(R.id.cedulaAddUpdAlum);
         EditText telefono= root.findViewById(R.id.telefonoAddUpdAlum);
         EditText email= root.findViewById(R.id.emailAddUpdAlum);
         EditText fecha= root.findViewById(R.id.fechaAddUpdAlum);
-       // EditText carrera= root.findViewById(R.id.carreraAddUpdAlum);
-       // Carrera carrera1= Datos_Controller.getInstance().buscarCarreraXNombre(carrera.getText().toString());
-       // Alumno al= new Alumno(Integer.parseInt(cedula.getText().toString()),nombre.getText().toString(),fecha.getText().toString(),21,email.getText().toString(),carrera1,Integer.parseInt(telefono.getText().toString()));
-
-        //Datos_Controller.getInstance().actualizarEstudiante(Integer.parseInt(cedula.getText().toString()),al);
-        Toast.makeText(root.getContext(), "Alumno Actualizado!!", Toast.LENGTH_SHORT).show();
+        String carrera1= (String)carreras.getSelectedItem();
+        Carrera car= Datos_Controller.getInstance().buscarCarreraXNombre(carrera1);
+        Alumno al= new Alumno(Integer.parseInt(cedula.getText().toString()),nombre.getText().toString(),fecha.getText().toString(),21,email.getText().toString(),car,Integer.parseInt(telefono.getText().toString()));
+        if(Datos_Controller.getInstance().updateAlumno(al)){
+            Toast.makeText(root.getContext(), "Alumno Actualizado!!", Toast.LENGTH_SHORT).show();
+        }else{
+            Toast.makeText(root.getContext(), "Ocurrío un error!!", Toast.LENGTH_SHORT).show();
+        }
     }
 
     /*@Override

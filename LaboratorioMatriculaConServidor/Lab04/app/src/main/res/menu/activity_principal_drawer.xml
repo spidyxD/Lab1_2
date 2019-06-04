@@ -46,6 +46,11 @@
             android:title="Matricula"
             android:visible="true" />
         <item
+            android:id="@+id/nav_principal_changePassword"
+            android:icon="@drawable/matricula"
+            android:title="Cambiar clave"
+            android:visible="true" />
+        <item
             android:id="@+id/nav_principal_logout"
             android:icon="@drawable/logout2"
             android:title="Logout"

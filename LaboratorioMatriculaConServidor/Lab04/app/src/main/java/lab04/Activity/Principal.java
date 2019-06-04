@@ -177,6 +177,14 @@ public class Principal extends AppCompatActivity
                 ft13.replace(R.id.fragment_container, new AddCarreraFragment());
                 ft13.addToBackStack(null).commit();
                 break;
+            case 12:
+                FragmentManager fm14;
+                FragmentTransaction ft14;
+                fm14= getSupportFragmentManager();
+                ft14=fm14.beginTransaction();
+                ft14.replace(R.id.fragment_container, new ChangeClave());
+                ft14.addToBackStack(null).commit();
+                break;
         }
     }
 
@@ -275,6 +283,9 @@ public class Principal extends AppCompatActivity
             Toast.makeText(getApplicationContext(), "Seleccione un Alumno", Toast.LENGTH_LONG).show();
             Datos_Controller.getInstance().getModel().setModo("matricular");
             setFragment(3);
+        }
+        else if (id == R.id.nav_principal_changePassword) {
+            setFragment(12);
         }
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
