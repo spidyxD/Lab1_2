@@ -138,8 +138,7 @@ CREATE OR REPLACE PROCEDURE crearAlumno (xcedula in Alumno.cedula%TYPE, xnombre 
 CREATE OR REPLACE PROCEDURE modificarAlumno (xnombre in Alumno.nombre%TYPE,xedad in Alumno.edad%TYPE, xemail in Alumno.email%TYPE, xfechaN in varchar,xtelefono in Alumno.telefono%TYPE,xusername in Usuario.id%TYPE, xclave in Usuario.clave%TYPE )
     IS 
     BEGIN
-        UPDATE  Alumno set nombre = xnombre, edad = xedad, email = xemail, fecha_nacimiento = TO_DATE(xfechaN, 'YYYY-MM-DD'), telefono = xtelefono where cedula = xusername; 
-        UPDATE  Usuario set clave = xclave where id = xusername;
+        UPDATE  Alumno set nombre = xnombre, edad = xedad, email = xemail, fecha_nacimiento = TO_DATE(xfechaN, 'DD/MM/YYYY'), telefono = xtelefono where cedula = xusername; 
         COMMIT;
     END;
     /
@@ -179,7 +178,6 @@ CREATE OR REPLACE PROCEDURE modificarProfesor (xnombre in Profesor.nombre%TYPE,x
     IS
     BEGIN
         UPDATE  Profesor SET nombre = xnombre, edad = xedad, telefono = xtelefono, email = xemail where cedula = xusername;
-        UPDATE  Usuario SET clave = xclave where id = xusername;
         COMMIT;
     END;
     /

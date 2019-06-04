@@ -215,17 +215,29 @@ public class Administrador extends HttpServlet {
     private void doUpdateStudent(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {         
          try{
             HttpSession s = request.getSession(true);
-            BufferedReader readerUser = new BufferedReader(new InputStreamReader(request.getPart("Usuario").getInputStream()));
-            BufferedReader readerAlumn = new BufferedReader(new InputStreamReader(request.getPart("Alumno").getInputStream()));
             PrintWriter out = response.getWriter();
-            Gson gson = new Gson();
-            Usuario u = gson.fromJson(readerUser, Usuario.class);
-            Alumno al = gson.fromJson(readerAlumn, Alumno.class);                        
+             String nombre = (String)request.getParameter("nombre");
+            String fechaN = (String)request.getParameter("fechaN");
+            int cedula = Integer.valueOf((request.getParameter("ced")));
+            String email = (String)request.getParameter("email");
+            int edad = Integer.valueOf((request.getParameter("edad")));
+            int telefono = Integer.valueOf((request.getParameter("cel")));
+            Alumno al = new Alumno();            
+            al.setCedula(cedula);
+            al.setCreditos(cedula);
+            al.setEdad(edad);
+            al.setEmail(email);
+            al.setFecha_nacimiento(fechaN);
+            al.setNombre(nombre);
+            al.setTelefono(telefono);
+            int carrera = Integer.valueOf(request.getParameter("carrera"));
+            Gson gson = new Gson();        
+            Usuario u = new Usuario(al.getCedula(),"1234","Alumno");                             
             Data.instance().getServicioestudiante().modificarEstudiante(al, u);
-            out.write(gson.toJson(u));
-            out.write(gson.toJson(al));
-            response.setContentType("application/json; charset=UTF-8");     
-            response.setStatus(200);                 
+            boolean respuesta=true;
+            String teachers = gson.toJson(respuesta);  
+            out.write(teachers);
+            response.setStatus(200);                          
          }
           catch(Exception e){ String error = e.getMessage();                     
                      request.setAttribute("error",error);
@@ -236,18 +248,26 @@ public class Administrador extends HttpServlet {
 
     private void doUpdateProfessor(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
          try{
-            HttpSession s = request.getSession(true);
-            BufferedReader readerUser = new BufferedReader(new InputStreamReader(request.getPart("Usuario").getInputStream()));
-            BufferedReader readerAlumn = new BufferedReader(new InputStreamReader(request.getPart("Profesor").getInputStream()));
+            HttpSession s = request.getSession(true);      
             PrintWriter out = response.getWriter();
             Gson gson = new Gson();
-            Usuario u = gson.fromJson(readerUser, Usuario.class);
-            Profesor prof = gson.fromJson(readerAlumn, Profesor.class);                            
+            String nombre = (String)request.getParameter("nombre");          
+            int cedula = Integer.valueOf((request.getParameter("ced")));
+            String email = (String)request.getParameter("email");
+            int edad = Integer.valueOf((request.getParameter("edad")));
+            int telefono = Integer.valueOf((request.getParameter("cel")));
+            Profesor prof = new Profesor();
+            prof.setCedula(cedula);
+            prof.setEdad(edad);
+            prof.setEmail(email);
+            prof.setNombre(nombre);
+            prof.setTelefono(telefono);
+            Usuario u = new Usuario(prof.getCedula(),"1234","Profesor");  
             Data.instance().getServicioProfesor().modificarProfesor(prof, u);
-            out.write(gson.toJson(u));
-            out.write(gson.toJson(prof));
-            response.setContentType("application/json; charset=UTF-8");  
-            response.setStatus(200);                 
+            boolean respuesta=true;
+            String teachers = gson.toJson(respuesta);  
+            out.write(teachers);
+            response.setStatus(200);                  
          }
           catch(Exception e){ String error = e.getMessage();                     
                      request.setAttribute("error",error);
@@ -332,20 +352,23 @@ public class Administrador extends HttpServlet {
 
     private void doUpdateCourse(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try{
-            HttpSession s = request.getSession(true);
-            BufferedReader readerCurso = new BufferedReader(new InputStreamReader(request.getPart("Curso").getInputStream()));
+           HttpSession s = request.getSession(true);                 
             PrintWriter out = response.getWriter();
             Gson gson = new Gson();
-            Curso c = gson.fromJson(readerCurso, Curso.class);                
+            Curso c = new Curso(); 
+            int codigo = Integer.valueOf((request.getParameter("codigo")));
+            String nombre = (String)request.getParameter("nombre");
+            int creditos=Integer.valueOf((request.getParameter("codigo")));
+            float horas_semanales=Integer.valueOf((request.getParameter("codigo")));
+            c.setCodigo(codigo);
+            c.setCreditos(creditos);
+            c.setHoras_semanales(horas_semanales);
+            c.setNombre(nombre);            
             Data.instance().getServicioCursos().modificarCurso(c.getCodigo(),c.getNombre(), c.getCreditos(), (int) c.getHoras_semanales());
-            ArrayList<Curso> cursos =  Data.instance().getServicioCursos().verCursos();
-              JSONArray jsArray = new JSONArray();
-                for(Curso cur: cursos){
-                   jsArray.put(cur);
-                }         
-            String courses = gson.toJson(jsArray);          
+            boolean respuesta=true;      
+            String courses = gson.toJson(respuesta);          
             out.write(courses);
-            response.setStatus(200);                 
+            response.setStatus(200);                   
          }
           catch(Exception e){ String error = e.getMessage();                     
                      request.setAttribute("error",error);
@@ -357,20 +380,23 @@ public class Administrador extends HttpServlet {
 
     private void doUpdateCareer(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
        try{
-            HttpSession s = request.getSession(true);
-            BufferedReader readerCarrera = new BufferedReader(new InputStreamReader(request.getPart("Carrera").getInputStream()));
+            HttpSession s = request.getSession(true); 
+            Gson gson = new Gson();                    
             PrintWriter out = response.getWriter();
-            Gson gson = new Gson();
-            Carrera c = gson.fromJson(readerCarrera, Carrera.class);                 
+            int codigo = Integer.valueOf((request.getParameter("codigo")));
+            String creditos = (String)request.getParameter("creditos");
+            String nombre = (String)request.getParameter("nombre");
+            String titulo = (String)request.getParameter("titulo");
+            Carrera c = new Carrera();  
+            c.setCodigo(codigo);
+            c.setCreditos(creditos);
+            c.setNombre(nombre);
+            c.setTitulo(titulo);              
             Data.instance().getServiciogenerales().modificarCarrera(c.getCodigo(),c.getNombre(), c.getTitulo());
-            ArrayList<Carrera> carreras =  Data.instance().getServiciobusquedas().verCarreras();
-            JSONArray jsArray = new JSONArray();
-                for(Carrera car: carreras){
-                   jsArray.put(car);
-                }         
-            String majores = gson.toJson(jsArray);      
+            boolean respuesta=true;       
+            String majores = gson.toJson(respuesta);      
             out.write(majores);
-            response.setStatus(200);                 
+            response.setStatus(200);               
          }
           catch(Exception e){ String error = e.getMessage();                     
                      request.setAttribute("error",error);
