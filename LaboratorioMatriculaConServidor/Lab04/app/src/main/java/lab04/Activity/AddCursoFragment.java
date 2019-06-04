@@ -63,9 +63,12 @@ public class AddCursoFragment extends Fragment {
         EditText horas= root.findViewById(R.id.cursoHoras);
         EditText codigo= root.findViewById(R.id.cursoCodigo);
         Curso curso=new Curso(Integer.parseInt(codigo.getText().toString()),nombre.getText().toString(),Integer.parseInt(creditos.getText().toString()),Float.parseFloat(horas.getText().toString()));
-        Datos_Controller.getInstance().getModel().getCursos().add(curso);
+        if(Datos_Controller.getInstance().addCurso(curso)){
         Toast.makeText(root.getContext(), "Curso Agregado!!", Toast.LENGTH_SHORT).show();
-        getActivity().finish();
+            ((Principal)getActivity()).setFragment(6);
+        }else{
+            Toast.makeText(root.getContext(), "Ocurrió un error!!", Toast.LENGTH_SHORT).show();
+        }
     }
     public void editar(View root){
         EditText nombre= root.findViewById(R.id.cursoNombre);

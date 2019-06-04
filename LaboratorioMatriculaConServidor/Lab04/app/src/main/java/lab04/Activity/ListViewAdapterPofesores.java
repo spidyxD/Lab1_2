@@ -43,8 +43,12 @@ public class ListViewAdapterPofesores extends RecyclerView.Adapter<ListViewAdapt
         this.profesores=als;
         this.arrayList= new ArrayList<Profesor>();
         this.arrayList.addAll(als);
-
-
+    }
+    public void setProfesores(List<Profesor> als){
+        this.profesores=als;
+        this.arrayList= new ArrayList<Profesor>();
+        this.arrayList.addAll(als);
+        notifyDataSetChanged();
     }
     @Override
     public ProfesorHolder onCreateViewHolder(ViewGroup parent, int viewType) {

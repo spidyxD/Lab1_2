@@ -1,6 +1,7 @@
 package lab04.Activity;
 
 import android.graphics.Canvas;
+import android.os.StrictMode;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
@@ -41,11 +42,14 @@ public class busquedaAlumnos extends Fragment implements SearchView.OnQueryTextL
     SwipeController swipeController = new SwipeController(new SwipeController.SwipeControllerActions(){
         @Override
         public void onRightClicked(int position){
+
             Alumno p= adapter.getAlumnoAt(position);
-            Datos_Controller.getInstance().getModel().getAlumnos().remove(p);
-            adapter.delete(p);
-            adapter.notifyItemRemoved(position);
-            adapter.notifyItemRangeChanged(position,adapter.getItemCount());
+            if(Datos_Controller.getInstance().deleteAlumno(p.getCedula())){
+                Toast.makeText(getContext(), "Alumno borrado!!", Toast.LENGTH_SHORT).show();
+                adapter.setAlumnos(Datos_Controller.getInstance().getModel().getAlumnos());
+            }else{
+                Toast.makeText(getContext(), "Ocurrió un error!!", Toast.LENGTH_SHORT).show();
+            }
         }
         @Override
         public void onLeftClicked(int position){

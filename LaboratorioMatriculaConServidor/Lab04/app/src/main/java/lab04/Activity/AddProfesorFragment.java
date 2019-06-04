@@ -12,6 +12,7 @@ import android.widget.Toast;
 import com.example.lab04.R;
 
 import lab04.Controller.Datos_Controller;
+import lab04.Controller.Login_controller;
 import lab04.LogicaNegocio.Profesor;
 
 public class AddProfesorFragment extends Fragment {
@@ -30,11 +31,15 @@ public class AddProfesorFragment extends Fragment {
            EditText cedula= rot.findViewById(R.id.cedulaAddUpdProf);
            EditText telefono= rot.findViewById(R.id.telefonoAddUpdProf);
            EditText email= rot.findViewById(R.id.emailAddUpdProf);
-
+           EditText pass=rot.findViewById(R.id.passwordProfe);
+           pass.setVisibility(View.INVISIBLE);
            Profesor p= Datos_Controller.getInstance().getModel().getCurrentProfesor();
            nombre.setText(p.getNombre());
            cedula.setText(Integer.toString(p.getCedula()));
-           cedula.setEnabled(false);
+           if(Login_controller.getInstance().getModel().getUser().getRol()=="Administrador"){
+           cedula.setEnabled(true);}else{
+               cedula.setEnabled(false);
+           }
            telefono.setText(Integer.toString(p.getTelefono()));
            email.setText(p.getEmail());
            FloatingActionButton editar = rot.findViewById(R.id.saveProf);
@@ -45,6 +50,8 @@ public class AddProfesorFragment extends Fragment {
                }
            });
        }else {
+           EditText pass=rot.findViewById(R.id.passwordProfe);
+           pass.setVisibility(View.VISIBLE);
         FloatingActionButton guardar = rot.findViewById(R.id.saveProf);
         guardar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -61,9 +68,14 @@ public class AddProfesorFragment extends Fragment {
         EditText cedula= root.findViewById(R.id.cedulaAddUpdProf);
         EditText telefono= root.findViewById(R.id.telefonoAddUpdProf);
         EditText email= root.findViewById(R.id.emailAddUpdProf);
+        EditText pass=root.findViewById(R.id.passwordProfe);
         Profesor p= new Profesor(Integer.parseInt(cedula.getText().toString()),nombre.getText().toString(),34,Integer.parseInt(telefono.getText().toString()),email.getText().toString());
-        Datos_Controller.getInstance().getModel().getProfesores().add(p);
+        if(Datos_Controller.getInstance().addProfesor(p,pass.getText().toString())){
         Toast.makeText(root.getContext(), "Profesor Agregado!!", Toast.LENGTH_SHORT).show();
+            ((Principal)getActivity()).setFragment(4);
+        }else{
+            Toast.makeText(root.getContext(), "Ocurrió un error!!", Toast.LENGTH_SHORT).show();
+        }
     }
     public  void  editar(View root){
         EditText nombre= root.findViewById(R.id.nombreAddUpdProf);

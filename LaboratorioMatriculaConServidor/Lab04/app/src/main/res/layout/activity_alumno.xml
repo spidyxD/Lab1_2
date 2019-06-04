@@ -10,7 +10,7 @@
         android:id="@+id/imageView3"
         android:layout_width="131dp"
         android:layout_height="93dp"
-        android:src="@drawable/student"
+        android:src="@drawable/user1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -79,34 +79,42 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/emailAddUpdAlum" />
 
-    <EditText
-        android:id="@+id/carreraAddUpdAlum"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:ems="10"
-        android:hint="@string/carreraAddUpdAlum"
-        android:inputType="textPersonName"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/fechaAddUpdAlum" />
-
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/saveAlumno"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="424dp"
+        android:layout_marginTop="400dp"
         android:layout_marginEnd="8dp"
         android:clickable="true"
-        app:backgroundTint="#EB7410"
+        android:tint="#FFFFFF"
+        app:backgroundTint="@color/bg_row_background"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/carreraAddUpdAlum"
+        app:layout_constraintHorizontal_bias="0.259"
+        app:layout_constraintStart_toEndOf="@+id/passwordAlumno"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/save" />
+        app:srcCompat="@drawable/check" />
+
+    <EditText
+        android:id="@+id/passwordAlumno"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="45dp"
+        android:ems="10"
+        android:hint="Clave"
+        android:inputType="textPassword"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/carrerasAlumno" />
+
+    <Spinner
+        android:id="@+id/carrerasAlumno"
+        android:layout_width="219dp"
+        android:layout_height="24dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/fechaAddUpdAlum" />
 
 </android.support.constraint.ConstraintLayout>
 

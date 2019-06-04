@@ -1,5 +1,7 @@
 package lab04.Controller;
 
+import android.os.StrictMode;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -17,6 +19,7 @@ import lab04.LogicaNegocio.Carrera;
 import lab04.LogicaNegocio.Ciclo;
 import lab04.LogicaNegocio.Curso;
 import lab04.LogicaNegocio.Grupo;
+import lab04.LogicaNegocio.Matricula;
 import lab04.LogicaNegocio.Profesor;
 import lab04.LogicaNegocio.Usuario;
 import lab04.Model.DatosModel;
@@ -54,7 +57,7 @@ public class Datos_Controller {
     public Carrera buscarCarreraXNombre(String Nombre){
         Carrera resul=null;
         for(Carrera c : model.getCarreras()){
-            if(c.getNombre()==Nombre){
+            if(c.getNombre().equals(Nombre)){
                 resul=c;
             }
         }
@@ -96,18 +99,362 @@ public class Datos_Controller {
         }
         return resul;
     }
-
-    public void deleteAlumno(){}
-    public void deleteProfe(){}
-    public void deleteCurso(){}
-    public void deleteCarrera(){}
-    //////////////////////////////////////////////////////////////////////////////////////////////////
-    public void addAlumno(Alumno al){
-
+    public List<String> nombreCarreras(){
+        List<String> nombres= new ArrayList<>();
+        for(Carrera c : model.getCarreras()){
+            nombres.add(c.getNombre());
+        }
+        return nombres;
     }
-    public void addProfesor(){}
-    public void addCurso(){}
-    public void addCarrera(){}
+    public int posCarreras(String carrera){
+        int pos=0;
+        for(int i=0; i< model.getCarreras().size();i++){
+            if(model.getCarreras().get(i).getNombre().equals(carrera)){
+                pos=i;
+            }
+        }
+        return pos;
+    }
+
+    public boolean deleteAlumno(int id ){
+        StrictMode.ThreadPolicy policy= new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
+        String apiUrl = "http://"+Login_controller.getInstance().host+":"+Login_controller.getInstance().puerto+"/Sys_Matricula_Server/EliminarEstudiante?cedula="+id;
+        String current = "";
+        boolean res= false;
+        try {
+            URL url;
+            HttpURLConnection urlConnection = null;
+            try {
+                url = new URL(apiUrl);
+
+                urlConnection = (HttpURLConnection) url
+                        .openConnection();
+
+                InputStream in = urlConnection.getInputStream();
+                BufferedReader streamReader= new BufferedReader(new InputStreamReader(in,"UTF-8"));
+                StringBuilder responseStrBuilder= new StringBuilder();
+
+                String inputStr;
+                while((inputStr = streamReader.readLine())!=null){
+                    responseStrBuilder.append(inputStr);
+                }
+
+                //JSONObject jsonObject = new JSONObject(responseStrBuilder.toString());
+                boolean respuesta=Boolean.parseBoolean(responseStrBuilder.toString());
+                cargarAlumnos();
+                res= respuesta;
+
+            } catch (Exception e) {
+                e.printStackTrace();
+                res=false;
+            } finally {
+                if (urlConnection != null) {
+                    urlConnection.disconnect();
+                }
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return res;
+    }
+    public boolean deleteProfe(int id){
+        StrictMode.ThreadPolicy policy= new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
+        String apiUrl = "http://"+Login_controller.getInstance().host+":"+Login_controller.getInstance().puerto+"/Sys_Matricula_Server/EliminarProfesor?cedula="+id;
+        String current = "";
+        boolean res= false;
+        try {
+            URL url;
+            HttpURLConnection urlConnection = null;
+            try {
+                url = new URL(apiUrl);
+
+                urlConnection = (HttpURLConnection) url
+                        .openConnection();
+
+                InputStream in = urlConnection.getInputStream();
+                BufferedReader streamReader= new BufferedReader(new InputStreamReader(in,"UTF-8"));
+                StringBuilder responseStrBuilder= new StringBuilder();
+
+                String inputStr;
+                while((inputStr = streamReader.readLine())!=null){
+                    responseStrBuilder.append(inputStr);
+                }
+                boolean respuesta=Boolean.parseBoolean(responseStrBuilder.toString());
+                cargarGrupos();
+                cargarProfesores();
+                res= respuesta;
+
+            } catch (Exception e) {
+                e.printStackTrace();
+                res=false;
+            } finally {
+                if (urlConnection != null) {
+                    urlConnection.disconnect();
+                }
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return res;
+    }
+    public boolean deleteCurso(int id ){
+        StrictMode.ThreadPolicy policy= new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
+        String apiUrl = "http://"+Login_controller.getInstance().host+":"+Login_controller.getInstance().puerto+"/Sys_Matricula_Server/EliminarCurso?id="+id;
+        String current = "";
+        boolean res= false;
+        try {
+            URL url;
+            HttpURLConnection urlConnection = null;
+            try {
+                url = new URL(apiUrl);
+
+                urlConnection = (HttpURLConnection) url
+                        .openConnection();
+
+                InputStream in = urlConnection.getInputStream();
+                BufferedReader streamReader= new BufferedReader(new InputStreamReader(in,"UTF-8"));
+                StringBuilder responseStrBuilder= new StringBuilder();
+
+                String inputStr;
+                while((inputStr = streamReader.readLine())!=null){
+                    responseStrBuilder.append(inputStr);
+                }
+                boolean respuesta=Boolean.parseBoolean(responseStrBuilder.toString());
+                cargarCursos();
+                cargarGrupos();
+                res= respuesta;
+
+            } catch (Exception e) {
+                e.printStackTrace();
+                res=false;
+            } finally {
+                if (urlConnection != null) {
+                    urlConnection.disconnect();
+                }
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return res;
+    }
+    public boolean deleteCarrera(int id ){
+        StrictMode.ThreadPolicy policy= new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
+        String apiUrl = "http://"+Login_controller.getInstance().host+":"+Login_controller.getInstance().puerto+"/Sys_Matricula_Server/EliminarCarrera?id="+id;
+        String current = "";
+        boolean res= false;
+        try {
+            URL url;
+            HttpURLConnection urlConnection = null;
+            try {
+                url = new URL(apiUrl);
+
+                urlConnection = (HttpURLConnection) url
+                        .openConnection();
+
+                InputStream in = urlConnection.getInputStream();
+                BufferedReader streamReader= new BufferedReader(new InputStreamReader(in,"UTF-8"));
+                StringBuilder responseStrBuilder= new StringBuilder();
+
+                String inputStr;
+                while((inputStr = streamReader.readLine())!=null){
+                    responseStrBuilder.append(inputStr);
+                }
+                boolean respuesta=Boolean.parseBoolean(responseStrBuilder.toString());
+                cargarCarreras();
+                res= respuesta;
+
+            } catch (Exception e) {
+                e.printStackTrace();
+                res=false;
+            } finally {
+                if (urlConnection != null) {
+                    urlConnection.disconnect();
+                }
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return res;
+    }
+
+    public boolean addAlumno(Alumno al,String pass){
+        StrictMode.ThreadPolicy policy= new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
+        String apiUrl = "http://"+Login_controller.getInstance().host+":"+Login_controller.getInstance().puerto+"/Sys_Matricula_Server/RegistroEstudiante?ced="+al.getCedula()+"&nombre="
+                +al.getNombre()+"&fechaN="+al.getFecha_nacimiento()+"&edad="+al.getEdad()+"&email="+al.getEmail()+"&cel="+
+                al.getTelefono()+"&carrera="+al.getCarrera().getCodigo()+"&password="+pass;
+        String current = "";
+        boolean res= false;
+        try {
+            URL url;
+            HttpURLConnection urlConnection = null;
+            try {
+                url = new URL(apiUrl);
+
+                urlConnection = (HttpURLConnection) url
+                        .openConnection();
+
+                InputStream in = urlConnection.getInputStream();
+                BufferedReader streamReader= new BufferedReader(new InputStreamReader(in,"UTF-8"));
+                StringBuilder responseStrBuilder= new StringBuilder();
+
+                String inputStr;
+                while((inputStr = streamReader.readLine())!=null){
+                    responseStrBuilder.append(inputStr);
+                }
+                boolean respuesta=Boolean.parseBoolean(responseStrBuilder.toString());
+                cargarAlumnos();
+                res= respuesta;
+
+            } catch (Exception e) {
+                e.printStackTrace();
+                res=false;
+            } finally {
+                if (urlConnection != null) {
+                    urlConnection.disconnect();
+                }
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return res;
+    }
+    public boolean addProfesor(Profesor p , String pass){
+        StrictMode.ThreadPolicy policy= new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
+        String apiUrl = "http://"+Login_controller.getInstance().host+":"+Login_controller.getInstance().puerto+"/Sys_Matricula_Server/RegistroProfesor?ced="+p.getCedula()+"&nombre="
+                +p.getNombre()+"&edad="+p.getEdad()+"&email="+p.getEmail()+"&cel="+
+                p.getTelefono()+"&password="+pass;
+        String current = "";
+        boolean res= false;
+        try {
+            URL url;
+            HttpURLConnection urlConnection = null;
+            try {
+                url = new URL(apiUrl);
+
+                urlConnection = (HttpURLConnection) url
+                        .openConnection();
+
+                InputStream in = urlConnection.getInputStream();
+                BufferedReader streamReader= new BufferedReader(new InputStreamReader(in,"UTF-8"));
+                StringBuilder responseStrBuilder= new StringBuilder();
+
+                String inputStr;
+                while((inputStr = streamReader.readLine())!=null){
+                    responseStrBuilder.append(inputStr);
+                }
+                boolean respuesta=Boolean.parseBoolean(responseStrBuilder.toString());
+                cargarProfesores();
+                res= respuesta;
+
+            } catch (Exception e) {
+                e.printStackTrace();
+                res=false;
+            } finally {
+                if (urlConnection != null) {
+                    urlConnection.disconnect();
+                }
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return res;
+    }
+    public boolean addCurso(Curso c){
+        StrictMode.ThreadPolicy policy= new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
+        String apiUrl = "http://"+Login_controller.getInstance().host+":"+Login_controller.getInstance().puerto+"/Sys_Matricula_Server/CrearCurso?codigo="+c.getCodigo()+
+                "&nombre="+c.getNombre()+"&cred="+c.getCreditos()+"&horas="+(int)c.getHoras_semanales();
+        String current = "";
+        boolean res= false;
+        try {
+            URL url;
+            HttpURLConnection urlConnection = null;
+            try {
+                url = new URL(apiUrl);
+
+                urlConnection = (HttpURLConnection) url
+                        .openConnection();
+
+                InputStream in = urlConnection.getInputStream();
+                BufferedReader streamReader= new BufferedReader(new InputStreamReader(in,"UTF-8"));
+                StringBuilder responseStrBuilder= new StringBuilder();
+
+                String inputStr;
+                while((inputStr = streamReader.readLine())!=null){
+                    responseStrBuilder.append(inputStr);
+                }
+                boolean respuesta=Boolean.parseBoolean(responseStrBuilder.toString());
+                cargarCursos();
+                res= respuesta;
+
+            } catch (Exception e) {
+                e.printStackTrace();
+                res=false;
+            } finally {
+                if (urlConnection != null) {
+                    urlConnection.disconnect();
+                }
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return res;
+    }
+    public boolean addCarrera(Carrera c){
+        StrictMode.ThreadPolicy policy= new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
+        String apiUrl = "http://"+Login_controller.getInstance().host+":"+Login_controller.getInstance().puerto+"/Sys_Matricula_Server/CrearCarrera?codigo="
+                +c.getCodigo()+"&nombre="+c.getNombre()+"&titulo="+c.getTitulo();
+        String current = "";
+        boolean res= false;
+        try {
+            URL url;
+            HttpURLConnection urlConnection = null;
+            try {
+                url = new URL(apiUrl);
+
+                urlConnection = (HttpURLConnection) url
+                        .openConnection();
+
+                InputStream in = urlConnection.getInputStream();
+                BufferedReader streamReader= new BufferedReader(new InputStreamReader(in,"UTF-8"));
+                StringBuilder responseStrBuilder= new StringBuilder();
+
+                String inputStr;
+                while((inputStr = streamReader.readLine())!=null){
+                    responseStrBuilder.append(inputStr);
+                }
+                boolean respuesta=Boolean.parseBoolean(responseStrBuilder.toString());
+                cargarCarreras();
+                res= respuesta;
+
+            } catch (Exception e) {
+                e.printStackTrace();
+                res=false;
+            } finally {
+                if (urlConnection != null) {
+                    urlConnection.disconnect();
+                }
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return res;
+    }
     public void serializarCarrera(JSONObject jsonObject) throws JSONException {
         List<Carrera> carreraList= new ArrayList<>();
         JSONArray jsonArray= jsonObject.getJSONArray("myArrayList");
@@ -412,8 +759,8 @@ public class Datos_Controller {
 
     public void cargarAplicacion(){
         if(!model.isCargado()){
-            cargarAlumnos();
             cargarCarreras();
+            cargarAlumnos();
             cargarCiclos();
             cargarProfesores();
             cargarCursos();
@@ -436,16 +783,5 @@ public class Datos_Controller {
     public void actualizarCurso(int codigo,Curso c){
 
     }
-    public void deleteAlumno(int ced){
 
-    }
-    public void deleteProf(int ced){
-
-    }
-    public void deleteCarrera(int ced){
-
-    }
-    public void deleteCurso(int ced){
-
-    }
 }

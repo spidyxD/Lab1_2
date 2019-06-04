@@ -40,7 +40,12 @@ public class ListViewAdapterCarreras extends RecyclerView.Adapter<ListViewAdapte
         this.arrayList= new ArrayList<Carrera>();
         this.arrayList.addAll(crs);
     }
-
+    public void setCarreras(List<Carrera> crs){
+        this.carreras=crs;
+        this.arrayList= new ArrayList<Carrera>();
+        this.arrayList.addAll(crs);
+        notifyDataSetChanged();
+    }
     @Override
     public ListViewAdapterCarreras.CarreraHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())

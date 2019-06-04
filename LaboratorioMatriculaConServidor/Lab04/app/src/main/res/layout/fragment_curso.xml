@@ -75,11 +75,12 @@
         android:layout_marginTop="364dp"
         android:layout_marginEnd="8dp"
         android:clickable="true"
-        app:backgroundTint="#159B0E"
+        android:tint="#FFFFFF"
+        app:backgroundTint="@color/bg_row_background"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.917"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/save" />
+        app:srcCompat="@drawable/check" />
 
 </android.support.constraint.ConstraintLayout>

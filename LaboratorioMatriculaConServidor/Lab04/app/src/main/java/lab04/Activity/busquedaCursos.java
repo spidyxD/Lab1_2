@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.SearchView;
+import android.widget.Toast;
 
 import com.example.lab04.R;
 
@@ -36,10 +37,12 @@ public class busquedaCursos extends Fragment implements SearchView.OnQueryTextLi
         @Override
         public void onRightClicked(int position){
             Curso p= adapter.getCursorAt(position);
-            Datos_Controller.getInstance().getModel().getCursos().remove(p);
-            adapter.delete(p);
-            adapter.notifyItemRemoved(position);
-            adapter.notifyItemRangeChanged(position,adapter.getItemCount());
+            if(Datos_Controller.getInstance().deleteCurso(p.getCodigo())){
+                Toast.makeText(getContext(), "Curso borrado!!", Toast.LENGTH_SHORT).show();
+                adapter.setCursos(Datos_Controller.getInstance().getModel().getCursos());
+            }else {
+                Toast.makeText(getContext(), "Ocurrío un error!!", Toast.LENGTH_SHORT).show();
+            }
         }
         @Override
         public void onLeftClicked(int position){

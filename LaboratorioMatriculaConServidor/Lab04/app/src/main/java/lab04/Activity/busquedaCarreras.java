@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.SearchView;
+import android.widget.Toast;
 
 import com.example.lab04.R;
 
@@ -37,10 +38,12 @@ public class busquedaCarreras extends Fragment implements SearchView.OnQueryText
         @Override
         public void onRightClicked(int position){
             Carrera p= adapter.getCarreraAt(position);
-            Datos_Controller.getInstance().getModel().getCarreras().remove(p);
-            adapter.delete(p);
-            adapter.notifyItemRemoved(position);
-            adapter.notifyItemRangeChanged(position,adapter.getItemCount());
+            if(Datos_Controller.getInstance().deleteCarrera(p.getCodigo())){
+               adapter.setCarreras(Datos_Controller.getInstance().getModel().getCarreras());
+                Toast.makeText(getContext(), "Carrera borrada!!", Toast.LENGTH_SHORT).show();
+            }else{
+                Toast.makeText(getContext(), "Ocurrió un error!!", Toast.LENGTH_SHORT).show();
+            }
         }
         @Override
         public void onLeftClicked(int position){

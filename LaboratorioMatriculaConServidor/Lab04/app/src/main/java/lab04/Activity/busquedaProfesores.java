@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.SearchView;
+import android.widget.Toast;
 
 import com.example.lab04.R;
 
@@ -34,10 +35,12 @@ public class busquedaProfesores extends Fragment implements SearchView.OnQueryTe
         @Override
         public void onRightClicked(int position){
             Profesor p= adapter.getProfesorAt(position);
-            Datos_Controller.getInstance().getModel().getProfesores().remove(p);
-            adapter.delete(p);
-            adapter.notifyItemRemoved(position);
-            adapter.notifyItemRangeChanged(position,adapter.getItemCount());
+            if(Datos_Controller.getInstance().deleteProfe(p.getCedula())){
+                adapter.setProfesores(Datos_Controller.getInstance().getModel().getProfesores());
+                Toast.makeText(getContext(), "Profesor Borrado!!", Toast.LENGTH_SHORT).show();
+            }else{
+                Toast.makeText(getContext(), "Ocurrió un error!!", Toast.LENGTH_SHORT).show();
+            }
         }
         @Override
         public void onLeftClicked(int position){

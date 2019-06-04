@@ -53,6 +53,12 @@ public class ListViewAdapterAlumnos extends RecyclerView.Adapter<ListViewAdapter
         this.arrayList.addAll(als);
     }
 
+    public void setAlumnos(List<Alumno> als){
+        this.alumnos=als;
+        this.arrayList=new ArrayList<Alumno>();
+        this.arrayList.addAll(als);
+        notifyDataSetChanged();
+    }
     @Override
     public AlumnosHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())

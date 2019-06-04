@@ -40,7 +40,12 @@ public class ListViewAdapterCursos extends RecyclerView.Adapter<ListViewAdapterC
         this.arrayList= new ArrayList<Curso>();
         this.arrayList.addAll(cursos);
     }
-
+    public void setCursos(List<Curso> cursos){
+        this.cursos=cursos;
+        this.arrayList= new ArrayList<Curso>();
+        this.arrayList.addAll(cursos);
+        notifyDataSetChanged();
+    }
     @Override
     public ListViewAdapterCursos.CursosHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
